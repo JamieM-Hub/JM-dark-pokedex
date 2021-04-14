@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon List</title>
+</head>
+
+<body>
+    {% for mon in pokemon %}
+    <img src="{{ mon.img_src }}" alt="{{ mon.name }}"><br>
+    {{ mon.name }}<br>
+    {{ mon.type }}<br>
+    {{ mon.species }}<br>
+    {{ mon.dex_id }}<br>
+    {{ mon.desc }}<br>
+
+
+    {% endfor %}
+</body>
+
+</html>
