@@ -19,8 +19,8 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_pokemon")
 def get_pokemon():
-    pokemon = mongo.db.pokemon.find()
-    return render_template("pokemon.html", pokemon=pokemon)
+    pokedex = mongo.db.pokemon.find()
+    return render_template("pokemon.html", pokedex=pokedex)
 
 
 @app.route("/register", methods=["GET", "POST"])

@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% for mon in pokemon %}
-<img src="{{ mon.img_src }}" alt="{{ mon.name }}" height="200"><br>
-{{ mon.name }}<br>
-{{ mon.type }}<br>
-{{ mon.species }}<br>
-{{ mon.dex_id }}<br>
-{{ mon.desc }}<br>
+{% for pokemon in pokedex %}
+<div class="row section">
+    <div class="col s4">
+        <div class="pokemon-img center-align"><img src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200">
+        </div>
+        <div class="pokemon-id center-align">No. {{ pokemon.dex_id }}</div>
+    </div>
+    <div class="col s8">
+        <span class="pokemon-name">{{ pokemon.name }}</span><br>
+        {{ pokemon.type }}<br>
+        {{ pokemon.species }}<br>
+        Height {{ pokemon.height }}<br>
+        Weight {{ pokemon.weight }} lb<br>
+        {{ pokemon.desc }}<br>
+    </div>
+</div>
+<div class="divider"></div>
+
 {% endfor %}
 
 {% endblock %}
