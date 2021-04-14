@@ -2,11 +2,12 @@
 {% block content %}
 
 {% for pokemon in pokedex %}
-<div class="row section">
+<div class="row section yellow lighten-3">
     <div class="col s4">
-        <div class="pokemon-img center-align"><img src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200">
+        <div class="center-align"><img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}"
+                height="200">
         </div>
-        <div class="pokemon-id center-align">No. {{ pokemon.dex_id }}</div>
+        <div class="pokemon-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
     </div>
     <div class="col s8">
         <span class="pokemon-name">{{ pokemon.name }}</span><br>
