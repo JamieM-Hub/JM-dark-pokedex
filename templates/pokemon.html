@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>I am extends base!</h2>
-
 {% for mon in pokemon %}
 <img src="{{ mon.img_src }}" alt="{{ mon.name }}" height="200"><br>
 {{ mon.name }}<br>
