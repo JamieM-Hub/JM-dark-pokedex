@@ -10,3 +10,5 @@ vscode:
     - eventyret.bootstrap-4-cdn-snippet
     - kevinglasson.cornflakes-linter
     - hookyqr.beautify
+    - samuelcolvin.jinjahtml@0.16.0:0559a632af4074fc5b1a8a281e78e352
+    - wholroyd.jinja@0.0.8:0b7cec8f59d9c5225987f11c57a1e396
