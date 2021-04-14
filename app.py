@@ -17,7 +17,7 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/get_tasks")
+@app.route("/get_pokemon")
 def get_pokemon():
     pokemon = mongo.db.pokemon.find()
     return render_template("pokemon.html", pokemon=pokemon)
