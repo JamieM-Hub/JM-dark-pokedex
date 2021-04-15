@@ -28,6 +28,12 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/trainers")
+def trainers():
+    trainers = mongo.db.trainers.find()
+    return render_template("trainers.html", trainers=trainers)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
