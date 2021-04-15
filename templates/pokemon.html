@@ -10,12 +10,21 @@
         <div class="pokemon-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
     </div>
     <div class="col s8">
-        <span class="pokemon-name">{{ pokemon.name }}</span><br>
-        {{ pokemon.type }}<br>
+        <div class="row">
+            <div class="col s4 pokemon-name">{{ pokemon.name }}</div>
+            <div class="col s2 pokemon-type">{{ pokemon.type[0] }}</div>
+            <div class="col s2 pokemon-type">{{ pokemon.type[1] }}</div>
+        </div>
+        <div class="row">
+            <div class="col s6">Created by: {{ pokemon.created_by }}</div>
+            <div class="col s6"><i class="far fa-arrow-alt-circle-up"></i> {{ pokemon.rating }} </div>
+        </div>
         {{ pokemon.species }}<br>
-        Height {{ pokemon.height }}<br>
+        Height {{ pokemon.height[0] }}'{{ pokemon.height[1] }}"<br>
         Weight {{ pokemon.weight }} lb<br>
+        <br>
         {{ pokemon.desc }}<br>
+
     </div>
 </div>
 <div class="divider"></div>
