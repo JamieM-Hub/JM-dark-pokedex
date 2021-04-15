@@ -28,6 +28,11 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/contribute", methods=["GET", "POST"])
+def contribute():
+    return render_template("contribute.html")
+
+
 @app.route("/trainers")
 def trainers():
     trainers = mongo.db.trainers.find()

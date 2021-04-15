@@ -4,4 +4,5 @@
           edge: "right"
       });
 
+      $("select").formSelect();
   });
