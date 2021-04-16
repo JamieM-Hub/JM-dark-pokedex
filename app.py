@@ -28,9 +28,9 @@ def get_pokemon():
 @app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
 def edit_pokemon(dex_id):
     pokedex = mongo.db.pokemon.find()
-    pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
+    selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
     print("hello")
-    return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=pokemon)
+    return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon)
 
 
 # @app.route("/delete_pokemon/<dex_id>")

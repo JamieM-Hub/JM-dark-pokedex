@@ -15,6 +15,31 @@
     </div>
 </div>
 
+<div class="row section yellow lighten-3">
+    <div class="col s4">
+        <div class="center-align"><img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}"
+                height="200">
+        </div>
+        <div class="pokemon-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
+    </div>
+    <div class="col s8">
+        <div class="row">
+            <div class="col s4 pokemon-name">{{ pokemon.name }}</div>
+            <div class="col s2 pokemon-type">{{ pokemon.type[0] }}</div>
+            <div class="col s2 pokemon-type">{{ pokemon.type[1] }}</div>
+        </div>
+        <div class="row">
+            <div class="col s6">Created by: {{ pokemon.created_by }}</div>
+            <div class="col s6"><i class="far fa-arrow-alt-circle-up"></i> {{ pokemon.rating }} </div>
+        </div>
+        {{ pokemon.species }}<br>
+        Height {{ pokemon.height[0] }}'{{ pokemon.height[1] }}"<br>
+        Weight {{ pokemon.weight }} lb<br>
+        <br>
+        {{ pokemon.desc }}<br>
+    </div>
+</div>
+
 <div class="row card">
     <form class="col s12" action="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}" method="POST">
         <div class="row deep-purple">
@@ -23,12 +48,12 @@
                 <div class="row">
                     <!-- Name -->
                     <div class="input-field col s12 m6">
-                        <input id="name" type="text" name="name" required>
+                        <input id="name" type="text" name="name" value="{{ pokemon.name }}" required>
                         <label for="name">Name</label>
                     </div>
                     <!-- Species -->
                     <div class="input-field col s12 m6">
-                        <input id="species" type="text" name="species" required>
+                        <input id="species" type="text" name="species" value="{{ pokemon.species }}" required>
                         <label for="species">Species</label>
                     </div>
                     <!-- Type 1 -->
@@ -83,22 +108,24 @@
                 <div class="row">
                     <!-- Height (feet) -->
                     <div class="input-field col s12 m4">
-                        <input id="height_feet" type="number" name="height_feet" max="25" required>
+                        <input id="height_feet" type="number" name="height_feet" max="25"
+                            value="{{ pokemon.height[0] }}" required>
                         <label for="height_feet">Height (feet)</label>
                     </div>
                     <!-- Height (inches) -->
                     <div class="input-field col s12 m4">
-                        <input id="height_inches" type="number" name="height_inches" max="11" required>
+                        <input id="height_inches" type="number" name="height_inches" max="11"
+                            value="{{ pokemon.height[1] }}" required>
                         <label for="height_inches">Height (inches)</label>
                     </div>
                     <!-- Weight -->
                     <div class="input-field col s12 m4">
-                        <input id="weight" type="number" name="weight" max="999" required>
+                        <input id="weight" type="number" name="weight" max="999" value="{{ pokemon.weight }}" required>
                         <label for="weight">Weight (pounds)</label>
                     </div>
                     <!-- Description -->
                     <div class="input-field col s12">
-                        <textarea id="desc" name="desc" class="materialize-textarea validate" required></textarea>
+                        <input id="desc" type="text" name="desc" value="{{ pokemon.desc }}" required>
                         <label for="desc">Description</label>
                     </div>
                 </div>
@@ -107,12 +134,12 @@
             <!-- Bottom section -->
             <!-- Description -->
             <div class="input-field col s12">
-                <textarea id="img_src" name="img_src" class="materialize-textarea" required></textarea>
+                <input id="img_src" type="text" name="img_src" value="{{ pokemon.img_src }}" required>
                 <label for="img_src">Image URL</label>
             </div>
             <!-- Created by -->
             <div class="input-field col s12 m6">
-                <input id="created_by" type="text" name="created_by" required>
+                <input id="created_by" type="text" name="created_by" value="{{ pokemon.created_by }}" required>
                 <label for="created_by">Created By</label>
             </div>
             <div class="input-field col s12 m6">
