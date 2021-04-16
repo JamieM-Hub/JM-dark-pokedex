@@ -143,9 +143,13 @@
                 <label for="created_by">Created By</label>
             </div>
             <div class="input-field col s12 m6">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit Changes
                     <i class="fas fa-arrow-right right"></i>
                 </button>
+                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light">
+                    Cancel <i class="fas fa-circle right"></i>
+                </a>
+
             </div>
         </div>
     </form>
