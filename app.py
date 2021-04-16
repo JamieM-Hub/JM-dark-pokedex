@@ -17,10 +17,19 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/get_pokemon")
+@app.route("/get_pokemon", methods=["GET", "POST"])
 def get_pokemon():
     pokedex = mongo.db.pokemon.find()
+    # if request.method == "POST":
+    #     mongo.db.pokemon
     return render_template("pokemon.html", pokedex=pokedex)
+
+
+@app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
+def edit_pokemon(dex_id):
+    pokemon = mongo.db.pokemon.find_one({"dex_id": dex_id})
+    print("hello")
+    return
 
 
 @app.route("/register", methods=["GET", "POST"])
