@@ -25,6 +25,10 @@
         <br>
         {{ pokemon.desc }}<br>
 
+        {% if pokemon.dex_id|int > 20 %}
+        <a href="" class="btn-small">EDIT</a>
+        <a href="" class="btn-small">DELETE</a>
+        {% endif %}
     </div>
 </div>
 <div class="divider"></div>
