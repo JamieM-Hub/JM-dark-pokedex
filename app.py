@@ -30,6 +30,29 @@ def register():
 
 @app.route("/contribute", methods=["GET", "POST"])
 def contribute():
+    if request.method == "POST":
+        pokedex_length = mongo.db.pokemon.count()
+        dex_id = pokedex_length + 1
+        new_pokemon = {
+            "name": request.form.get("name"),
+            "dex_id": dex_id,
+            "type": [
+                request.form.get("type_1"),
+                request.form.get("type_2")
+            ],
+            "species": request.form.get("species"),
+            "height": [
+                request.form.get("height_feet"),
+                request.form.get("height_inches")
+            ],
+            "weight": request.form.get("weight"),
+            "desc": request.form.get("desc"),
+            "img_src": request.form.get("img_src"),
+            "created_by": request.form.get("created_by"),
+
+        }
+        mongo.db.pokemon.insert_one(new_pokemon)
+
     return render_template("contribute.html")
 
 
