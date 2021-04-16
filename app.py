@@ -54,10 +54,11 @@ def edit_pokemon(dex_id):
     return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon)
 
 
-# @app.route("/delete_pokemon/<dex_id>")
-# def delete_pokemon(dex_id):
-#     mongo.db.pokemon.remove({"dex_id": dex_id})
-#     return
+@app.route("/delete_pokemon/<dex_id>")
+def delete_pokemon(dex_id):
+    mongo.db.pokemon.remove({"_id": ObjectId(dex_id)})
+    flash("Pokemon deleted :(")
+    return redirect(url_for("get_pokemon"))
 
 
 @app.route("/register", methods=["GET", "POST"])
