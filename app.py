@@ -27,9 +27,30 @@ def get_pokemon():
 
 @app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
 def edit_pokemon(dex_id):
+    if request.method == "POST":
+        submit = {
+            "name": request.form.get("name"),
+            "dex_id": request.form.get("dex_id"),
+            "type": [
+                request.form.get("type_1"),
+                request.form.get("type_2")
+            ],
+            "species": request.form.get("species"),
+            "height": [
+                request.form.get("height_feet"),
+                request.form.get("height_inches")
+            ],
+            "weight": request.form.get("weight"),
+            "desc": request.form.get("desc"),
+            "img_src": request.form.get("img_src"),
+            "created_by": request.form.get("created_by"),
+        }
+        mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
+        flash("Pokemon updated!")
+        return redirect(url_for("get_pokemon"))
+
     pokedex = mongo.db.pokemon.find()
     selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
-    print("hello")
     return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon)
 
 

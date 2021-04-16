@@ -20,7 +20,9 @@
         <div class="center-align"><img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}"
                 height="200">
         </div>
-        <div class="pokemon-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
+        <div class="pokemon-id center-align">
+            <strong>No. {{ pokemon.dex_id }}</strong>
+        </div>
     </div>
     <div class="col s8">
         <div class="row">
@@ -46,6 +48,9 @@
             <!-- Left column -->
             <div class="col s6">
                 <div class="row">
+                    <div class="hide">
+                        <input type="text" name="dex_id" id="dex_id" value="{{ pokemon.dex_id }}">
+                    </div>
                     <!-- Name -->
                     <div class="input-field col s12 m6">
                         <input id="name" type="text" name="name" value="{{ pokemon.name }}" required>
