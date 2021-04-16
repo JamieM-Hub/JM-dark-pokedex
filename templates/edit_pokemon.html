@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card blue-grey darken-1">
+    <div class="card-content white-text">
+        <span class="card-title">Edit Pokemon</span>
+        <p>
+            Lorem ipsum dolor sit amet. Et labore veniam ut reprehenderit expedita est labore ullam in vitae consectetur
+            in dolore optio. Sit minima perspiciatis nam maiores consequatur aut quibusdam nostrum qui repellat quae aut
+            internos iure aut quia fugit nam ipsam quas. Sit quia rerum ut provident quae ea necessitatibus ipsum et
+            eligendi soluta est obcaecati quia sit velit itaque non laudantium itaque?
+
+            Aut voluptatem illum in suscipit nulla vel dolor autem. Sed deserunt cumque eos rerum galisum aut optio
+            iusto qui similique possimus id dolor quibusdam.</p>
+    </div>
+</div>
+
+<div class="row card">
+    <form class="col s12" action="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}" method="POST">
+        <div class="row deep-purple">
+            <!-- Left column -->
+            <div class="col s6">
+                <div class="row">
+                    <!-- Name -->
+                    <div class="input-field col s12 m6">
+                        <input id="name" type="text" name="name" required>
+                        <label for="name">Name</label>
+                    </div>
+                    <!-- Species -->
+                    <div class="input-field col s12 m6">
+                        <input id="species" type="text" name="species" required>
+                        <label for="species">Species</label>
+                    </div>
+                    <!-- Type 1 -->
+                    <div class="input-field col s6">
+                        <select name="type_1" required>
+                            <option value="" disabled selected>Choose Type</option>
+                            <option value="normal">normal</option>
+                            <option value="fire">fire</option>
+                            <option value="water">water</option>
+                            <option value="electric">electric</option>
+                            <option value="grass">grass</option>
+                            <option value="ice">ice</option>
+                            <option value="fighting">fighting</option>
+                            <option value="poison">poison</option>
+                            <option value="ground">ground</option>
+                            <option value="flying">flying</option>
+                            <option value="psychic">psychic</option>
+                            <option value="bug">bug</option>
+                            <option value="rock">rock</option>
+                            <option value="ghost">ghost</option>
+                            <option value="dragon">dragon</option>
+                        </select>
+                        <label for="type_1">Type 1</label>
+                    </div>
+                    <!-- Type 2 -->
+                    <div class="input-field col s6">
+                        <select name="type_2" required>
+                            <option value="none" selected>none</option>
+                            <option value="normal">normal</option>
+                            <option value="fire">fire</option>
+                            <option value="water">water</option>
+                            <option value="electric">electric</option>
+                            <option value="grass">grass</option>
+                            <option value="ice">ice</option>
+                            <option value="fighting">fighting</option>
+                            <option value="poison">poison</option>
+                            <option value="ground">ground</option>
+                            <option value="flying">flying</option>
+                            <option value="psychic">psychic</option>
+                            <option value="bug">bug</option>
+                            <option value="rock">rock</option>
+                            <option value="ghost">ghost</option>
+                            <option value="dragon">dragon</option>
+                        </select>
+                        <label for="type_2">Type 2</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right column -->
+            <div class="col s6">
+                <div class="row">
+                    <!-- Height (feet) -->
+                    <div class="input-field col s12 m4">
+                        <input id="height_feet" type="number" name="height_feet" max="25" required>
+                        <label for="height_feet">Height (feet)</label>
+                    </div>
+                    <!-- Height (inches) -->
+                    <div class="input-field col s12 m4">
+                        <input id="height_inches" type="number" name="height_inches" max="11" required>
+                        <label for="height_inches">Height (inches)</label>
+                    </div>
+                    <!-- Weight -->
+                    <div class="input-field col s12 m4">
+                        <input id="weight" type="number" name="weight" max="999" required>
+                        <label for="weight">Weight (pounds)</label>
+                    </div>
+                    <!-- Description -->
+                    <div class="input-field col s12">
+                        <textarea id="desc" name="desc" class="materialize-textarea validate" required></textarea>
+                        <label for="desc">Description</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom section -->
+            <!-- Description -->
+            <div class="input-field col s12">
+                <textarea id="img_src" name="img_src" class="materialize-textarea" required></textarea>
+                <label for="img_src">Image URL</label>
+            </div>
+            <!-- Created by -->
+            <div class="input-field col s12 m6">
+                <input id="created_by" type="text" name="created_by" required>
+                <label for="created_by">Created By</label>
+            </div>
+            <div class="input-field col s12 m6">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="fas fa-arrow-right right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- <div class="row section deep-purple">
+    <div class=" col s12">
+        <div class="row">
+            <div class="col s4">
+                <div class="center-align"><img class="pokemon-img" src="" alt="" height="200">
+                </div>
+            </div>
+            <div class="col s8">
+                <div class="row">
+                    <div class="col s4 pokemon-name">Name</div>
+                    <div class="col s2 pokemon-type">Type 1</div>
+                    <div class="col s2 pokemon-type">Type 2</div>
+                </div>
+                <div class="row">
+                    <div class="col s6">Created by: </div>
+                </div>
+                Species<br>
+                Height ' "<br>
+                Weight lb<br>
+                <br>
+                Description<br>
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="fas fa-arrow-right right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+{% endblock %}
