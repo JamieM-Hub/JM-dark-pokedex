@@ -86,9 +86,14 @@ def contribute():
             "desc": request.form.get("desc"),
             "img_src": request.form.get("img_src"),
             "created_by": request.form.get("created_by"),
+            "rating": 0,
+            "in_squad": [],
+            "rated_by": []
 
         }
         mongo.db.pokemon.insert_one(new_pokemon)
+        flash("Pokemon discovered!")
+        return redirect(url_for('get_pokemon'))
 
     return render_template("contribute.html")
 

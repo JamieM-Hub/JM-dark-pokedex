@@ -32,7 +32,6 @@
         </div>
         <div class="row">
             <div class="col s6">Created by: {{ pokemon.created_by }}</div>
-            <div class="col s6"><i class="far fa-arrow-alt-circle-up"></i> {{ pokemon.rating }} </div>
         </div>
         {{ pokemon.species }}<br>
         Height {{ pokemon.height[0] }}'{{ pokemon.height[1] }}"<br>
@@ -48,8 +47,10 @@
             <!-- Left column -->
             <div class="col s6">
                 <div class="row">
+                    <!-- hidden inputs to fix update bug -->
                     <div class="hide">
                         <input type="text" name="dex_id" id="dex_id" value="{{ pokemon.dex_id }}">
+                        <input type="text" name="rating" id="rating" value="{{ pokemon.rating }}">
                     </div>
                     <!-- Name -->
                     <div class="input-field col s12 m6">
