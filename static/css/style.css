@@ -5,3 +5,8 @@
 .pokemon-img {
     border: solid 2.5px black;
 }
+
+.flashes h4 {
+    line-height: 2;
+    color: black;
+}
