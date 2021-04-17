@@ -3,31 +3,131 @@
 
 <h3 class="center-align">Register</h3>
 
-<div class="row">
-    <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('register') }}">
-        <div class="card-panel">
+<div class="row card deep-purple">
+    <form class="col s12" method="POST" action="" autocomplete="off">
+        <div class="row">
+            <!-- Top Left column -->
+            <div class="col s6">
+                <div class="row">
+                    <!-- Name -->
+                    <div class="input-field col s12 m6">
+                        <input id="name" type="text" name="name" required>
+                        <label for="name">Name</label>
+                    </div>
+                    <!-- Hometown -->
+                    <div class="input-field col s12 m6">
+                        <input id="hometown" type="text" name="hometown" required>
+                        <label for="hometown">Hometown</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Right column -->
+            <div class="col s6">
+                <!-- Favourite Type -->
+                <div class="input-field col s6">
+                    <select name="fav_type" required>
+                        <option value="" disabled selected>Choose Type</option>
+                        <option value="none">None</option>
+                        <option value="normal">normal</option>
+                        <option value="fire">fire</option>
+                        <option value="water">water</option>
+                        <option value="electric">electric</option>
+                        <option value="grass">grass</option>
+                        <option value="ice">ice</option>
+                        <option value="fighting">fighting</option>
+                        <option value="poison">poison</option>
+                        <option value="ground">ground</option>
+                        <option value="flying">flying</option>
+                        <option value="psychic">psychic</option>
+                        <option value="bug">bug</option>
+                        <option value="rock">rock</option>
+                        <option value="ghost">ghost</option>
+                        <option value="dragon">dragon</option>
+                    </select>
+                    <label for="fav_type">Favourite Type</label>
+                </div>
+                <!-- Favourite Pokemon -->
+                <div class="input-field col s12 m6">
+                    <select name="fav_pokemon">
+                        <option value="" disabled selected>Choose Pokemon</option>
+                        <option value="none">None</option>
+                        {% for pokemon in pokedex %}
+                        <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fav_pokemon">Favourite Pokemon</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Squad section -->
+        <div class="row">
+            <h4 class="center-align">SQUAD</h4>
+
+            <!-- Generate 6 Squad options -->
+            {% for num in range(1,7) %}
+            <div class="input-field col s4">
+                <select name="squad_{{ num }} ">
+                    <option value="" disabled selected>Choose Pokemon</option>
+                    <option value="none">None</option>
+                    {% for pokemon in pokedex %}
+                    <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                    {% endfor %}
+                </select>
+                <label for="squad_{{ num }}">Squad #{{ num }}</label>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Bottom section -->
+        <div class="row">
+
+            <!-- Bio -->
+            <div class="input-field col s12">
+                <input id="bio" name="bio" type="text" required>
+                <label for="bio">Bio</label>
+            </div>
+
+            <!-- Image URL -->
+            <div class="input-field col s12">
+                <input id="img_src" name="img_src" type="url" required>
+                <label for="img_src">Image URL</label>
+            </div>
+
             <!-- username -->
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="fa fa-id-badge prefix light-blue-text text-darken-4"></i>
-                    <input id="username" name="username" type="text" class="validate">
-                    <label for="username">Username</label>
-                </div>
+            <div class="input-field col s6">
+                <input id="username" name="username" type="text" required>
+                <label for="username">Username</label>
             </div>
-            <!-- passowrd -->
-            <div class="row">
-                <div class="input-field col s12">
-                    <i class="fa fa-lock prefix light-blue-text text-darken-4"></i>
-                    <input id="password" name="password" type="password" class="validate">
-                    <label for="password">Password</label>
-                </div>
+
+            <!-- password -->
+            <div class="input-field col s6">
+                <input id="password" name="password" type="password" required>
+                <label for="password">Password</label>
             </div>
-            <!-- register -->
-            <div class="row">
-                <button type="submit" class="col s12 btn-large light-blue darken-4 text-shadow">
-                    Register <i class="fas fa-sign-in-alt"></i>
+
+            <!-- private/public switch -->
+            <div class="switch center-align">
+                <label for="private">
+                    Private
+                    <input type="checkbox" id="private" name="private">
+                    <span class="lever"></span>
+                    Public
+                </label>
+            </div>
+
+            <!-- Confirm/cancel buttons -->
+            <div class="input-field col s12 center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Register
+                    <i class="fas fa-clipboard-check right"></i>
                 </button>
+                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light">
+                    Cancel <i class="fas fa-circle right"></i>
+                </a>
             </div>
+
         </div>
     </form>
 </div>

@@ -1,8 +1,11 @@
 import os
-from flask import (
-    Flask, flash, render_template, redirect, request, session, url_for)
-from flask_pymongo import PyMongo
+
 from bson.objectid import ObjectId
+from flask import (Flask, flash, redirect, render_template, request, session,
+                   url_for)
+from flask_pymongo import PyMongo
+from werkzeug.security import check_password_hash, generate_password_hash
+
 if os.path.exists("env.py"):
     import env
 
@@ -63,7 +66,38 @@ def delete_pokemon(dex_id):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    if request.method == "POST":
+        trainers_length = mongo.db.trainers.count()
+        trainer_id = trainers_length + 1
+        private = False if request.form.get("private") else True
+        new_trainer = {
+            "name": request.form.get("name"),
+            "trainer_id": trainer_id,
+            "hometown": request.form.get("hometown"),
+            "fav_type": request.form.get("fav_type"),
+            "fav_pokemon": request.form.get("fav_pokemon"),
+            "bio": request.form.get("bio"),
+            "img_src": request.form.get("img_src"),
+            "squad": [
+                request.form.get("squad_1 "),
+                request.form.get("squad_2 "),
+                request.form.get("squad_3 "),
+                request.form.get("squad_4 "),
+                request.form.get("squad_5 "),
+                request.form.get("squad_6 "),
+            ],
+            "username": request.form.get("username"),
+            "password": request.form.get("password"),
+            "private": private,
+            "rating": 0,
+            "rated_by": []
+        }
+        mongo.db.trainers.insert_one(new_trainer)
+        flash("Trainer registered!")
+        return redirect(url_for('trainers'))
+
+    pokedex = list(mongo.db.pokemon.find())
+    return render_template("register.html", pokedex=pokedex)
 
 
 @app.route("/contribute", methods=["GET", "POST"])
