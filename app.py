@@ -194,6 +194,20 @@ def trainers():
     return render_template("trainers.html", trainers=trainers)
 
 
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        feedback = {
+            "name": request.form.get("name"),
+            "feedback": request.form.get("feedback")
+        }
+        mongo.db.feedback.insert_one(feedback)
+        flash("Thanks for the feedback!")
+        return redirect(url_for('get_pokemon'))
+
+    return render_template("contact.html")
+
+
 @app.route("/about")
 def about():
     return render_template("about.html")
