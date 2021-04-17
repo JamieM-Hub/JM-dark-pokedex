@@ -12,8 +12,14 @@
     <div class="col s8">
         <div class="row">
             <div class="col s4 pokemon-name">{{ pokemon.name }}</div>
-            <div class="col s2 pokemon-type">{{ pokemon.type[0] }}</div>
-            <div class="col s2 pokemon-type">{{ pokemon.type[1] }}</div>
+            <div class="col s2 pokemon-type">
+                <button class="btn type-{{ pokemon.type[0] }}">{{ pokemon.type[0] }}</button>
+            </div>
+            {% if pokemon.type[1] %}
+            <div class="col s2 pokemon-type">
+                <button class="btn type-{{ pokemon.type[1] }}">{{ pokemon.type[1] }}</button>
+            </div>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col s6">Created by: {{ pokemon.created_by }}</div>
