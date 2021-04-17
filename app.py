@@ -67,6 +67,14 @@ def delete_pokemon(dex_id):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        # check if username already exists in db
+        username_taken = mongo.db.trainers.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if username_taken:
+            flash("Username unavailable!")
+            return redirect(url_for("register"))
+
         trainers_length = mongo.db.trainers.count()
         trainer_id = trainers_length + 1
         private = False if request.form.get("private") else True
@@ -87,12 +95,15 @@ def register():
                 request.form.get("squad_6 "),
             ],
             "username": request.form.get("username"),
-            "password": request.form.get("password"),
+            "password": generate_password_hash(request.form.get("password")),
             "private": private,
             "rating": 0,
             "rated_by": []
         }
         mongo.db.trainers.insert_one(new_trainer)
+
+        # put the new user into 'session' cookie
+        # session["user"] = request.form.get("username").lower()
         flash("Trainer registered!")
         return redirect(url_for('trainers'))
 
