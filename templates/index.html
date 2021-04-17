@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="row">
+    {% if session.user %}
+    <div class="col s6">
+        <a href="{{ url_for('profile', username=session['user']) }}" class="btn waves-effect waves-light">
+            {{ session["user"] }}
+        </a>
+    </div>
+    {% else %}
+    <div class="col s6">
+        <a href="{{ url_for('login') }}" class="btn waves-effect waves-light">
+            Log In
+        </a>
+    </div>
+    {% endif %}
+    <div class="col s6">
+        <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light">
+            Pokedex
+        </a>
+    </div>
+    <div class="col s6">
+        <a href="{{ url_for('trainers') }}" class="btn waves-effect waves-light">
+            Trainers
+        </a>
+    </div>
+    <div class="col s6">
+        <a href="{{ url_for('contribute') }}" class="btn waves-effect waves-light">
+            Contribute
+        </a>
+    </div>
+    <div class="col s6">
+        <a href="{{ url_for('contact') }}" class="btn waves-effect waves-light">
+            Contact
+        </a>
+    </div>
+    <div class="col s6">
+        <a href="{{ url_for('about') }}" class="btn waves-effect waves-light">
+            About
+        </a>
+    </div>
+</div>
+
+{% endblock %}
