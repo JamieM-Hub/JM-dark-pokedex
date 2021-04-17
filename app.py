@@ -93,6 +93,14 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/logout")
+def logout():
+    # remove user from session cookies
+    flash("Logged out. Bye!")
+    session.pop("user")
+    return redirect(url_for("login"))
+
+
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab Trainer profile for session user
