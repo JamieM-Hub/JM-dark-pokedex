@@ -76,7 +76,10 @@ def login():
             if check_password_hash(
                     existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
+                print(session["user"])
                 flash("Welcome, {}".format(request.form.get("username")))
+                return redirect(url_for("profile", username=session["user"]))
+
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password :(")
@@ -88,6 +91,13 @@ def login():
             return redirect(url_for("login"))
 
     return render_template("login.html")
+
+
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # grab Trainer profile for session user
+    trainer = mongo.db.trainers.find_one({"username": session["user"]})
+    return render_template("profile.html", trainer=trainer)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -129,9 +139,9 @@ def register():
         mongo.db.trainers.insert_one(new_trainer)
 
         # put the new user into 'session' cookie
-        # session["user"] = request.form.get("username").lower()
+        session["user"] = request.form.get("username").lower()
         flash("Trainer registered!")
-        return redirect(url_for('trainers'))
+        return redirect(url_for("profile", username=session["user"]))
 
     pokedex = list(mongo.db.pokemon.find())
     return render_template("register.html", pokedex=pokedex)
