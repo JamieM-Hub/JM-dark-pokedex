@@ -5,6 +5,7 @@ from flask import (Flask, flash, redirect, render_template, request, session,
                    url_for)
 from flask_pymongo import PyMongo
 from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import datetime
 
 if os.path.exists("env.py"):
     import env
@@ -197,13 +198,16 @@ def trainers():
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
+        # get date and time (https://www.programiz.com/python-programming/datetime/current-datetime)
+        now = datetime.now().strftime("%H:%M | %d/%m/%Y")
         feedback = {
             "name": request.form.get("name"),
-            "feedback": request.form.get("feedback")
+            "feedback": request.form.get("feedback"),
+            "submitted_at": now
         }
         mongo.db.feedback.insert_one(feedback)
         flash("Thanks for the feedback!")
-        return redirect(url_for('get_pokemon'))
+        return redirect(url_for('contact'))
 
     return render_template("contact.html")
 
