@@ -11,6 +11,14 @@
     color: black;
 }
 
+.pokedex-entry {
+    padding: 15px 0;
+}
+
+.pokedex-entry>.center-align {
+    padding: 15px 25px;
+}
+
 /* TYPES */
 
 .type-normal {
