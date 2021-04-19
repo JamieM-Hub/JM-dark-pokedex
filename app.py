@@ -35,7 +35,7 @@ def get_pokemon():
 @app.route("/search_pokemon", methods=["GET", "POST"])
 def search_pokemon():
     query = request.form.get("query")
-    print(query)
+    flash("Searching for \"" + query + "\"")
     # import pymongo sort advice from Slack
     pokedex = list(mongo.db.pokemon.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
     return render_template("pokemon.html", pokedex=pokedex)
@@ -43,6 +43,7 @@ def search_pokemon():
 @app.route("/search_trainers", methods=["GET", "POST"])
 def search_trainers():
     query = request.form.get("query")
+    flash("Searching for \"" + query + "\"")
     # import pymongo sort advice from Slack
     trainers = list(mongo.db.trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
     return render_template("trainers.html", trainers=trainers)
