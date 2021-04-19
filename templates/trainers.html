@@ -1,8 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% for trainer in trainers %}
+<!-- Search bar -->
+<div class="row card-panel grey">
+    <form class="col s12" action="{{url_for('search_trainers') }}" method="post">
+        <div class="row valign-wrapper center-align">
+            <div class="input-field col s12 m8">
+                <i class="fas fa-search prefix"></i>
+                <input type="text" name="query" id="query" required>
+                <label for="query">Search Pokemon</label>
+            </div>
+            <div class="col s12 m4">
+                <a href="{{ url_for('trainers') }}" class="red btn text-shadow">Reset</a>
+                <button type="submit" class="light-blue">
+                    <i class="fas fa-search left"></i> Search
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
+{% if trainers %}
+{% for trainer in trainers %}
 {% if not trainer.private %}
 
 <div class="row card horizontal yellow lighten-3">
@@ -36,7 +55,11 @@
 </div>
 
 {% endif %}
-
 {% endfor %}
+{% else %}
+<div class="row card pokedex-entry yellow lighten-3">
+    No Trainers found!
+</div>
+{% endif %}
 
 {% endblock %}

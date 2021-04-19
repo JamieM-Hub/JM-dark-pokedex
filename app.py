@@ -3,7 +3,7 @@ import os
 from bson.objectid import ObjectId
 from flask import (Flask, flash, redirect, render_template, request, session,
                    url_for)
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, pymongo
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 
@@ -29,10 +29,22 @@ def index():
 @app.route("/get_pokemon", methods=["GET", "POST"])
 def get_pokemon():
     pokedex = mongo.db.pokemon.find()
-    # if request.method == "POST":
-    #     mongo.db.pokemon
     return render_template("pokemon.html", pokedex=pokedex)
 
+
+@app.route("/search_pokemon", methods=["GET", "POST"])
+def search_pokemon():
+    query = request.form.get("query")
+    # import pymongo sort advice from Slack
+    pokedex = list(mongo.db.pokemon.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+    return render_template("pokemon.html", pokedex=pokedex)
+
+@app.route("/search_trainers", methods=["GET", "POST"])
+def search_trainers():
+    query = request.form.get("query")
+    # import pymongo sort advice from Slack
+    trainers = list(mongo.db.trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+    return render_template("trainers.html", trainers=trainers)
 
 @app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
 def edit_pokemon(dex_id):
