@@ -24,24 +24,32 @@
 {% for pokemon in pokedex %}
 <div class="row card pokedex-entry">
 
-    <!-- right column -->
+    <!-- column 1 -->
     <div class="col s4 white center-align">
         <img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200"><br>
         <strong>No. {{ pokemon.dex_id }}</strong>
     </div>
 
-    <!-- left column -->
+    <!-- column 2 -->
     <div class="col s4">
+        <br>
+
+        <!-- name and species-->
         <h4 class=" center-align">{{ pokemon.name|upper }}</h4>
         <h5 class="center-align"><em>{{ pokemon.species|capitalize }} Pokemon</em></h5>
         <br>
+        <!-- type(s)-->
         <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+            {% if not pokemon.type[1] %}
+            <div class="col s12 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[0]|upper }}">
+            </div>
+            {% else %}
             <div class="col s6 pokemon-type">
                 <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
                     value="{{ pokemon.type[0]|upper }}">
-                <!-- <button class="btn-large btn-type type-{{ pokemon.type[0] }}">{{ pokemon.type[0] }}</button> -->
             </div>
-            {% if pokemon.type[1] %}
             <div class="col s6 pokemon-type">
                 <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
                     value="{{ pokemon.type[1]|upper }}">
@@ -50,51 +58,57 @@
         </form>
     </div>
 
-    <!-- center column -->
+    <!-- column 3 -->
     <div class="col s4 center-align">
-
         <div class="row">
-            <h6><em>by {{ pokemon.created_by }}</em></h6>
+            <br>
+
+            <!-- height -->
+            <div class="col s6">
+                <h5><i class="fas fa-arrows-alt-v"></i>{{ pokemon.height[0] }}'{{ pokemon.height[1] }}"</h5>
+            </div>
+
+            <!-- weight -->
+            <div class="col s6">
+                <h5><i class="fas fa-weight-hanging"></i>{{ pokemon.weight }} lb"</h5>
+            </div>
+
+        </div>
+        <!-- description -->
+        <div class="row">
             <p>{{ pokemon.desc }}</p>
-            <h5 class="col s6">
-                <i class="fas fa-arrows-alt-v"></i>
-                {{ pokemon.height[0] }}'{{ pokemon.height[1] }}"
-            </h5>
-
-            <h5 class="col s6">
-                <i class="fas fa-weight-hanging"></i>
-                {{ pokemon.weight }} lb
-            </h5>
         </div>
+        <!-- <div class="row"><em>by {{ pokemon.created_by }}</em></div> -->
+        <!-- rating -->
         <!-- <h5 class="right-align">
-            {{ pokemon.rating }}
-            <i class="far fa-arrow-alt-circle-up"></i>
-        </h5> -->
-
-        <div class="row">
-            <div class="col s6">
-                {% if session["user"] == pokemon.created_by %}
-                <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
-                    class="waves-effect waves-light btn-small left type-{{ pokemon.type[0] }}">EDIT</a>
-                {% endif %}
-            </div>
-            <div class="col s6">
-                {% if session["user"] == pokemon.created_by %}
-                <a href="{{ url_for('delete_pokemon', dex_id=pokemon._id) }}"
-                    class="waves-effect waves-light btn-small right type-{{ pokemon.type[1] }}">DELETE</a>
-                {% endif %}
-            </div>
-        </div>
+                {{ pokemon.rating }}
+                <i class="far fa-arrow-alt-circle-up"></i>
+            </h5> -->
     </div>
 
-
+    <!-- edit/delete buttons -->
+    <div class="row">
+        <div class="col s6">
+            {% if session["user"] == pokemon.created_by %}
+            <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
+                class="waves-effect waves-light btn-small left type-{{ pokemon.type[0] }}">EDIT</a>
+            {% endif %}
+        </div>
+        <div class="col s6">
+            {% if session["user"] == pokemon.created_by %}
+            <a href="{{ url_for('delete_pokemon', dex_id=pokemon._id) }}"
+                class="waves-effect waves-light btn-small right type-{{ pokemon.type[1] }}">DELETE</a>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+
 {% endfor %}
 {% else %}
 <div class="row card pokedex-entry yellow lighten-3">
     No Pokemon found!
 </div>
 {% endif %}
-
 
 {% endblock %}
