@@ -69,7 +69,7 @@ def edit_pokemon(dex_id):
             "created_by": request.form.get("created_by"),
         }
         mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
-        flash("Pokemon updated!")
+        flash(submit["name"].capitalize() + " updated!")
         return redirect(url_for("get_pokemon"))
 
     pokedex = mongo.db.pokemon.find()
