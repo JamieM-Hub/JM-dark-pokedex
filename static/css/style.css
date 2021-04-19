@@ -42,6 +42,10 @@ body {
     font-size: 45px;
 }
 
+.trainer-img {
+    max-width: 100%;
+}
+
 .trainer-bio {
     padding: 20px;
     font-size: medium;
