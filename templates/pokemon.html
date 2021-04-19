@@ -47,16 +47,19 @@
         <h4 class="center-align">{{ pokemon.name|upper }}</h4>
         <h5 class="center-align"><em>{{ pokemon.species|capitalize }} Pokemon</em></h5>
         <br>
-        <div class="row center-align">
+        <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
             <div class="col s6 pokemon-type">
-                <button class="btn-large btn-type type-{{ pokemon.type[0] }}">{{ pokemon.type[0] }}</button>
+                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[0]|upper }}">
+                <!-- <button class="btn-large btn-type type-{{ pokemon.type[0] }}">{{ pokemon.type[0] }}</button> -->
             </div>
             {% if pokemon.type[1] %}
             <div class="col s6 pokemon-type">
-                <button class="btn-large btn-type type-{{ pokemon.type[1] }}">{{ pokemon.type[1] }}</button>
+                <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[1]|upper }}">
             </div>
             {% endif %}
-        </div>
+        </form>
     </div>
 
     <!-- center column -->
