@@ -25,46 +25,89 @@
 {% if not trainer.private %}
 
 <div class="row card pokedex-entry yellow lighten-3">
-
-    <!-- column -->
-    <div class="col s4">
-        <div class="center-align"><img class="pokemon-img" src="{{ trainer.img_src }}" alt="{{ trainer.name }}"
-                height="200">
-        </div>
-        <div class="pokemon-id center-align"><strong>No. {{ trainer.trainer_id }}</strong></div>
-        <!-- <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}</div> -->
-    </div>
-
-    <!-- column -->
-    <div class="col s4">
-        <h4 class="center-align"><strong>{{ trainer.name|upper }}</strong></h4>
-        <h5 class="center-align"><em>{{ trainer.hometown|capitalize }}</em></h5>
-        <p class="center-align">{{ trainer.bio }}</p>
-        <form class="row center-align" method="POST" action="{{url_for('search_pokemon') }}">
-            Favourite<br>
-            <input id="query" name="query" type="submit" value="{{ trainer.fav_pokemon|upper }}">
-        </form>
-    </div>
-
-    <!-- column -->
-    <div class="col s4">
+    <div class="col s8">
         <div class="row">
-            <div class="col s6">Favourite Type:</div>
-            <div class="col s6">
-                <button class="btn btn-small btn-type type-{{ trainer.fav_type }}">
-                    {{ trainer.fav_type }}
-                </button>
-            </div>
-        </div>
 
+            <!-- column 1 -->
+            <div class="col s6">
+                <!-- img -->
+                <div class="center-align"><img class="pokemon-img" src="{{ trainer.img_src }}" alt="{{ trainer.name }}"
+                        height="200">
+                </div>
+
+                <!-- trainer ID -->
+                <div class="pokemon-id center-align"><strong>No. {{ trainer.trainer_id }}</strong>
+                </div>
+            </div>
+
+            <!-- column 2 -->
+            <div class="col s6">
+                <br>
+
+                <!-- name & hometown -->
+                <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|upper }}</strong></div>
+                <div class="trainer-hometown center-align"><em>from {{ trainer.hometown|capitalize }}</em></div>
+                <br>
+                <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
+                </div>
+
+            </div>
+
+            <!-- bio -->
+            <div class="col s12">
+                <p class="center-align trainer-bio">{{ trainer.bio }}</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- column 3 -->
+    <div class="col s4">
+
+        <!-- favourite type -->
+        <form class="row center-align" method="POST" action="{{url_for('search_pokemon') }}">
+            <div class="col s12">
+                <div class="">
+                    Favourite Type<br>
+                    {% if trainer.fav_type %}
+                    <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
+                        type="submit" value="{{ trainer.fav_type|upper }}">
+                    {% else %}
+                    <div class="btn btn-small btn-pokemon grey">-</div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+        <!-- favourite pokemon -->
+        <form class="row center-align" method="POST" action="{{url_for('search_pokemon') }}">
+            <div class="col s12">
+                <div class="">
+                    Favourite Pokemon<br>
+                    <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                        value="{{ trainer.fav_pokemon|upper }}">
+                </div>
+            </div>
+        </form>
+
+        <!-- squad -->
         <div class="center-align">
             {% if trainer.squad %}
-            <form method="POST" action="{{url_for('search_pokemon') }}">
+            <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                Squad
                 <div class="row">
                     {% for n in range(6) %}
                     {% if trainer.squad[n] %}
                     <div class="col s12">
-                        <input id="query" name="query" type="submit" value="{{ trainer.squad[n]|upper }}">
+                        <div class="">
+                            <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                                value="{{ trainer.squad[n]|upper }}">
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col s12">
+                        <div class="">
+                            <div class="btn btn-small btn-pokemon grey">-</div>
+                        </div>
                     </div>
                     {% endif %}
                     {% endfor %}
@@ -74,7 +117,6 @@
         </div>
 
     </div>
-
 </div>
 
 {% endif %}
