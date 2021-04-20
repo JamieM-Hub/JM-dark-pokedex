@@ -124,7 +124,7 @@ def logout():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab Trainer profile for session user
-    trainer = mongo.db.trainers.find_one({"username": session["user"]})
+    trainer = mongo.db.trainers.find_one({"username": username})
     return render_template("profile.html", trainer=trainer)
 
 
@@ -133,7 +133,7 @@ def register():
     if request.method == "POST":
         # check if username already exists in db
         username_taken = mongo.db.trainers.find_one(
-            {"username": request.form.get("username").lower()})
+            {"username": request.form.get("username")})
 
         if username_taken:
             flash("Username unavailable!")
@@ -158,7 +158,7 @@ def register():
                 request.form.get("squad_5 "),
                 request.form.get("squad_6 "),
             ],
-            "username": request.form.get("username"),
+            "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password")),
             "private": private,
             "rating": 0,
