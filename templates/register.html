@@ -1,9 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="center-align">Register</h3>
+<div class="row center-align">
+    <h4 class="white-text">
+        Already a Trainer?
+    </h4>
+    <a href="{{ url_for('login') }}" class="btn waves-effect waves-light">
+        Log In
+        <i class="fas fa-circle right"></i>
+    </a>
+</div>
 
-<div class="row card deep-purple">
+<div class="row card">
+    <h3 class="center-align">Register</h3>
+    <br>
     <form class="col s12" method="POST" action="" autocomplete="off">
         <div class="row">
             <!-- Top Left column -->

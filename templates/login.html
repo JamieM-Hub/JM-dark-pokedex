@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h4 class="center-align">Log In</h4>
+<div class="row center-align">
+    <h4 class="white-text">
+        New around here?
+    </h4>
+    <a href="{{ url_for('register') }}" class="btn waves-effect waves-light">
+        Register
+        <i class="fas fa-circle right"></i>
+    </a>
+</div>
 
-<div class="row">
+<div class="row card">
     <form action="{{ url_for('login') }}" method="POST" class="col s12">
         <div class="row">
             <!-- username -->
