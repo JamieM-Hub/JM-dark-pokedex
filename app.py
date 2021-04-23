@@ -120,6 +120,7 @@ def logout():
     # remove user from session cookies
     flash("Logged out. Bye!")
     session.pop("user")
+
     return redirect(url_for("login"))
 
 
@@ -127,17 +128,55 @@ def logout():
 def profile(username):
     # grab Trainer profile for session user
     trainer = mongo.db.trainers.find_one({"username": username})
+
     return render_template("profile.html", trainer=trainer)
 
 
-@app.route("/edit_profile/<username>", methods=["GET", "POST"])
-def edit_profile(username):
-    if request.method == "POST":
-        # check
-        # update
-        return redirect(url_for('profile', username=session['user']))
+@app.route("/edit_profile/<username>/<index>", methods=["GET", "POST"])
+def edit_profile(username, index):
+    # grab Trainer profile for session user and full sorted Pokedex
     trainer = mongo.db.trainers.find_one({"username": username})
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
+    if request.method == "POST":
+        # serialize form input into new_profile
+        private = False if request.form.get("private") else True
+        submit = {
+            "name": request.form.get("name"),
+            "hometown": request.form.get("hometown"),
+            "trainer_id": trainer['trainer_id'],
+            "fav_type": request.form.get("fav_type"),
+            "fav_pokemon": request.form.get("fav_pokemon"),
+            "bio": request.form.get("bio"),
+            "img_src": request.form.get("img_src"),
+            "squad": [
+                request.form.get("squad_1 "),
+                request.form.get("squad_2 "),
+                request.form.get("squad_3 "),
+                request.form.get("squad_4 "),
+                request.form.get("squad_5 "),
+                request.form.get("squad_6 "),
+            ],
+            "username": trainer['username'],
+            "password": generate_password_hash(request.form.get("password")),
+            "private": private,
+            "rating": trainer['rating'],
+            "rated_by": trainer['rated_by']
+        }       
+        print(f"{submit['username']}: {submit['password']}")
+        print(f"{trainer['username']}: {trainer['password']}")
+        # ensure hashed password matches user input
+        if not check_password_hash(trainer['password'], submit['password']):
+            # invalid password match
+            flash("Incorrect Password :(")
+            return render_template("edit_profile.html", trainer=submit, pokedex=pokedex, types=types)
+        else:
+            # valid password match
+            flash("Trainer ID updated!")
+            mongo.db.trainers.update({"_id": ObjectId(index)}, submit)
+            return redirect(url_for('profile', username=session['user']))
+            
+    trainer = mongo.db.trainers.find_one({"username": username})
+    pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))        
     return render_template("edit_profile.html", trainer=trainer, pokedex=pokedex, types=types)
 
 

@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="row center-align">
-    <a href="{{ url_for('edit_profile', username=session['user']) }}"
+    <a href="{{ url_for('edit_profile', username=session['user'], index=trainer._id) }}"
         class="col s4 offset-s2 btn btn-pokemon waves-effect waves-light yellow darken-2">
         Edit Profile
     </a>
