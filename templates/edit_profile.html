@@ -100,8 +100,6 @@
 
 <!-- edit profile -->
 <div class="row card">
-    <h3 class="center-align">Register</h3>
-    <br>
     <form class="col s12" method="POST" action="" autocomplete="off">
 
         <div class="row">
@@ -123,42 +121,62 @@
 
             <!-- Top Right column -->
             <div class="col s6">
+
                 <!-- Favourite Type -->
                 <div class="input-field col s6">
                     <select name="fav_type" required>
-                        <option value="{{ trainer.fav_type }}" disabled selected>{{ trainer.fav_type|capitalize }}
-                        </option>
-                        <option value="none">None</option>
-                        <option value="normal">normal</option>
-                        <option value="fire">fire</option>
-                        <option value="water">water</option>
-                        <option value="electric">electric</option>
-                        <option value="grass">grass</option>
-                        <option value="ice">ice</option>
-                        <option value="fighting">fighting</option>
-                        <option value="poison">poison</option>
-                        <option value="ground">ground</option>
-                        <option value="flying">flying</option>
-                        <option value="psychic">psychic</option>
-                        <option value="bug">bug</option>
-                        <option value="rock">rock</option>
-                        <option value="ghost">ghost</option>
-                        <option value="dragon">dragon</option>
+
+                        <!-- display "-" option if trainer does not have a favourite type -->
+                        {% if trainer.fav_type %}
+                            <option value="none">-</option>
+                        {% else %}
+                            <option value="none" selected>-</option>
+                        {% endif %}
+
+                        <!-- display each type in the types list as options, with current favourite selected -->
+                        {% for type in types %}
+                            {% if trainer.fav_type == type %}
+                                <option value="{{ type }}" selected>{{ type|capitalize }}</option>
+                            {% else %}
+                                <option value="{{ type }}">{{ type|capitalize }}</option>
+                            {% endif %}
+                        {% endfor %}                        
+
                     </select>
                     <label for="fav_type">Favourite Type</label>
                 </div>
+
                 <!-- Favourite Pokemon -->
                 <div class="input-field col s12 m6">
                     <select name="fav_pokemon">
-                        <option value="{{ trainer.fav_pokemon }}" disabled selected>{{ trainer.fav_pokemon|capitalize }}
+
+                        <!-- <option value="{{ trainer.fav_pokemon }}" disabled selected>{{ trainer.fav_pokemon|capitalize }}
                         </option>
                         <option value="none">None</option>
                         {% for pokemon in pokedex %}
                         <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                        {% endfor %} -->
+
+                        <!-- generate empty option -->
+                        {% if trainer.squad[n] %}
+                            <option value="none">-</option>
+                        {% else %}
+                            <option value="none" selected>-</option>
+                        {% endif %}
+
+                        <!-- display pokemon in pokedex as options, with current favourite selected-->
+                        {% for pokemon in pokedex %}
+                            {% if trainer.fav_pokemon == pokemon.name %}
+                                <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
+                            {% else %}
+                                <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                            {% endif %}
                         {% endfor %}
+
                     </select>
                     <label for="fav_pokemon">Favourite Pokemon</label>
                 </div>
+
             </div>
         </div>
 
@@ -173,22 +191,22 @@
 
                     <!-- forbid pokemon deselection in squad slot 1 -->
                     {% if n > 0 %}
-                        
+
                         {% if trainer.squad[n] %}
-                            <option value="none">[empty]</option>
+                        <option value="none">-</option>
                         {% else %}
-                            <option value="none" selected>[empty]</option>
+                        <option value="none" selected>-</option>
                         {% endif %}
 
                     {% endif %}
 
                     <!-- print each pokemon in the pokedex as an option-->
-                    {% for pokemon in pokedex %}     
-                        {% if trainer.squad[n] == pokemon.name %}
-                            <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
-                        {% else %}
-                            <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>       
-                        {% endif %}
+                    {% for pokemon in pokedex %}
+                    {% if trainer.squad[n] == pokemon.name %}
+                    <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
+                    {% else %}
+                    <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                    {% endif %}
                     {% endfor %}
 
                 </select>

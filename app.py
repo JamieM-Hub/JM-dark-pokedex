@@ -10,6 +10,8 @@ from datetime import datetime
 if os.path.exists("env.py"):
     import env
 
+types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", 
+        "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon"]
 
 app = Flask(__name__)
 
@@ -136,7 +138,7 @@ def edit_profile(username):
         return redirect(url_for('profile', username=session['user']))
     trainer = mongo.db.trainers.find_one({"username": username})
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
-    return render_template("edit_profile.html", trainer=trainer, pokedex=pokedex)
+    return render_template("edit_profile.html", trainer=trainer, pokedex=pokedex, types=types)
 
 
 @app.route("/register", methods=["GET", "POST"])
