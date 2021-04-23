@@ -157,20 +157,21 @@ def edit_profile(username, index):
                 request.form.get("squad_6 "),
             ],
             "username": trainer['username'],
-            "password": generate_password_hash(request.form.get("password")),
+            "password": request.form.get("password"),
             "private": private,
             "rating": trainer['rating'],
             "rated_by": trainer['rated_by']
         }       
-        print(f"{submit['username']}: {submit['password']}")
-        print(f"{trainer['username']}: {trainer['password']}")
+        print(f"\n{submit['username']}: {submit['password']}\n")
+        print(f"{trainer['username']}: {trainer['password']}\n")
         # ensure hashed password matches user input
         if not check_password_hash(trainer['password'], submit['password']):
-            # invalid password match
+            # invalid password
             flash("Incorrect Password :(")
             return render_template("edit_profile.html", trainer=submit, pokedex=pokedex, types=types)
         else:
-            # valid password match
+            # valid password
+            submit['password'] = trainer['password']
             flash("Trainer ID updated!")
             mongo.db.trainers.update({"_id": ObjectId(index)}, submit)
             return redirect(url_for('profile', username=session['user']))
