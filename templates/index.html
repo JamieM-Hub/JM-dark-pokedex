@@ -1,45 +1,123 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- https://stackoverflow.com/questions/796087/make-a-div-into-a-link -->
+
 <div class="row">
     {% if session.user %}
-    <div class="col s6">
-        <a href="{{ url_for('profile', username=session['user']) }}" class="btn waves-effect waves-light">
-            {{ session["user"] }}
-        </a>
+
+    <div class="col s6 home-grid">
+        <div class="btn waves-effect waves-light home-button theme">
+            <a href="{{ url_for('profile', username=session['user']) }}">
+                <span class="home-link"></span>
+            </a>
+
+            <span class="home-header">{{ session["user"] }}</span>
+            <p class="home-p">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.
+            </p>
+        </div>
     </div>
+
     {% else %}
-    <div class="col s6">
-        <a href="{{ url_for('login') }}" class="btn waves-effect waves-light">
-            Log In
+
+    <div class="col s6 home-grid"">
+        <div class=" btn waves-effect waves-light home-button theme">
+        <a href="{{ url_for('login') }}">
+            <span class="home-link"></span>
         </a>
+
+        <span class="home-header">Login</span>
+        <p class="home-p">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat.
+        </p>
+
     </div>
-    {% endif %}
-    <div class="col s6">
-        <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light">
-            Pokedex
+</div>
+
+{% endif %}
+
+<div class="col s6 home-grid">
+    <div class="btn waves-effect waves-light home-button theme">
+        <a href="{{ url_for('get_pokemon') }}">
+            <span class="home-link"></span>
         </a>
+
+        <span class="home-header">Pokedex</span>
+        <p class="home-p">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat.
+        </p>
     </div>
-    <div class="col s6">
-        <a href="{{ url_for('trainers') }}" class="btn waves-effect waves-light">
-            Trainers
+</div>
+
+<div class="col s6 home-grid">
+    <div class=" btn waves-effect waves-light home-button theme">
+        <a href="{{ url_for('trainers') }}">
+            <span class="home-link"></span>
         </a>
+
+        <span class="home-header">League</span>
+        <p class="home-p">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat.
+        </p>
     </div>
-    <div class="col s6">
-        <a href="{{ url_for('contribute') }}" class="btn waves-effect waves-light">
-            Contribute
+</div>
+
+<div class="col s6 home-grid">
+    <div class="btn waves-effect waves-light home-button theme">
+        <a href="{{ url_for('contribute') }}">
+            <span class="home-link"></span>
         </a>
+
+        <span class="home-header">Contribute</span>
+        <p class="home-p">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex ea commodo consequat.
+        </p>
     </div>
-    <div class="col s6">
-        <a href="{{ url_for('contact') }}" class="btn waves-effect waves-light">
-            Contact
-        </a>
-    </div>
-    <div class="col s6">
-        <a href="{{ url_for('about') }}" class="btn waves-effect waves-light">
-            About
-        </a>
-    </div>
+</div>
+
+<div class="col s6 home-grid"">
+        <div class=" btn waves-effect waves-light home-button theme">
+    <a href="{{ url_for('contact') }}">
+        <span class="home-link"></span>
+    </a>
+
+    <span class="home-header">Contact</span>
+    <p class="home-p">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+        ex ea commodo consequat.
+    </p>
+</div>
+</div>
+
+<div class="col s6 home-grid"">
+        <div class=" btn waves-effect waves-light home-button theme">
+    <a href="{{ url_for('about') }}">
+        <span class="home-link"></span>
+    </a>
+
+    <span class="home-header">About</span>
+    <p class="home-p">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+        ex ea commodo consequat.
+    </p>
+</div>
+</div>
+
+
+
 </div>
 
 {% endblock %}
