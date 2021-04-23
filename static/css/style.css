@@ -70,6 +70,7 @@ body {
     color: whitesmoke;
 }
 
+/* POKEDEX */
 
 .pokedex-entry {
     padding: 15px 0;
@@ -79,6 +80,16 @@ body {
 .pokedex-entry>.center-align {
     padding: 15px 25px;
 }
+
+.pokedex-under-img {
+    padding-top: 1vh;
+    margin: 0;
+}
+.pokedex-id {
+    padding-top: 0.5vh !important;
+}
+
+/* TRAINER PROFILE */
 
 .trainer-name {
     margin: 0;

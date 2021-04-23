@@ -24,7 +24,24 @@
     <!-- column 1 -->
     <div class="col s4 white center-align">
         <img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200"><br>
-        <strong>No. {{ pokemon.dex_id }}</strong>
+
+        <!-- edit/delete buttons -->
+        <div class="row pokedex-under-img">
+            <div class="col s4 center-align">
+                {% if session["user"] == pokemon.created_by %}
+                <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
+                    class="waves-effect waves-light btn-small grey">EDIT</a>
+                {% endif %}
+            </div>
+            <div class="col s4 pokedex-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
+            <div class="col s4 center-align">
+                {% if session["user"] == pokemon.created_by %}
+                <a href="{{ url_for('delete_pokemon', dex_id=pokemon._id) }}"
+                    class="waves-effect waves-light btn-small red">DELETE</a>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
 
     <!-- column 2 -->
@@ -83,21 +100,6 @@
             </h5> -->
     </div>
 
-    <!-- edit/delete buttons -->
-    <div class="row">
-        <div class="col s6">
-            {% if session["user"] == pokemon.created_by %}
-            <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
-                class="waves-effect waves-light btn-small left type-{{ pokemon.type[0] }}">EDIT</a>
-            {% endif %}
-        </div>
-        <div class="col s6">
-            {% if session["user"] == pokemon.created_by %}
-            <a href="{{ url_for('delete_pokemon', dex_id=pokemon._id) }}"
-                class="waves-effect waves-light btn-small right type-{{ pokemon.type[1] }}">DELETE</a>
-            {% endif %}
-        </div>
-    </div>
 </div>
 
 
