@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- display profile -->
 <div class="row card pokedex-entry">
     <div class="col s8">
         <div class="row">
@@ -97,8 +98,7 @@
     </div>
 </div>
 
-<!-- -->
-
+<!-- edit profile -->
 <div class="row card">
     <h3 class="center-align">Register</h3>
     <br>
@@ -166,17 +166,35 @@
         <div class="row">
 
             <!-- Generate 6 Squad options -->
-            {% for num in range(1,7) %}
+            {% for n in range(6) %}
+
             <div class="input-field col s4">
-                <select name="squad_{{ num }} ">
-                    <option value="" disabled selected>Choose Pokemon</option>
-                    <option value="none">None</option>
-                    {% for pokemon in pokedex %}
-                    <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                <select name="squad_{{ n+1 }} ">
+
+                    <!-- forbid pokemon deselection in squad slot 1 -->
+                    {% if n > 0 %}
+                        
+                        {% if trainer.squad[n] %}
+                            <option value="none">[empty]</option>
+                        {% else %}
+                            <option value="none" selected>[empty]</option>
+                        {% endif %}
+
+                    {% endif %}
+
+                    <!-- print each pokemon in the pokedex as an option-->
+                    {% for pokemon in pokedex %}     
+                        {% if trainer.squad[n] == pokemon.name %}
+                            <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
+                        {% else %}
+                            <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>       
+                        {% endif %}
                     {% endfor %}
+
                 </select>
-                <label for="squad_{{ num }}">Squad #{{ num }}</label>
+                <label for="squad_{{ n+1 }}">Squad #{{ n+1 }}</label>
             </div>
+
             {% endfor %}
 
         </div>

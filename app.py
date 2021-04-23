@@ -135,7 +135,8 @@ def edit_profile(username):
         # update
         return redirect(url_for('profile', username=session['user']))
     trainer = mongo.db.trainers.find_one({"username": username})
-    return render_template("edit_profile.html", trainer=trainer)
+    pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
+    return render_template("edit_profile.html", trainer=trainer, pokedex=pokedex)
 
 
 @app.route("/register", methods=["GET", "POST"])
