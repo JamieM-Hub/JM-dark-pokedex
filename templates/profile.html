@@ -2,7 +2,11 @@
 {% block content %}
 
 <div class="row center-align">
-    <a href="{{ url_for('logout') }}" class="col s4 offset-s4 btn btn-pokemon waves-effect waves-light grey">
+    <a href="{{ url_for('edit_profile', username=session['user']) }}"
+        class="col s4 offset-s2 btn btn-pokemon waves-effect waves-light yellow darken-2">
+        Edit Profile
+    </a>
+    <a href="{{ url_for('logout') }}" class="col s4 btn btn-pokemon waves-effect waves-light red">
         Log Out
     </a>
 </div>
@@ -102,6 +106,5 @@
 
     </div>
 </div>
-
 
 {% endblock %}

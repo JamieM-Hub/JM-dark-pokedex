@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row card pokedex-entry">
+    <div class="col s8">
+        <div class="row">
+
+            <!-- column 1 -->
+            <div class="col s6">
+                <!-- img -->
+                <div class="center-align">
+                    <img class="pokemon-img" src="{{ trainer.img_src }}" alt="{{ trainer.name }}" height="200">
+                </div>
+
+                <!-- trainer ID -->
+                <div class="pokemon-id center-align"><strong>No. {{ trainer.trainer_id }}</strong>
+                </div>
+            </div>
+
+            <!-- column 2 -->
+            <div class="col s6">
+                <br>
+
+                <!-- name & hometown -->
+                <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|capitalize }}</strong>
+                </div>
+                <div class="trainer-hometown center-align"><em>from {{ trainer.hometown|capitalize }}</em></div>
+                <br>
+                <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
+                </div>
+
+            </div>
+
+            <!-- bio -->
+            <div class="col s12">
+                <p class="center-align trainer-bio">{{ trainer.bio }}</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- column 3 -->
+    <div class="col s4">
+
+        <!-- favourite type -->
+        <form class="row center-align" method="POST" action="{{url_for('search_pokemon') }}">
+            <div class="col s12">
+                <div class="">
+                    Favourite Type<br>
+                    {% if trainer.fav_type %}
+                    <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
+                        type="submit" value="{{ trainer.fav_type|upper }}">
+                    {% else %}
+                    <div class="btn btn-small btn-pokemon grey">-</div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+        <!-- favourite pokemon -->
+        <form class="row center-align" method="POST" action="{{url_for('search_pokemon') }}">
+            <div class="col s12">
+                <div class="">
+                    Favourite Pokemon<br>
+                    <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                        value="{{ trainer.fav_pokemon|upper }}">
+                </div>
+            </div>
+        </form>
+
+        <!-- squad -->
+        <div class="center-align">
+            {% if trainer.squad %}
+            <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                Squad
+                <div class="row">
+                    {% for n in range(6) %}
+                    {% if trainer.squad[n] %}
+                    <div class="col s12">
+                        <div class="">
+                            <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                                value="{{ trainer.squad[n]|upper }}">
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col s12">
+                        <div class="">
+                            <div class="btn btn-small btn-pokemon grey">-</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+<!-- -->
+
+<div class="row card">
+    <h3 class="center-align">Register</h3>
+    <br>
+    <form class="col s12" method="POST" action="" autocomplete="off">
+
+        <div class="row">
+            <!-- Top Left column -->
+            <div class="col s6">
+                <div class="row">
+                    <!-- Name -->
+                    <div class="input-field col s12 m6">
+                        <input id="name" type="text" name="name" value="{{ trainer.name }}" required>
+                        <label for="name">Name</label>
+                    </div>
+                    <!-- Hometown -->
+                    <div class="input-field col s12 m6">
+                        <input id="hometown" type="text" name="hometown" value="{{ trainer.hometown }}" required>
+                        <label for="hometown">Hometown</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Right column -->
+            <div class="col s6">
+                <!-- Favourite Type -->
+                <div class="input-field col s6">
+                    <select name="fav_type" required>
+                        <option value="{{ trainer.fav_type }}" disabled selected>{{ trainer.fav_type|capitalize }}
+                        </option>
+                        <option value="none">None</option>
+                        <option value="normal">normal</option>
+                        <option value="fire">fire</option>
+                        <option value="water">water</option>
+                        <option value="electric">electric</option>
+                        <option value="grass">grass</option>
+                        <option value="ice">ice</option>
+                        <option value="fighting">fighting</option>
+                        <option value="poison">poison</option>
+                        <option value="ground">ground</option>
+                        <option value="flying">flying</option>
+                        <option value="psychic">psychic</option>
+                        <option value="bug">bug</option>
+                        <option value="rock">rock</option>
+                        <option value="ghost">ghost</option>
+                        <option value="dragon">dragon</option>
+                    </select>
+                    <label for="fav_type">Favourite Type</label>
+                </div>
+                <!-- Favourite Pokemon -->
+                <div class="input-field col s12 m6">
+                    <select name="fav_pokemon">
+                        <option value="{{ trainer.fav_pokemon }}" disabled selected>{{ trainer.fav_pokemon|capitalize }}
+                        </option>
+                        <option value="none">None</option>
+                        {% for pokemon in pokedex %}
+                        <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fav_pokemon">Favourite Pokemon</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Squad section -->
+        <div class="row">
+
+            <!-- Generate 6 Squad options -->
+            {% for num in range(1,7) %}
+            <div class="input-field col s4">
+                <select name="squad_{{ num }} ">
+                    <option value="" disabled selected>Choose Pokemon</option>
+                    <option value="none">None</option>
+                    {% for pokemon in pokedex %}
+                    <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                    {% endfor %}
+                </select>
+                <label for="squad_{{ num }}">Squad #{{ num }}</label>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Bottom section -->
+        <div class="row">
+
+            <!-- Bio -->
+            <div class="input-field col s12">
+                <input id="bio" name="bio" type="text" value="{{ trainer.bio }}" required>
+                <label for="bio">Bio</label>
+            </div>
+
+            <!-- Image URL -->
+            <div class="input-field col s12">
+                <input id="img_src" name="img_src" type="url" value="{{ trainer.img_src }}" required>
+                <label for="img_src">Image URL</label>
+            </div>
+            <br>
+
+            <!-- username -->
+            <div class="input-field col s6">
+                <input id="username" name="username" type="text" value="{{ trainer.username }}" disabled required>
+                <label for="username">Username</label>
+            </div>
+
+            <!-- password -->
+            <div class="input-field col s6">
+                <input id="password" name="password" type="password" value="" required>
+                <label for="password">Password</label>
+            </div>
+
+            <!-- private/public switch -->
+            <div class="switch center-align">
+                <label for="private">
+                    Private
+                    {% if trainer.private %}
+                    <input type="checkbox" id="private" name="private">
+                    {% else %}
+                    <input type="checkbox" id="private" name="private" checked>
+                    {% endif %}
+                    <span class="lever"></span>
+                    Public
+                </label>
+            </div>
+
+            <!-- Confirm/cancel buttons -->
+            <div class="input-field col s12 center-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Update
+                    <i class="fas fa-clipboard-check right"></i>
+                </button>
+                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light red">
+                    Cancel <i class="fas fa-circle right"></i>
+                </a>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

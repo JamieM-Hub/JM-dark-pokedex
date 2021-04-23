@@ -121,11 +121,21 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/profile/<username>", methods=["GET", "POST"])
+@app.route("/profile/<username>")
 def profile(username):
     # grab Trainer profile for session user
     trainer = mongo.db.trainers.find_one({"username": username})
     return render_template("profile.html", trainer=trainer)
+
+
+@app.route("/edit_profile/<username>", methods=["GET", "POST"])
+def edit_profile(username):
+    if request.method == "POST":
+        # check
+        # update
+        return redirect(url_for('profile', username=session['user']))
+    trainer = mongo.db.trainers.find_one({"username": username})
+    return render_template("edit_profile.html", trainer=trainer)
 
 
 @app.route("/register", methods=["GET", "POST"])
