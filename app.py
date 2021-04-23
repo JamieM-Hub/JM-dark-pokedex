@@ -68,7 +68,8 @@ def edit_pokemon(dex_id):
             "weight": request.form.get("weight"),
             "desc": request.form.get("desc"),
             "img_src": request.form.get("img_src"),
-            "created_by": request.form.get("created_by"),
+            "created_by": "user123",
+            # "created_by": request.form.get("created_by"),
         }
         mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
         flash(submit["name"].capitalize() + " updated!")
@@ -76,7 +77,7 @@ def edit_pokemon(dex_id):
 
     pokedex = mongo.db.pokemon.find()
     selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
-    return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon)
+    return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon, types=types)
 
 
 @app.route("/delete_pokemon/<dex_id>")
