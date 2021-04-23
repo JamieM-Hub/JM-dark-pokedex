@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card blue-grey darken-1">
-    <div class="card-content white-text">
+<div class="card theme">
+    <div class="card-content">
         <span class="card-title">Edit Pokemon</span>
         <p>
             Lorem ipsum dolor sit amet. Et labore veniam ut reprehenderit expedita est labore ullam in vitae consectetur
@@ -15,37 +15,86 @@
     </div>
 </div>
 
-<div class="row section yellow lighten-3">
-    <div class="col s4">
-        <div class="center-align"><img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}"
-                height="200">
+<div class="card pokedex-entry">
+    <div class="row">
+
+        <!-- column 1 -->
+        <div class="col s4 white center-align">
+
+            <!-- image -->
+            <img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200"><br>
+
+            <!-- dex id -->
+            <div class="row pokedex-under-img">
+                <div class="col s4 center-align"></div>
+                <div class="col s4 pokedex-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
+                <div class="col s4 center-align"></div>
+            </div>
+
         </div>
-        <div class="pokemon-id center-align">
-            <strong>No. {{ pokemon.dex_id }}</strong>
+
+
+        <!-- column 2 -->
+        <div class="col s4">
+            <br>
+            <!-- name and species-->
+            <h4 class="center-align">{{ pokemon.name|upper }}</h4>
+            <h6 class="center-align"><em>{{ pokemon.species|capitalize }} Pokemon</em></h6>
+            <br>
+            <!-- type(s)-->
+            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+                {% if not pokemon.type[1] %}
+                <div class="col s12 pokemon-type">
+                    <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[0]|upper }}">
+                </div>
+                {% else %}
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[0]|upper }}">
+                </div>
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[1]|upper }}">
+                </div>
+                {% endif %}
+            </form>
         </div>
-    </div>
-    <div class="col s8">
-        <div class="row">
-            <div class="col s4 pokemon-name">{{ pokemon.name }}</div>
-            <div class="col s2 pokemon-type">{{ pokemon.type[0] }}</div>
-            <div class="col s2 pokemon-type">{{ pokemon.type[1] }}</div>
+
+        <!-- column 3 -->
+        <div class="col s4 center-align">
+            <div class="row">
+                <br>
+                <!-- height -->
+                <div class="col s6">
+                    <h6><i class="fas fa-arrows-alt-v"></i>{{ pokemon.height[0] }}'{{ pokemon.height[1] }}"</h6>
+                </div>
+                <!-- weight -->
+                <div class="col s6">
+                    <h6><i class="fas fa-weight-hanging"></i>{{ pokemon.weight }} lb</h6>
+                </div>
+            </div>
+
+            <!-- description -->
+            <div class="row">
+                <p>{{ pokemon.desc }}</p>
+            </div>
+            <!-- <div class="row"><em>by {{ pokemon.created_by }}</em></div> -->
+            <!-- rating -->
+            <!-- <h5 class="right-align">
+                {{ pokemon.rating }}
+                <i class="far fa-arrow-alt-circle-up"></i>
+            </h5> -->
         </div>
-        <div class="row">
-            <div class="col s6">Created by: {{ pokemon.created_by }}</div>
-        </div>
-        {{ pokemon.species }}<br>
-        Height {{ pokemon.height[0] }}'{{ pokemon.height[1] }}"<br>
-        Weight {{ pokemon.weight }} lb<br>
-        <br>
-        {{ pokemon.desc }}<br>
+
     </div>
 </div>
 
-<div class="row card">
+<div class="row card theme">
     <form class="col s12" action="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}" method="POST">
-        <div class="row deep-purple">
-            <!-- Left column -->
-            <div class="col s6">
+        <div class="row">
+            <!-- Top row -->
+            <div class="col s12">
                 <div class="row">
                     <!-- hidden inputs to fix update bug -->
                     <div class="hide">
@@ -53,101 +102,99 @@
                         <input type="text" name="rating" id="rating" value="{{ pokemon.rating }}">
                     </div>
                     <!-- Name -->
-                    <div class="input-field col s12 m6">
-                        <input id="name" type="text" name="name" value="{{ pokemon.name }}" required>
+                    <div class="input-field col s6 m3">
+                        <input id="name" type="text" name="name" value="{{ pokemon.name|capitalize }}" required>
                         <label for="name">Name</label>
                     </div>
                     <!-- Species -->
-                    <div class="input-field col s12 m6">
-                        <input id="species" type="text" name="species" value="{{ pokemon.species }}" required>
+                    <div class="input-field col s6 m3">
+                        <input id="species" type="text" name="species" value="{{ pokemon.species|capitalize  }}" required>
                         <label for="species">Species</label>
                     </div>
                     <!-- Type 1 -->
-                    <div class="input-field col s6">
+                    <div class="input-field col s6 m3">
                         <select name="type_1" required>
-                            <option value="" disabled selected>Choose Type</option>
-                            <option value="normal">normal</option>
-                            <option value="fire">fire</option>
-                            <option value="water">water</option>
-                            <option value="electric">electric</option>
-                            <option value="grass">grass</option>
-                            <option value="ice">ice</option>
-                            <option value="fighting">fighting</option>
-                            <option value="poison">poison</option>
-                            <option value="ground">ground</option>
-                            <option value="flying">flying</option>
-                            <option value="psychic">psychic</option>
-                            <option value="bug">bug</option>
-                            <option value="rock">rock</option>
-                            <option value="ghost">ghost</option>
-                            <option value="dragon">dragon</option>
+
+                            <!-- display each type in the types list as options, with current selected -->
+                            {% for type in types %}
+                            {% if pokemon.type[0] == type %}
+                            <option value="{{ type }}" selected>{{ type|capitalize }}</option>
+                            {% else %}
+                            <option value="{{ type }}">{{ type|capitalize }}</option>
+                            {% endif %}
+                            {% endfor %}
+
                         </select>
-                        <label for="type_1">Type 1</label>
+                        <label for="type_1">Type (primary)</label>
                     </div>
+
                     <!-- Type 2 -->
-                    <div class="input-field col s6">
+                    <div class="input-field col s6 m3">
                         <select name="type_2" required>
-                            <option value="none" selected>none</option>
-                            <option value="normal">normal</option>
-                            <option value="fire">fire</option>
-                            <option value="water">water</option>
-                            <option value="electric">electric</option>
-                            <option value="grass">grass</option>
-                            <option value="ice">ice</option>
-                            <option value="fighting">fighting</option>
-                            <option value="poison">poison</option>
-                            <option value="ground">ground</option>
-                            <option value="flying">flying</option>
-                            <option value="psychic">psychic</option>
-                            <option value="bug">bug</option>
-                            <option value="rock">rock</option>
-                            <option value="ghost">ghost</option>
-                            <option value="dragon">dragon</option>
+
+                            <!-- display "-" option if pokemon does not have a secondary type -->
+                            {% if pokemon.type[1] != "none" %}
+                            <option value="none">-</option>
+                            {% else %}
+                            <option value="none" selected>-</option>
+                            {% endif %}
+
+                            <!-- display each type in the types list as options, with current selected -->
+                            {% for type in types %}
+                            {% if pokemon.type[1] == type %}
+                            <option value="{{ type }}" selected>{{ type|capitalize }}</option>
+                            {% else %}
+                            <option value="{{ type }}">{{ type|capitalize }}</option>
+                            {% endif %}
+                            {% endfor %}
+
                         </select>
-                        <label for="type_2">Type 2</label>
+                        <label for="type_2">Type (secondary)</label>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Right column -->
-            <div class="col s6">
+            <div class="col s12">
                 <div class="row">
+
                     <!-- Height (feet) -->
-                    <div class="input-field col s12 m4">
+                    <div class="input-field col s4">
                         <input id="height_feet" type="number" name="height_feet" max="25"
                             value="{{ pokemon.height[0] }}" required>
                         <label for="height_feet">Height (feet)</label>
                     </div>
+
                     <!-- Height (inches) -->
-                    <div class="input-field col s12 m4">
+                    <div class="input-field col s4">
                         <input id="height_inches" type="number" name="height_inches" max="11"
                             value="{{ pokemon.height[1] }}" required>
                         <label for="height_inches">Height (inches)</label>
                     </div>
+
                     <!-- Weight -->
-                    <div class="input-field col s12 m4">
+                    <div class="input-field col s4 m4">
                         <input id="weight" type="number" name="weight" max="999" value="{{ pokemon.weight }}" required>
                         <label for="weight">Weight (pounds)</label>
-                    </div>
-                    <!-- Description -->
-                    <div class="input-field col s12">
-                        <input id="desc" type="text" name="desc" value="{{ pokemon.desc }}" required>
-                        <label for="desc">Description</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom section -->
             <!-- Description -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="desc" type="text" name="desc" value="{{ pokemon.desc }}" required>
+                    <label for="desc">Description</label>
+                </div>
+            </div>
+
+            <!-- image URL -->
             <div class="input-field col s12">
                 <input id="img_src" type="text" name="img_src" value="{{ pokemon.img_src }}" required>
                 <label for="img_src">Image URL</label>
             </div>
-            <!-- Created by -->
-            <div class="input-field col s12 m6">
-                <input id="created_by" type="text" name="created_by" value="{{ pokemon.created_by }}" required>
-                <label for="created_by">Created By</label>
-            </div>
+
+            <!-- action buttons -->
             <div class="input-field col s12 m6">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Submit Changes
                     <i class="fas fa-arrow-right right"></i>
