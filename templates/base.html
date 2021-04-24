@@ -23,12 +23,13 @@
                 <ul class="left hide-on-med-and-down">
                     <!-- <li><a href="{{ url_for('get_pokemon') }}">Home</a></li> -->
                     {% if session.user %}
-                    <li><a href="{{ url_for('profile', username=session['user']) }}">{{ session["user"] }}</a></li>
+                    <li><a href="{{ url_for('profile', username=session['user']) }}"
+                            class="header-color">{{ session["user"] }}</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('login') }}">Log In</a></li>
+                    <li><a href="{{ url_for('login') }}" class="header-color">Log In</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('trainers') }}">Trainers</a></li>
-                    <li><a href="{{ url_for('get_pokemon') }}">Pokedex</a></li>
+                    <li><a href="{{ url_for('trainers') }}" class="header-color">Trainers</a></li>
+                    <li><a href="{{ url_for('get_pokemon') }}" class="header-color">Pokedex</a></li>
                 </ul>
                 <a href="{{ url_for('index') }}" class="brand-logo center">
                     <!-- <span>The</span> -->
@@ -36,9 +37,9 @@
                     <span class="title">Dark Pokedex</span>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('contribute') }}">Contribute</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contribute') }}" class="header-color">Contribute</a></li>
+                    <li><a href="{{ url_for('contact') }}" class="header-color">Contact</a></li>
+                    <li><a href="{{ url_for('about') }}" class="header-color">About</a></li>
                 </ul>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fa fa-bars"></i></a>
             </div>
