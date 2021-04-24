@@ -6,7 +6,7 @@
     <div class="row center-align">
         <div class="col s2 search-button">
             <button type="submit" class="btn theme text-shadow">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search header-color"></i>
             </button>
         </div>
         <div class="col s8">
@@ -16,8 +16,8 @@
             </div>
         </div>
         <div class="col s2 search-button">
-            <a href="{{ url_for('get_pokemon') }}" class="btn red text-shadow">
-                <i class="far fa-times-circle"></i>
+            <a href="{{ url_for('get_pokemon') }}" class="btn theme text-shadow">
+                <i class="far fa-times-circle header-color"></i>
             </a>
         </div>
     </div>
@@ -56,7 +56,7 @@
 
         <!-- name and species-->
         <h4 class="center-align">{{ pokemon.name|upper }}</h4>
-        <h6 class="center-align"><em>{{ pokemon.species|capitalize }} Pokemon</em></h6>
+        <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
         <br>
         <!-- type(s)-->
         <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
@@ -80,7 +80,7 @@
 
     <!-- column 3 -->
     <div class="col s4 center-align">
-        <div class="row">
+        <div class="row header-color">
             <br>
 
             <!-- height -->

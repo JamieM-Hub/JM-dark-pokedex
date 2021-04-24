@@ -25,10 +25,10 @@
                 <!-- name & hometown -->
                 <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|capitalize }}</strong>
                 </div>
-                <div class="trainer-hometown center-align"><em>from {{ trainer.hometown|capitalize }}</em></div>
+                <div class="trainer-hometown center-align"><em class="header-color">from {{ trainer.hometown|capitalize }}</em></div>
                 <br>
-                <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
-                </div>
+                <!-- <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
+                </div> -->
 
             </div>
 
@@ -51,7 +51,7 @@
                     <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
                         type="submit" value="{{ trainer.fav_type|upper }}">
                     {% else %}
-                    <div class="btn btn-small btn-pokemon grey">-</div>
+                    <div class="btn btn-small btn-pokemon">-</div>
                     {% endif %}
                 </div>
             </div>
@@ -62,7 +62,7 @@
             <div class="col s12">
                 <div class="">
                     Favourite Pokemon<br>
-                    <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                    <input class="btn btn-small btn-pokemon" id="query" name="query" type="submit"
                         value="{{ trainer.fav_pokemon|upper }}">
                 </div>
             </div>
@@ -78,14 +78,14 @@
                     {% if trainer.squad[n] %}
                     <div class="col s12">
                         <div class="">
-                            <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                            <input class="btn btn-small btn-pokemon" id="query" name="query" type="submit"
                                 value="{{ trainer.squad[n]|upper }}">
                         </div>
                     </div>
                     {% else %}
                     <div class="col s12">
                         <div class="">
-                            <div class="btn btn-small btn-pokemon grey">-</div>
+                            <div class="btn btn-small btn-pokemon">-</div>
                         </div>
                     </div>
                     {% endif %}

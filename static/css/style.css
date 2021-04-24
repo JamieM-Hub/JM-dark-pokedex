@@ -12,6 +12,13 @@ body {
 
 .btn-pokemon {
     width: 80%;
+    background-color:rgb(185, 144, 185);
+    color:seashell;
+}
+
+.fav-pokemon {
+    background-color: black;
+    color: #e7d75c;
 }
 
 .text-shadow {
