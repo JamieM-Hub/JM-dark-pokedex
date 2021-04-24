@@ -16,8 +16,9 @@
 <body class="">
 
     <header>
+        <nav class="nav-extended"></nav>
         <!-- main nav -->
-        <nav class="nav-extended text-shadow red">
+        <nav class="nav-extended text-shadow theme header-color">
             <div class="nav-wrapper">
                 <ul class="left hide-on-med-and-down">
                     <!-- <li><a href="{{ url_for('get_pokemon') }}">Home</a></li> -->
@@ -29,7 +30,11 @@
                     <li><a href="{{ url_for('trainers') }}">Trainers</a></li>
                     <li><a href="{{ url_for('get_pokemon') }}">Pokedex</a></li>
                 </ul>
-                <a href="{{ url_for('index') }}" class="brand-logo center">The Dark Pokedex</a>
+                <a href="{{ url_for('index') }}" class="brand-logo center">
+                    <!-- <span>The</span> -->
+                    <span>The</span><br>
+                    <span class="title">Dark Pokedex</span>
+                </a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('contribute') }}">Contribute</a></li>
                     <li><a href="{{ url_for('contact') }}">Contact</a></li>
