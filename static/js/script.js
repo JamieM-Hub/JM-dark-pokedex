@@ -5,4 +5,5 @@
       });
 
       $("select").formSelect();
+      $('.modal').modal();
   });
