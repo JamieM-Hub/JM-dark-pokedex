@@ -23,19 +23,11 @@ mongo = PyMongo(app)
 
 def process_search(data, query, returned, url):
     if returned:
-        print(returned)
-        flash(f"Searching for \"{query}\"")
         return render_template(url, data=returned)
-        
-    elif not returned and query == "" or query == "pokemon":
-        print(returned)
-        return render_template(url, data=data)
-
     else:
-        print(returned)
-        flash(f"No results for \"{query}\"")
-        return render_template(url, data=returned)
-
+        flash("nothing found")
+        return redirect(url_for('get_pokemon'))
+        
 
 @app.route("/")
 @app.route("/index")
@@ -69,7 +61,7 @@ def search_trainers():
         league = mongo.db.trainers.find()
         query = request.form.get("query")
         returned = list(mongo.db.trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
-        process_search(trainers, query, returned, "trainers.html")
+        process_search(league, query, returned, "trainers.html")
         data=returned
     else:
         data=league
