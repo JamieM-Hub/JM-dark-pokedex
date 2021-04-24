@@ -281,7 +281,7 @@ def contribute():
             "weight": request.form.get("weight"),
             "desc": request.form.get("desc"),
             "img_src": request.form.get("img_src"),
-            "created_by": request.form.get("created_by"),
+            "created_by": session['user'],
             "rating": 0,
             "in_squad": [],
             "rated_by": []
