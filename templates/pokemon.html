@@ -33,19 +33,9 @@
 
         <!-- edit/delete buttons -->
         <div class="row pokedex-under-img">
-            <div class="col s4 center-align">
-                {% if session["user"] == pokemon.created_by %}
-                <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
-                    class="waves-effect waves-light btn-small grey">EDIT</a>
-                {% endif %}
-            </div>
+            <div class="col s4 center-align"></div>
             <div class="col s4 pokedex-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
-            <div class="col s4 center-align">
-                {% if session["user"] == pokemon.created_by %}
-                <a href="{{ url_for('delete_pokemon', dex_id=pokemon._id) }}"
-                    class="waves-effect waves-light btn-small red">DELETE</a>
-                {% endif %}
-            </div>
+            <div class="col s4 center-align"></div>
         </div>
 
     </div>

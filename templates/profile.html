@@ -34,7 +34,7 @@
                 <!-- name & hometown -->
                 <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|capitalize }}</strong>
                 </div>
-                <div class="trainer-hometown center-align"><em>from {{ trainer.hometown|capitalize }}</em></div>
+                <div class="trainer-hometown center-align header-color"><em>from {{ trainer.hometown|capitalize }}</em></div>
                 <br>
                 <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
                 </div>
@@ -71,7 +71,7 @@
             <div class="col s12">
                 <div class="">
                     Favourite Pokemon<br>
-                    <input class="btn btn-small btn-pokemon grey" id="query" name="query" type="submit"
+                    <input class="btn btn-small btn-pokemon grey header-color" id="query" name="query" type="submit"
                         value="{{ trainer.fav_pokemon|upper }}">
                 </div>
             </div>
@@ -106,5 +106,96 @@
 
     </div>
 </div>
+
+<div class="transparent center-align">
+    <h4 class="white-text text-shadow">Pokemon discovered by {{trainer.name}}</h4>
+</div>
+
+
+<!-- pokemon created by trainer -->
+{% if pokedex %}
+{% for pokemon in pokedex %}
+<div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+
+    <!-- column 1 -->
+    <div class="col s4 center-align">
+        <img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200"><br>
+
+        <!-- edit/delete buttons -->
+        <div class="row pokedex-under-img">
+            <div class="col s4 center-align"></div>
+            <div class="col s4 pokedex-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
+            <div class="col s4 center-align"></div>
+        </div>
+
+    </div>
+
+    <!-- column 2 -->
+    <div class="col s4">
+        <br>
+
+        <!-- name and species-->
+        <h4 class="center-align">{{ pokemon.name|upper }}</h4>
+        <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
+        <br>
+        <!-- type(s)-->
+        <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+            {% if not pokemon.type[1] %}
+            <div class="col s12 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[0]|upper }}">
+            </div>
+            {% else %}
+            <div class="col s6 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[0]|upper }}">
+            </div>
+            <div class="col s6 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[1]|upper }}">
+            </div>
+            {% endif %}
+        </form>
+
+        <!-- modify button -->
+        <div class="row center-align">
+            <br>
+            <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
+                class="waves-effect waves-light btn-small grey">MODIFY</a>
+        </div>
+    </div>
+
+    <!-- column 3 -->
+    <div class="col s4 center-align">
+        <div class="row header-color">
+            <br>
+
+            <!-- height -->
+            <div class="col s6">
+                <h6><i class="fas fa-arrows-alt-v"></i>{{ pokemon.height[0] }}'{{ pokemon.height[1] }}"</h6>
+            </div>
+
+            <!-- weight -->
+            <div class="col s6">
+                <h6><i class="fas fa-weight-hanging"></i>{{ pokemon.weight }} lb</h6>
+            </div>
+
+        </div>
+        <!-- description -->
+        <div class="row">
+            <p>{{ pokemon.desc }}</p>
+        </div>
+        <!-- <div class="row"><em>by {{ pokemon.created_by }}</em></div> -->
+        <!-- rating -->
+        <!-- <h5 class="right-align">
+                {{ pokemon.rating }}
+                <i class="far fa-arrow-alt-circle-up"></i>
+            </h5> -->
+    </div>
+
+</div>
+
+{% endfor %}
+{% endif %}
 
 {% endblock %}
