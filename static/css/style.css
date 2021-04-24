@@ -16,8 +16,8 @@ body {
 
 .btn-pokemon {
     width: 80%;
-    background-color:rgb(185, 144, 185);
-    color:seashell;
+    background-color: rgb(185, 144, 185);
+    color: seashell;
 }
 
 .fav-pokemon {
@@ -37,8 +37,6 @@ body {
     color: whitesmoke;
     text-align: center;
 }
-
-.
 
 /* HEADER */
 
@@ -116,10 +114,6 @@ section {
     line-height: normal;
 }
 
-/* .pokemon-img {
-    border: solid 2.5px black;
-} */
-
 .flashes h4 {
     color: whitesmoke;
 }
@@ -134,6 +128,8 @@ section {
     padding: 15px 0;
     background-color: rgba(255, 255, 255, 1);
 }
+
+
 
 .pokedex-entry>.center-align {
     padding: 15px 25px;
@@ -171,19 +167,26 @@ section {
     color: whitesmoke;
 }
 
+.theme-reverse {
+    background-color: #e7d75cec;
+    color: rgb(128, 0, 128);
+}
+
 /* EDIT PAGES */
 
-.input-field > input {
+.input-field>input {
     color: whitesmoke;
     text-align: center;
 
 }
-.input-field > label {
+
+.input-field>label {
     color: #e7d75c;
 }
 
 .select-dropdown {
     background-color: rgba(128, 0, 128, 0.9);
+    width: fit-content;
 }
 
 .select-dropdown li span {
