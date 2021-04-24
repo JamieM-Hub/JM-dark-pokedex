@@ -30,7 +30,7 @@ def process_search(data, query, returned, url):
     elif not returned and query == "":
         print(returned)
         return render_template(url, data=data)
-        
+
     else:
         print(returned)
         flash(f"No results for \"{query}\"")
@@ -65,12 +65,16 @@ def search_pokemon():
 
 @app.route("/search_trainers", methods=["GET", "POST"])
 def search_trainers():
-    trainers = mongo.db.trainers.find()
-    query = request.form.get("query")
-    returned = list(trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+    if request.method == "POST":
+        league = mongo.db.trainers.find()
+        query = request.form.get("query")
+        returned = list(mongo.db.trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+        process_search(trainers, query, returned, "trainers.html")
+        data=returned
+    else:
+        data=league
 
-    process_search(trainers, query, returned, "trainers.html")
-    return render_template("trainers.html", trainers=trainers)
+    return render_template("trainers.html", trainers=data)
 
 
 @app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])

@@ -18,6 +18,10 @@ body {
 /* HEADER */
 
 
+/* search bar */
+.search-button {
+    padding-top: 2vh !important;
+}
 
 /* HOME */
 
@@ -85,6 +89,7 @@ body {
     padding-top: 1vh;
     margin: 0;
 }
+
 .pokedex-id {
     padding-top: 0.5vh !important;
 }
