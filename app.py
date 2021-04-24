@@ -21,6 +21,21 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+def process_search(data, query, returned, url):
+    if returned:
+        print(returned)
+        flash(f"Searching for \"{query}\"")
+        return render_template(url, data=returned)
+        
+    elif not returned and query == "":
+        print(returned)
+        return render_template(url, data=data)
+        
+    else:
+        print(returned)
+        flash(f"No results for \"{query}\"")
+        return render_template(url, data=returned)
+
 
 @app.route("/")
 @app.route("/index")
@@ -28,7 +43,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/get_pokemon", methods=["GET", "POST"])
+@app.route("/get_pokemon", methods=["GET"])
 def get_pokemon():
     pokedex = mongo.db.pokemon.find()
     return render_template("pokemon.html", pokedex=pokedex)
@@ -36,19 +51,27 @@ def get_pokemon():
 
 @app.route("/search_pokemon", methods=["GET", "POST"])
 def search_pokemon():
-    query = request.form.get("query")
-    flash("Searching for \"" + query + "\"")
-    # import pymongo sort advice from Slack
-    pokedex = list(mongo.db.pokemon.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
-    return render_template("pokemon.html", pokedex=pokedex)
+    if request.method == "POST":
+        pokedex = mongo.db.pokemon.find()
+        query = request.form.get("query")
+        returned = list(mongo.db.pokemon.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+        process_search(pokedex, query, returned, "pokemon.html")
+        data=returned
+    else:
+        data=pokedex
+
+    return render_template("pokemon.html", pokedex=data)
+
 
 @app.route("/search_trainers", methods=["GET", "POST"])
 def search_trainers():
+    trainers = mongo.db.trainers.find()
     query = request.form.get("query")
-    flash("Searching for \"" + query + "\"")
-    # import pymongo sort advice from Slack
-    trainers = list(mongo.db.trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+    returned = list(trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
+
+    process_search(trainers, query, returned, "trainers.html")
     return render_template("trainers.html", trainers=trainers)
+
 
 @app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
 def edit_pokemon(dex_id):
