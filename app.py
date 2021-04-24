@@ -27,7 +27,7 @@ def process_search(data, query, returned, url):
         flash(f"Searching for \"{query}\"")
         return render_template(url, data=returned)
         
-    elif not returned and query == "":
+    elif not returned and query == "" or query == "pokemon":
         print(returned)
         return render_template(url, data=data)
 
@@ -286,7 +286,7 @@ def contribute():
         flash("Pokemon discovered!")
         return redirect(url_for('get_pokemon'))
 
-    return render_template("contribute.html")
+    return render_template("contribute.html", types=types)
 
 
 @app.route("/trainers")
