@@ -25,7 +25,11 @@
 
 {% if pokedex %}
 {% for pokemon in pokedex %}
+
 <div class="row card pokedex-entry theme" id ="{{ pokemon.dex_id }}">
+{% if pokemon.dex_id > 1000 %}
+{% set display_id = -(pokemon.dex_id - 1000) %}
+{% endif %}
 
     <!-- column 1 -->
     <div class="col s4 center-align">
@@ -34,7 +38,13 @@
         <!-- edit/delete buttons -->
         <div class="row pokedex-under-img">
             <div class="col s4 center-align"></div>
-            <div class="col s4 pokedex-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
+            <div class="col s4 pokedex-id center-align">
+                {% if pokemon.dex_id < 1000 %} 
+                    <strong>No. {{ pokemon.dex_id }}</strong>
+                {% else %}
+                    <strong>No. {{ display_id }}</strong>
+                {% endif %} 
+            </div>
             <div class="col s4 center-align"></div>
         </div>
 
