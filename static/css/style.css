@@ -10,6 +10,10 @@ body {
 
 }
 
+.card {
+    padding: 2vh;
+}
+
 .btn-pokemon {
     width: 80%;
     background-color:rgb(185, 144, 185);
@@ -28,6 +32,13 @@ body {
 .header-color {
     color: #e7d75c;
 }
+
+.input-field input {
+    color: whitesmoke;
+    text-align: center;
+}
+
+.
 
 /* HEADER */
 
@@ -158,6 +169,30 @@ section {
 .theme {
     background-color: rgba(128, 0, 128, 0.9);
     color: whitesmoke;
+}
+
+/* EDIT PAGES */
+
+.input-field > input {
+    color: whitesmoke;
+    text-align: center;
+
+}
+.input-field > label {
+    color: #e7d75c;
+}
+
+.select-dropdown {
+    background-color: rgba(128, 0, 128, 0.9);
+}
+
+.select-dropdown li span {
+    color: whitesmoke;
+    text-align: center;
+}
+
+.active {
+    color: red;
 }
 
 /* TYPES */
