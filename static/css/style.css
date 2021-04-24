@@ -129,7 +129,15 @@ section {
     background-color: rgba(255, 255, 255, 1);
 }
 
-
+.pokemon-img {
+    border: solid 2.5px #e7d75c;
+    height: 17vh;
+    width: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: white;
+}
 
 .pokedex-entry>.center-align {
     padding: 15px 25px;
