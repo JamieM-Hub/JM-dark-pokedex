@@ -38,7 +38,9 @@ def index():
 
 @app.route("/get_pokemon")
 def get_pokemon():
-    pokedex = mongo.db.pokemon.find()
+    discovered = list(mongo.db.pokemon.find({ "dex_id" : {'$gt': 1000} }).sort("dex_id", pymongo.DESCENDING))
+    original = list(mongo.db.pokemon.find({ "dex_id" : {'$lt': 1000} }).sort("dex_id", pymongo.ASCENDING))
+    pokedex = discovered + original
     return render_template("pokemon.html", pokedex=pokedex)
 
 
@@ -262,8 +264,8 @@ def register():
 @app.route("/contribute", methods=["GET", "POST"])
 def contribute():
     if request.method == "POST":
-        pokedex_length = mongo.db.pokemon.count()
-        dex_id = pokedex_length + 1
+        last_created_pokemon = list(mongo.db.pokemon.find().sort("dex_id", pymongo.DESCENDING).limit(1))
+        dex_id = last_created_pokemon[0]['dex_id'] + 1
         new_pokemon = {
             "name": request.form.get("name"),
             "dex_id": dex_id,
