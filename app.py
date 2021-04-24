@@ -32,13 +32,20 @@ def process_search(data, query, returned, url):
 @app.route("/")
 @app.route("/index")
 def index():
+    flash("Helloooooooooo!!")
     return render_template("index.html")
 
 
-@app.route("/get_pokemon", methods=["GET"])
+@app.route("/get_pokemon")
 def get_pokemon():
     pokedex = mongo.db.pokemon.find()
     return render_template("pokemon.html", pokedex=pokedex)
+
+
+@app.route("/get_pokemon/<id>")
+def get_selected_pokemon(id):
+    pokedex = mongo.db.pokemon.find()
+    return redirect(url_for('get_pokemon', _anchor=id))
 
 
 @app.route("/search_pokemon", methods=["GET", "POST"])
@@ -71,10 +78,13 @@ def search_trainers():
 
 @app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
 def edit_pokemon(dex_id):
+    pokedex = mongo.db.pokemon.find()
+    selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
+
     if request.method == "POST":
         submit = {
             "name": request.form.get("name"),
-            "dex_id": request.form.get("dex_id"),
+            "dex_id": selected_pokemon['dex_id'],
             "type": [
                 request.form.get("type_1"),
                 request.form.get("type_2")
@@ -87,15 +97,15 @@ def edit_pokemon(dex_id):
             "weight": request.form.get("weight"),
             "desc": request.form.get("desc"),
             "img_src": request.form.get("img_src"),
-            "created_by": "user123",
-            # "created_by": request.form.get("created_by"),
+            "created_by": selected_pokemon['created_by'],
+            "rating": selected_pokemon['rating'],
+            "in_squad": selected_pokemon['in_squad'],
+            "rated_by": selected_pokemon['rated_by']
         }
         mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
         flash(submit["name"].capitalize() + " updated!")
-        return redirect(url_for("get_pokemon"))
+        return redirect(url_for("get_pokemon", id=submit['dex_id']))
 
-    pokedex = mongo.db.pokemon.find()
-    selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
     return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon, types=types)
 
 

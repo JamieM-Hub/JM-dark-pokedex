@@ -25,7 +25,7 @@
 
 {% if pokedex %}
 {% for pokemon in pokedex %}
-<div class="row card pokedex-entry theme">
+<div class="row card pokedex-entry theme" id ="{{ pokemon.dex_id }}">
 
     <!-- column 1 -->
     <div class="col s4 center-align">
