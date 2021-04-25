@@ -27,9 +27,28 @@
 {% if trainers %}
 {% for trainer in trainers %}
 {% if not trainer.private %}
+{% if not trainer.name == "ash ketchum"}
+    <hr>
+{% endif %}
 
 <div class="row card pokedex-entry theme">
     <div class="col s12">
+<<<<<<< HEAD
+=======
+        <div class="row">
+
+            <!-- left column -->
+            <div class="col s3">
+                <div class="row">
+                    <br>
+                    <br>
+
+                    <!-- hometown-->
+                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                        Hometown<br>
+                        <span class="header-color">{{ trainer.hometown|upper }}</span>
+                    </form>
+>>>>>>> c430f52 (add divider between trainer profiles in trainers page)
 
         <!-- top row -->
         <div class="row">
