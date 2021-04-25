@@ -23,81 +23,90 @@
     {% set display_id = -(pokemon.dex_id - 1000) %}
     {% endif %}
 
-    <!-- column 1 -->
-    <div class="col s4 center-align">
-
-        <!-- image -->
-        <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ pokemon.img_src }}');">
-        </div>
-
-        <!-- edit/delete buttons -->
-        <div class="row pokedex-under-img">
-            <div class="col s4 offset-s4 pokedex-id header-color">
-                {% if pokemon.dex_id < 1000 %}
-                <strong>No. {{ pokemon.dex_id }}</strong>
-                {% else %}
-                <strong>No. {{ display_id }}</strong>
-                {% endif %}
-            </div>
-        </div>
-
-    </div>
-
     <!-- column 2 -->
-    <div class="col s4">
-
-        <!-- name and species-->
-        <h4 class="center-align">{{ pokemon.name|upper }}</h4>
-        <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
-        <br>
-        <!-- type(s)-->
-        <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-            {% if pokemon.type[1] == "" %}
-            <div class="col s6 offset-s3 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[0]|upper }}">
-            </div>
-            {% else %}
-            <div class="col s6 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[0]|upper }}">
-            </div>
-            <div class="col s6 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[1]|upper }}">
-            </div>
-            {% endif %}
-        </form>
-    </div>
-
-    <!-- column 3 -->
     <div class="col s4 center-align">
         <div class="row">
-
-            <!-- created by -->
-            <div class="col s12">
-                <em class="header-color">Discovered by {{ pokemon.created_by }}</em>
+            <!-- image -->
+            <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
+                style="background-image: url('{{ pokemon.img_src }}');">
             </div>
 
+            <!-- id -->
+            <div class="row pokedex-under-img">
+                <div class="col s4 offset-s4 pokedex-id header-color">
+                    {% if pokemon.dex_id < 1000 %}
+                    <strong>No. <span class="white-text">{{ pokemon.dex_id }}</span></strong>
+                    {% else %}
+                    <strong>No. <span class="white-text">{{ display_id }}</span></strong>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- column 1 -->
+    <div class="col s4 center-align">
+        <div class="row">
+            <br>
+
+            <!-- name and species-->
+            <div class="col s12 center-align">
+                <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6>
+                <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
+            </div>
+            <br><br>
+            <br><br><br>
+
+            <!-- type(s)-->
+            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+                {% if pokemon.type[1] == "" %}
+                <div class="col s6 offset-s3 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[0]|upper }}">
+                </div>
+                {% else %}
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[0]|upper }}">
+                </div>
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[1]|upper }}">
+                </div>
+                {% endif %}
+            </form>
+            <br>
+
+            <!-- height -->
+            <h6 class="col s6 pokemon-stats">
+                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                <i class="fas fa-arrows-alt-v header-color"></i>
+            </h6>
+
+            <!-- weight -->
+            <h6 class="col s6 pokemon-stats">
+                <i class="fas fa-weight-hanging header-color"></i>
+                {{ pokemon.weight }} lb
+            </h6>
+
+        </div>
+    </div>
+
+
+
+    <!-- column 3 -->
+    <div class="col s4 center-align pokedex-text">
+        <div class="row">
+            <br>
+            <!-- created by -->
+            <div class="col s12">
+                <em>Discovered by <span class="header-color">{{ pokemon.created_by }}</span></em>
+            </div>
+
+            <br><br>
             <!-- description -->
             <div class="col s12 pokemon-desc">
                 <p>{{ pokemon.desc }}</p>
-            </div>
-
-            <!-- height -->
-            <div class="col s5 offset-s1">
-                <span class="pokemon-stats">
-                    {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
-                    <i class="fas fa-arrows-alt-v header-color"></i>
-                </span>
-            </div>
-
-            <!-- weight -->
-            <div class="col s5">
-                <span class="pokemon-stats">
-                    <i class="fas fa-weight-hanging header-color"></i>
-                    {{ pokemon.weight }} lb
-                </span>
             </div>
 
         </div>
