@@ -261,7 +261,7 @@ def register():
         return redirect(url_for("profile", username=session["user"]))
 
     pokedex = list(mongo.db.pokemon.find())
-    return render_template("register.html", pokedex=pokedex)
+    return render_template("register.html", pokedex=pokedex, types=types)
 
 
 @app.route("/contribute", methods=["GET", "POST"])

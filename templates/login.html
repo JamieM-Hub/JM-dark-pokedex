@@ -1,17 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row center-align">
-    <h4 class="header-color">
-        New around here?
-    </h4>
-    <a href="{{ url_for('register') }}" class="btn waves-effect waves-light">
-        Register
-        <i class="fas fa-circle right"></i>
-    </a>
-</div>
-
+<!-- info section -->
 <div class="row card theme">
+    <h4 class="center-align header-color">Log In</h4>
+    <p>
+        Pretium quam vulputate dignissim suspendisse in.
+        Vestibulum mattis ullamcorper velit sed. Varius vel pharetra vel turpis nunc eget. Sit amet luctus
+        venenatis lectus magna fringilla. Ornare arcu dui vivamus arcu felis bibendum. Pretium nibh ipsum
+        consequat nisl vel pretium. Orci ac auctor augue mauris augue neque. In nulla posuere sollicitudin
+        aliquam ultrices sagittis orci a. Posuere ac ut consequat semper viverra nam. Semper viverra nam
+        libero justo laoreet sit amet cursus sit. Augue neque gravida in fermentum et sollicitudin ac orci
+        phasellus. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu. Vel fringilla est
+        ullamcorper eget.
+    </p>
+
+    <a href="{{ url_for('register') }}" class="btn waves-effect waves-light grey right">
+        BECOME A TRAINER
+    </a>
+
+
     <form action="{{ url_for('login') }}" method="POST" class="col s12">
         <div class="row">
             <!-- username -->
@@ -27,9 +35,9 @@
             </div>
 
             <!-- Confirm/cancel buttons -->
-            <div class="input-field col s12 center-align">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Log In
-                    <i class="fas fa-clipboard-check right"></i>
+            <div class="input-field col s12">
+                <button class="btn waves-effect waves-light yellow darken-3 right" type="submit" name="action">Log In
+                    <i class="fas fa-user right"></i>
                 </button>
             </div>
         </div>

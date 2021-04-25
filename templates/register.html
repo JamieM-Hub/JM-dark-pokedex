@@ -1,90 +1,67 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row center-align">
-    <h4 class="header-color">
-        Already a Trainer?
-    </h4>
-    <a href="{{ url_for('login') }}" class="btn waves-effect waves-light">
+<!-- info section -->
+<div class="row card theme">
+    <h4 class="center-align header-color">Register</h4>
+    <p>
+        Pretium quam vulputate dignissim suspendisse in.
+        Vestibulum mattis ullamcorper velit sed. Varius vel pharetra vel turpis nunc eget. Sit amet luctus
+        venenatis lectus magna fringilla. Ornare arcu dui vivamus arcu felis bibendum. Pretium nibh ipsum
+        consequat nisl vel pretium. Orci ac auctor augue mauris augue neque. In nulla posuere sollicitudin
+        aliquam ultrices sagittis orci a. Posuere ac ut consequat semper viverra nam. Semper viverra nam
+        libero justo laoreet sit amet cursus sit. Augue neque gravida in fermentum et sollicitudin ac orci
+        phasellus. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu. Vel fringilla est
+        ullamcorper eget.
+    </p>
+
+    <a href="{{ url_for('login') }}" class="btn waves-effect waves-light grey right">
         Log In
-        <i class="fas fa-circle right"></i>
+        <i class="fas fa-user right"></i>
     </a>
 </div>
 
-<div class="row card">
-    <h3 class="center-align header-color">Register</h3>
-    <br>
+<!-- form -->
+<div class="row card theme">
     <form class="col s12" method="POST" action="" autocomplete="off">
 
         <!-- top section -->
-        <div class="row">
 
-            <!-- username -->
-            <div class="input-field col s6">
-                <input id="username" name="username" type="text" required>
-                <label for="username">Username</label>
-            </div>
-
-            <!-- password -->
-            <div class="input-field col s6">
-                <input id="password" name="password" type="password" required>
-                <label for="password">Password</label>
-            </div>
-        </div>
 
         <div class="row">
-            <!-- Top Left column -->
-            <div class="col s6">
-                <div class="row">
-                    <!-- Name -->
-                    <div class="input-field col s12 m6">
-                        <input id="name" type="text" name="name" required>
-                        <label for="name">Name</label>
-                    </div>
-                    <!-- Hometown -->
-                    <div class="input-field col s12 m6">
-                        <input id="hometown" type="text" name="hometown" required>
-                        <label for="hometown">Hometown</label>
-                    </div>
-                </div>
+            <!-- Name -->
+            <div class="input-field col s6 m3">
+                <input id="name" type="text" name="name" required>
+                <label for="name">Name</label>
+            </div>
+            <!-- Hometown -->
+            <div class="input-field col s6 m3">
+                <input id="hometown" type="text" name="hometown" required>
+                <label for="hometown">Hometown</label>
             </div>
 
-            <!-- Top Right column -->
-            <div class="col s6">
-                <!-- Favourite Type -->
-                <div class="input-field col s6">
-                    <select name="fav_type" required>
-                        <option value="" disabled selected>Choose Type</option>
-                        <option value="none">None</option>
-                        <option value="normal">normal</option>
-                        <option value="fire">fire</option>
-                        <option value="water">water</option>
-                        <option value="electric">electric</option>
-                        <option value="grass">grass</option>
-                        <option value="ice">ice</option>
-                        <option value="fighting">fighting</option>
-                        <option value="poison">poison</option>
-                        <option value="ground">ground</option>
-                        <option value="flying">flying</option>
-                        <option value="psychic">psychic</option>
-                        <option value="bug">bug</option>
-                        <option value="rock">rock</option>
-                        <option value="ghost">ghost</option>
-                        <option value="dragon">dragon</option>
-                    </select>
-                    <label for="fav_type">Favourite Type</label>
-                </div>
-                <!-- Favourite Pokemon -->
-                <div class="input-field col s12 m6">
-                    <select name="fav_pokemon">
-                        <option value="" disabled selected>Choose Pokemon</option>
-                        <option value="none">None</option>
-                        {% for pokemon in pokedex %}
-                        <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="fav_pokemon">Favourite Pokemon</label>
-                </div>
+            <!-- favourite type -->
+            <div class="input-field col s6 m3">
+                <select name="type_1" required>
+                    <option value="none" selected>-</option>
+                    <!-- display each type in the types list as options, with current selected -->
+                    {% for type in types %}
+                    <option value="{{ type }}">{{ type|capitalize }}</option>
+                    {% endfor %}
+
+                </select>
+                <label for="type_1">Favourite Type</label>
+            </div>
+
+            <!-- Favourite Pokemon -->
+            <div class="input-field col s6 m3">
+                <select name="fav_pokemon">
+                    <option value="none" selected>-</option>
+                    {% for pokemon in pokedex %}
+                    <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                    {% endfor %}
+                </select>
+                <label for="fav_pokemon">Favourite Pokemon</label>
             </div>
         </div>
 
@@ -95,8 +72,7 @@
             {% for num in range(1,7) %}
             <div class="input-field col s4">
                 <select name="squad_{{ num }} ">
-                    <option value="" disabled selected>Choose Pokemon</option>
-                    <option value="none">None</option>
+                    <option value="none" selected>-</option>
                     {% for pokemon in pokedex %}
                     <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
                     {% endfor %}
@@ -121,6 +97,19 @@
                 <input id="img_src" name="img_src" type="url" required>
                 <label for="img_src">Image URL</label>
             </div>
+
+            <!-- username -->
+            <div class="input-field col s6">
+                <input id="username" name="username" type="text" required>
+                <label for="username">Username</label>
+            </div>
+
+            <!-- password -->
+            <div class="input-field col s6">
+                <input id="password" name="password" type="password" required>
+                <label for="password">Password</label>
+            </div>
+
             <br>
             <!-- private/public switch -->
             <div class="switch center-align">
@@ -131,14 +120,14 @@
                     Public
                 </label>
             </div>
-
+            <br>
             <!-- Confirm/cancel buttons -->
             <div class="input-field col s12 center-align">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Register
+                <button class="btn waves-effect waves-light yellow darken-3" type="submit" name="action">Register
                     <i class="fas fa-clipboard-check right"></i>
                 </button>
-                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light">
-                    Cancel <i class="fas fa-circle right"></i>
+                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light red">
+                    Cancel <i class="fas fa-window-close right"></i>
                 </a>
             </div>
 
