@@ -214,7 +214,42 @@ def edit_profile(username, index):
             
     trainer = mongo.db.trainers.find_one({"username": username})
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))        
-    return render_template("edit_profile.html", trainer=trainer, pokedex=pokedex, types=types)
+    return render_template("edit_profile.html", trainer=trainer, index=index, pokedex=pokedex, types=types)
+
+
+@app.route("/preview_profile/<username>/<index>", methods=["GET", "POST"])
+def preview_profile(username, index):
+    trainer = mongo.db.trainers.find_one({"username": username})
+    pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING)) 
+
+    if request.method == "POST":
+        # serialize form input into new_profile
+        private = False if request.form.get("private") else True
+        preview = {
+            "name": request.form.get("name"),
+            "hometown": request.form.get("hometown"),
+            "trainer_id": trainer['trainer_id'],
+            "fav_type": request.form.get("fav_type"),
+            "fav_pokemon": request.form.get("fav_pokemon"),
+            "bio": request.form.get("bio"),
+            "img_src": request.form.get("img_src"),
+            "squad": [
+                request.form.get("squad_1 "),
+                request.form.get("squad_2 "),
+                request.form.get("squad_3 "),
+                request.form.get("squad_4 "),
+                request.form.get("squad_5 "),
+                request.form.get("squad_6 "),
+            ],
+            "username": trainer['username'],
+            "password": request.form.get("password"),
+            "private": private,
+            "rating": trainer['rating'],
+            "rated_by": trainer['rated_by']
+        }    
+        return render_template("edit_profile.html", trainer=preview, index=index, pokedex=pokedex, types=types)
+    
+    return 
 
 
 @app.route("/register", methods=["GET", "POST"])
