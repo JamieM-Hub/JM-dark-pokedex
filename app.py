@@ -1,3 +1,4 @@
+# Import
 import os
 
 from bson.objectid import ObjectId
@@ -10,16 +11,24 @@ from datetime import datetime
 if os.path.exists("env.py"):
     import env
 
-types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", 
-        "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon"]
-
+# Flask
 app = Flask(__name__)
-
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
 mongo = PyMongo(app)
+
+# Global vars
+
+# all possible types
+types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", 
+        "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon"]
+
+# link to default image for pokemon or trainer creation preview
+default_img_p = "https://i.pinimg.com/originals/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f.png"
+default_img_t = "https://i.pinimg.com/originals/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f.png"
+
+# Global funcs
 
 def process_search(data, query, returned, url):
     if returned:
@@ -29,6 +38,7 @@ def process_search(data, query, returned, url):
         return redirect(url_for('get_pokemon'))
         
 
+# Routes
 @app.route("/")
 @app.route("/index")
 def index():
@@ -78,10 +88,10 @@ def search_trainers():
     return render_template("trainers.html", trainers=data)
 
 
-@app.route("/edit_pokemon/<dex_id>", methods=["GET", "POST"])
-def edit_pokemon(dex_id):
+@app.route("/edit_pokemon/<index>", methods=["GET", "POST"])
+def edit_pokemon(index):
     pokedex = mongo.db.pokemon.find()
-    selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(dex_id)})
+    selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
 
     if request.method == "POST":
         submit = {
@@ -106,18 +116,49 @@ def edit_pokemon(dex_id):
         }
         if submit['type'][0] == submit['type'][1]:
             flash("Pokemon types can't be identical.")
-            return redirect (url_for('edit_pokemon', dex_id=dex_id))           
+            return redirect (url_for('edit_pokemon', index=index))           
         else:
-            mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
+            mongo.db.pokemon.update({"_id": ObjectId(index)}, submit)
             flash(submit["name"].capitalize() + " updated!")
             return redirect(url_for("profile", username=session['user']))
 
-    return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon, types=types)
+    return render_template("edit_pokemon.html", pokedex=pokedex, index=index, pokemon=selected_pokemon, types=types)
 
 
-@app.route("/delete_pokemon/<dex_id>")
-def delete_pokemon(dex_id):
-    mongo.db.pokemon.remove({"_id": ObjectId(dex_id)})
+@app.route("/preview_pokemon/<username>/<index>", methods=["GET", "POST"])
+def preview_pokemon(username, index):
+    pokedex = mongo.db.pokemon.find()
+    selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
+
+    if request.method == "POST":
+        preview = {
+            "name": request.form.get("name"),
+            "dex_id": selected_pokemon['dex_id'],
+            "type": [
+                request.form.get("type_1"),
+                request.form.get("type_2")
+            ],
+            "species": request.form.get("species"),
+            "height": [
+                request.form.get("height_feet"),
+                request.form.get("height_inches")
+            ],
+            "weight": request.form.get("weight"),
+            "desc": request.form.get("desc"),
+            "img_src": request.form.get("img_src"),
+            "created_by": selected_pokemon['created_by'],
+            "rating": selected_pokemon['rating'],
+            "in_squad": selected_pokemon['in_squad'],
+            "rated_by": selected_pokemon['rated_by']
+        }
+        return render_template("edit_pokemon.html", pokemon=preview, index=index, pokedex=pokedex, types=types)
+
+    return
+
+
+@app.route("/delete_pokemon/<index>")
+def delete_pokemon(index):
+    mongo.db.pokemon.remove({"_id": ObjectId(index)})
     flash("Pokemon deleted :(")
     return redirect(url_for("get_pokemon"))
 
@@ -333,8 +374,60 @@ def contribute():
             flash("Pokemon discovered!")
             return redirect(url_for('profile', username=session['user']))
 
-    return render_template("contribute.html", types=types)
+    else:
+        null_pokemon = {
+            "name": "NAME",
+            "dex_id": 0,
+            "type": [
+                "TYPE 1",
+                "TYPE 2",
+            ],
+            "species": "SPECIES",
+            "height": [
+                0,
+                0,
+            ],
+            "weight": 0,
+            "desc": "POKEDEX TEXT ENTRY",
+            "img_src": "https://i.pinimg.com/originals/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f.png",
+            "created_by": session['user'],
+            "rating": 0,
+            "in_squad": [],
+            "rated_by": []
+        }
+        return render_template("contribute.html", pokemon=null_pokemon, types=types)
 
+
+@app.route("/preview_contribute/", methods=["GET", "POST"])
+def preview_contribute():
+    pokedex = mongo.db.pokemon.find()
+
+    if request.method == "POST":
+        last_created_pokemon = list(mongo.db.pokemon.find().sort("dex_id", pymongo.DESCENDING).limit(1))
+        dex_id = last_created_pokemon[0]['dex_id'] + 1
+        preview = {
+            "name": request.form.get("name"),
+            "dex_id": dex_id,
+            "type": [
+                request.form.get("type_1"),
+                request.form.get("type_2")
+            ],
+            "species": request.form.get("species"),
+            "height": [
+                request.form.get("height_feet"),
+                request.form.get("height_inches")
+            ],
+            "weight": request.form.get("weight"),
+            "desc": request.form.get("desc"),
+            "img_src": request.form.get("img_src"),
+            "created_by": session['user'],
+            "rating": 0,
+            "in_squad": [],
+            "rated_by": []
+        }
+        print(preview)
+        return render_template("preview_contribute.html", pokemon=preview, types=types)
+    
 
 @app.route("/trainers")
 def trainers():
@@ -364,7 +457,7 @@ def about():
     return render_template("about.html")
 
 
-
+# Main
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
