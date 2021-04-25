@@ -26,77 +26,113 @@
 {% if pokedex %}
 {% for pokemon in pokedex %}
 
+<<<<<<< HEAD
 <div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+=======
+<!-- pokedex entry -->
+<div class="row card pokedex-entry theme text-shadow" id="{{ pokemon.dex_id }}">
+>>>>>>> dc33171 (rearrange pokdex entry)
     {% if pokemon.dex_id > 1000 %}
     {% set display_id = -(pokemon.dex_id - 1000) %}
     {% endif %}
 
+    <!-- column 2 -->
+    <div class="col s4 center-align">
+        <div class="row">
+            <!-- image -->
+            <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
+                style="background-image: url('{{ pokemon.img_src }}');">
+            </div>
+
+            <!-- id -->
+            <div class="row pokedex-under-img">
+                <div class="col s4 offset-s4 pokedex-id header-color">
+                    {% if pokemon.dex_id < 1000 %}
+                    <strong>No. <span class="white-text">{{ pokemon.dex_id }}</span></strong>
+                    {% else %}
+                    <strong>No. <span class="white-text">{{ display_id }}</span></strong>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
     <!-- column 1 -->
     <div class="col s4 center-align">
+        <div class="row">
+            <br>
 
-        <!-- image -->
-        <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ pokemon.img_src }}');">
-        </div>
+            <!-- name and species-->
+            <div class="col s12 center-align">
+                <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6>
+                <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
+            </div>
+            <br><br>
+            <br><br>
+            <br><br>
 
-        <!-- edit/delete buttons -->
-        <div class="row pokedex-under-img">
-            <div class="col s4 offset-s4 pokedex-id header-color">
-                {% if pokemon.dex_id < 1000 %}
-                <strong>No. {{ pokemon.dex_id }}</strong>
+            <!-- type(s)-->
+            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+                {% if pokemon.type[1] == "" %}
+                <div class="col s6 offset-s3 pokemon-type">
+                    <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[0]|upper }}">
+                </div>
                 {% else %}
-                <strong>No. {{ display_id }}</strong>
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[0]|upper }}">
+                </div>
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                        value="{{ pokemon.type[1]|upper }}">
+                </div>
                 {% endif %}
-            </div>
+            </form>
+            <br><br>
+
+            <!-- height -->
+            <h6 class="col s6 pokemon-stats">
+                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                <i class="fas fa-arrows-alt-v header-color"></i>
+            </h6>
+
+            <!-- weight -->
+            <h6 class="col s6 pokemon-stats">
+                <i class="fas fa-weight-hanging header-color"></i>
+                {{ pokemon.weight }} lb
+            </h6>
+
         </div>
-
     </div>
 
-    <!-- column 2 -->
-    <div class="col s4">
 
-        <!-- name and species-->
-        <h4 class="center-align">{{ pokemon.name|upper }}</h4>
-        <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
-        <br>
-        <!-- type(s)-->
-        <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-            {% if pokemon.type[1] == "" %}
-            <div class="col s6 offset-s3 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[0]|upper }}">
-            </div>
-            {% else %}
-            <div class="col s6 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[0]|upper }}">
-            </div>
-            <div class="col s6 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[1]|upper }}">
-            </div>
-            {% endif %}
-        </form>
-    </div>
 
     <!-- column 3 -->
     <div class="col s4 center-align">
         <div class="row">
-
+            <br>
             <!-- created by -->
 <<<<<<< HEAD
             <div class="col s12"><em class="header-color">by {{ pokemon.created_by }}</em></div>
 
 =======
             <div class="col s12">
-                <em class="header-color">Discovered by {{ pokemon.created_by }}</em>  
+                <em>Discovered by <span class="header-color">{{ pokemon.created_by }}</span></em>
             </div>
+<<<<<<< HEAD
             
 >>>>>>> 054143a (add new styling to pokedex entries)
+=======
+
+            <br><br>
+>>>>>>> dc33171 (rearrange pokdex entry)
             <!-- description -->
             <div class="col s12 pokemon-desc">
                 <p>{{ pokemon.desc }}</p>
             </div>
 
+<<<<<<< HEAD
             <!-- height -->
             <div class="col s5 offset-s1">
                 <span class="pokemon-stats">
@@ -117,6 +153,8 @@
 =======
 >>>>>>> 054143a (add new styling to pokedex entries)
 
+=======
+>>>>>>> dc33171 (rearrange pokdex entry)
         </div>
 
         <!-- rating -->
