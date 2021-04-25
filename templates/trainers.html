@@ -34,13 +34,13 @@
 
             <!-- column 1 -->
             <div class="col s6">
-                <!-- img -->
-                <div class="center-align">
-                    <img class="trainer-img" src="{{ trainer.img_src }}" alt="{{ trainer.name }}" height="200">
+
+                <!-- image -->
+                <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ trainer.img_src }}');">
                 </div>
 
                 <!-- trainer ID -->
-                <div class="pokemon-id center-align"><strong class="">No. {{ trainer.trainer_id }}</strong>
+                <div class="pokemon-id center-align header-color"><strong class="">No. {{ trainer.trainer_id }}</strong>
                 </div>
             </div>
 
@@ -50,7 +50,8 @@
 
                 <!-- name & hometown -->
                 <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|upper }}</strong></div>
-                <div class="trainer-hometown center-align"><em class="header-color">from {{ trainer.hometown|capitalize }}</em></div>
+                <div class="trainer-hometown center-align"><em class="header-color">from
+                        {{ trainer.hometown|capitalize }}</em></div>
                 <br>
                 <!-- <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
                 </div> -->

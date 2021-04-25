@@ -11,16 +11,18 @@
     </a>
 </div>
 
+<!-- profile -->
 <div class="row card pokedex-entry theme">
     <div class="col s8">
         <div class="row">
 
             <!-- column 1 -->
             <div class="col s6">
-                <!-- img -->
-                <div class="center-align">
-                    <img class="pokemon-img" src="{{ trainer.img_src }}" alt="{{ trainer.name }}" height="200">
+
+                <!-- image -->
+                <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ trainer.img_src }}');">
                 </div>
+
 
                 <!-- trainer ID -->
                 <div class="pokemon-id center-align"><strong>No. {{ trainer.trainer_id }}</strong>
@@ -34,7 +36,8 @@
                 <!-- name & hometown -->
                 <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|capitalize }}</strong>
                 </div>
-                <div class="trainer-hometown center-align header-color"><em>from {{ trainer.hometown|capitalize }}</em></div>
+                <div class="trainer-hometown center-align header-color"><em>from {{ trainer.hometown|capitalize }}</em>
+                </div>
                 <br>
                 <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
                 </div>
@@ -107,25 +110,36 @@
     </div>
 </div>
 
+<!-- header -->
 <div class="transparent center-align">
     <h4 class="white-text text-shadow">Pokemon discovered by {{trainer.name}}</h4>
 </div>
 
-
-<!-- pokemon created by trainer -->
+<!-- display pokemon created by user -->
 {% if pokedex %}
 {% for pokemon in pokedex %}
+
 <div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+    {% if pokemon.dex_id > 1000 %}
+    {% set display_id = -(pokemon.dex_id - 1000) %}
+    {% endif %}
 
     <!-- column 1 -->
     <div class="col s4 center-align">
-        <img class="pokemon-img" src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" height="200"><br>
+
+        <!-- image -->
+        <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ pokemon.img_src }}');">
+        </div>
 
         <!-- edit/delete buttons -->
         <div class="row pokedex-under-img">
-            <div class="col s4 center-align"></div>
-            <div class="col s4 pokedex-id center-align"><strong>No. {{ pokemon.dex_id }}</strong></div>
-            <div class="col s4 center-align"></div>
+            <div class="col s4 offset-s4 pokedex-id header-color">
+                {% if pokemon.dex_id < 1000 %}
+                <strong>No. {{ pokemon.dex_id }}</strong>
+                {% else %}
+                <strong>No. {{ display_id }}</strong>
+                {% endif %}
+            </div>
         </div>
 
     </div>
