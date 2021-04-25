@@ -2,9 +2,10 @@
 {% block content %}
 
 
-<div class="card theme">
+<div class="card pokedex-entry text-shadow">
     <div class="card-content">
-        <span class="card-title header-color">Think you've spotted a Dark Pokemon?</span>
+        <span class="card-title center-align header-color">Think you've spotted a Dark Pokemon?</span>
+        <br>
         <p>
             Sed deserunt cumque eos rerum galisum aut optio
             iusto qui similique possimus id dolor quibusdam. Aut saepe velit vel dolor perspiciatis a eaque perspiciatis
@@ -29,7 +30,7 @@
     </div> -->
 </div>
 
-<div class="row card theme">
+<div class="row card pokedex-entry">
     <form class="col s12" action="{{ url_for('contribute') }}" method="POST">
         <div class="row">
             <div class="col s12">
@@ -92,7 +93,6 @@
                 <label for="weight">Weight (pounds)</label>
             </div>
 
-
             <!-- Description -->
             <div class="input-field col s12">
                 <input id="desc" type="text" name="desc" required>
@@ -105,16 +105,21 @@
                 <label for="img_src">Image URL</label>
             </div>
 
-            <!-- action buttons -->
-            <div class="input-field col s12 center-align">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                    <i class="fas fa-arrow-right right"></i>
+            <!-- action button -->
+            <div class="input-field col s4 offset-s4 center-align">
+                <button class="btn waves-effect waves-light yellow darken-3" type="submit" name="action">
+                    Add To Pokedex
+                    <i class="fas fa-file-invoice right"></i>
                 </button>
-                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light red">
-                    Cancel <i class="fas fa-circle right"></i>
-                </a>
-
             </div>
+
+            <!-- cancel button -->
+            <div class="input-field col s4 center-align">
+                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light grey right">
+                    Cancel <i class="fas fa-window-close right"></i>
+                </a>
+            </div>
+
         </div>
     </form>
 </div>
