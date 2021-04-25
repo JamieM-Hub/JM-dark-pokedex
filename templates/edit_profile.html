@@ -147,7 +147,7 @@
 
     <!-- cancel -->
     <div class="col s4">
-        <a href="{{ url_for('profile', username=session['user']) }}" class="btn btn-large waves-effect waves-light red">
+        <a href="{{ url_for('profile', username=session['user']) }}" class="btn btn-large waves-effect waves-light grey">
             Cancel
             <i class="fas fa-window-close right"></i>
         </a>
@@ -163,14 +163,13 @@
         </button>
     </div>
 
-    <!-- edit -->
+    <!-- update -->
     <div class="col s4">
-        <button class="btn btn-large waves-effect waves-light yellow darken-3" form="edit-profile"
-            formaction="{{ url_for('edit_profile', username=session['user'], index=index) }}" type="submit"
-            name="action">
-            Confirm
+        <a class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3"
+            href="#edit-modal" type="submit" name="action">
+            Update
             <i class="fas fa-clipboard-check right"></i>
-        </button>
+        </a>
     </div>
 
 </div>
@@ -413,5 +412,23 @@
     </form>
 </div>
 
+<!-- edit modal -->
+<div id="edit-modal" class="modal theme">
+    <div class="modal-content center-align">
+        <p>Are you happy with your changes?</p>
+    </div>
+    <div class="modal-footer center-align">
+        <button class="btn btn-large modal-close waves-effect waves-light grey">
+            Cancel
+            <i class="fas fa-window-close right"></i>
+        </button>
+        <button class="btn btn-large modal-close waves-effect waves-light yellow darken-3" form="edit-profile"
+            formaction="{{ url_for('edit_profile', username=session['user'], index=index) }}" type="submit"
+            name="action">
+            Confirm
+            <i class="fas fa-clipboard-check right"></i>
+        </button>
+    </div> 
+</div>
 
 {% endblock %}
