@@ -10,6 +10,14 @@ body {
 
 }
 
+.pokedex-entry > form {
+    padding: 1vh 3vh !important;
+}
+
+.row {
+    margin: 0;
+}
+
 .card {
     padding: 2vh;
 }
@@ -129,15 +137,26 @@ section {
 /* POKEDEX */
 
 .pokedex-entry {
+<<<<<<< HEAD
     padding: 2vh 0 1vh 0;
     background-color: rgba(255, 255, 255, 1);
+=======
+    padding: 2vh 0;
+    background-color: rgba(214, 197, 142, 0.35) !important;
+    /* background-color: rgba(88, 89, 38, 0.7) !important; */
+    color: whitesmoke;
+    margin-bottom: 6vh;
+    border: ridge 2vh rgba(77, 16, 77, 0.9);
+    margin: 3vh 0;
+>>>>>>> 2b24b86 (make style and structure adjusts for pokedex entry, trainer bio and divider)
 }
 
 .pokemon-img {
-    border: solid 2.5px #e7d75c;
-    height: 17vh;
-    width: 80%;
-    left: 10%;
+    border: outset 0.75vh rgba(77, 16, 77, 0.9);
+    /* border: outset 0.75vh #e7d75c; */
+    height: 22vh;
+    width: 60%;
+    left: 20%;
     position: relative;
     background-position: center;
     background-repeat: no-repeat;
@@ -155,8 +174,26 @@ section {
     margin: 0;
 }
 
+<<<<<<< HEAD
 .pokemon-desc {
     height: 13vh;
+=======
+.pokedex-text {
+    font-size: 1.75vh;
+}
+
+.pokemon-name {
+    line-height: 1vh;
+    font-size: 4vh;
+}
+
+.pokemon-species {
+    line-height: 1vh;
+}
+
+.pokemon-desc {
+    height: auto;
+>>>>>>> 2b24b86 (make style and structure adjusts for pokedex entry, trainer bio and divider)
 }
 
 .pokemon-stats {
@@ -167,11 +204,23 @@ section {
     padding-top: 0.5vh !important;
 }
 
+/* DIVIDERS */
+
+hr {
+    width: 30vw;
+    left:35vw;
+    border:none;
+    border-top: dotted 1vh rgba(77, 16, 77, 0.9);
+    /* border: ridge 2vh rgba(77, 16, 77, 0.9); */
+
+}
+
 /* TRAINER PROFILE */
 
 .trainer-name {
     margin: 0;
-    font-size: 45px;
+    font-size: 4vh;
+    color: whitesmoke;
 }
 
 .trainer-img {
@@ -179,11 +228,23 @@ section {
 }
 
 .trainer-bio {
+<<<<<<< HEAD
     padding: 3.5vh 0 0 3vw;
     font-size: medium;
     height: 18vh;
     margin: 0;
     text-align: center;
+=======
+    padding: 2vh;
+    padding-bottom: 0 !important;
+    font-size: medium;
+    height: auto;
+    margin: 0;
+    text-align: center;
+    width: 75%;
+    left: 12.5%;
+    position: relative;
+>>>>>>> 2b24b86 (make style and structure adjusts for pokedex entry, trainer bio and divider)
 }
 
 /* THEMES */
@@ -222,6 +283,14 @@ section {
 
 .active {
     color: red;
+}
+
+#github {
+    background-color: #1f477e;
+}
+
+#linkedin {
+    background-color: #0a66c2;
 }
 
 /* TYPES */
