@@ -140,9 +140,9 @@
 
                             <!-- display "-" option if pokemon does not have a secondary type -->
                             {% if pokemon.type[1] != "none" %}
-                            <option value="none">-</option>
+                            <option value="">-</option>
                             {% else %}
-                            <option value="none" selected>-</option>
+                            <option value="" selected>-</option>
                             {% endif %}
 
                             <!-- display each type in the types list as options, with current selected -->

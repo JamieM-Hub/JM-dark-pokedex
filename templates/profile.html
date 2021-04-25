@@ -25,7 +25,7 @@
 
 
                 <!-- trainer ID -->
-                <div class="pokemon-id center-align"><strong>No. {{ trainer.trainer_id }}</strong>
+                <div class="pokemon-id center-align header-color"><strong>No. {{ trainer.trainer_id }}</strong>
                 </div>
             </div>
 
@@ -34,12 +34,13 @@
                 <br>
 
                 <!-- name & hometown -->
-                <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|capitalize }}</strong>
+                <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|upper }}</strong>
                 </div>
-                <div class="trainer-hometown center-align header-color"><em>from {{ trainer.hometown|capitalize }}</em>
+                <div class="trainer-hometown center-align header-color"><em>from {{ trainer.hometown }}</em>
                 </div>
                 <br>
-                <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
+                <div class="trainer-rating center-align header-color"><i class="far fa-arrow-alt-circle-up"></i>
+                    {{ trainer.rating }}
                 </div>
 
             </div>
@@ -74,7 +75,7 @@
             <div class="col s12">
                 <div class="">
                     Favourite Pokemon<br>
-                    <input class="btn btn-small btn-pokemon grey header-color" id="query" name="query" type="submit"
+                    <input class="btn btn-small btn-pokemon yellow darken-3 id="query" name="query" type="submit"
                         value="{{ trainer.fav_pokemon|upper }}">
                 </div>
             </div>
@@ -110,13 +111,16 @@
     </div>
 </div>
 
+
+
+<!-- display pokemon created by user -->
+{% if pokedex %}
+
 <!-- header -->
 <div class="transparent center-align">
     <h4 class="white-text text-shadow">Pokemon discovered by {{trainer.name}}</h4>
 </div>
 
-<!-- display pokemon created by user -->
-{% if pokedex %}
 {% for pokemon in pokedex %}
 
 <div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
@@ -154,7 +158,7 @@
         <br>
         <!-- type(s)-->
         <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-            {% if not pokemon.type[1] %}
+            {% if pokemon.type[1] == "null" %}
             <div class="col s12 pokemon-type">
                 <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
                     value="{{ pokemon.type[0]|upper }}">
@@ -171,18 +175,17 @@
             {% endif %}
         </form>
 
-        <!-- modify button -->
-        <div class="row center-align">
-            <br>
-            <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
-                class="waves-effect waves-light btn-small grey">MODIFY</a>
-        </div>
+
     </div>
 
     <!-- column 3 -->
     <div class="col s4 center-align">
         <div class="row header-color">
-            <br>
+            <!-- modify button -->
+            <div class="row center-align">
+                <a href="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}"
+                    class="waves-effect waves-light btn-small yellow darken-3">MODIFY</a>
+            </div>
 
             <!-- height -->
             <div class="col s6">
@@ -205,11 +208,13 @@
                 {{ pokemon.rating }}
                 <i class="far fa-arrow-alt-circle-up"></i>
             </h5> -->
+
     </div>
 
 </div>
 
 {% endfor %}
+
 {% endif %}
 
 {% endblock %}

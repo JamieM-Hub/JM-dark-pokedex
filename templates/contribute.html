@@ -32,19 +32,22 @@
 <div class="row card theme">
     <form class="col s12" action="{{ url_for('contribute') }}" method="POST">
         <div class="row">
-
-            <!-- Name -->
-            <div class="input-field col s6 m3">
-                <input id="name" type="text" name="name" required>
-                <label for="name">Name</label>
-            </div>
-            <!-- Species -->
-            <div class="input-field col s6 m3">
-                <input id="species" type="text" name="species" required>
-                <label for="species">Species</label>
+            <div class="col s12">
+                <div class="row">
+                    <!-- Name -->
+                    <div class="input-field col s6">
+                        <input id="name" type="text" name="name" required>
+                        <label for="name">Name</label>
+                    </div>
+                    <!-- Species -->
+                    <div class="input-field col s6">
+                        <input id="species" type="text" name="species" required>
+                        <label for="species">Species</label>
+                    </div>
+                </div>
             </div>
             <!-- Type 1 -->
-            <div class="input-field col s6 m3">
+            <div class="input-field col s6">
                 <select name="type_1" required>
                     <option value="" disabled selected>-</option>
 
@@ -58,7 +61,7 @@
             </div>
 
             <!-- Type 2 -->
-            <div class="input-field col s6 m3">
+            <div class="input-field col s6">
                 <select name="type_2">
                     <option value="" selected>-</option>
 
@@ -72,19 +75,19 @@
             </div>
 
             <!-- Height (feet) -->
-            <div class="input-field col s4 m2 offset-m3">
+            <div class="input-field col s4">
                 <input id="height_feet" type="number" name="height_feet" max="25" required>
                 <label for="height_feet">Height (feet)</label>
             </div>
 
             <!-- Height (inches) -->
-            <div class="input-field col s4 m2">
+            <div class="input-field col s4">
                 <input id="height_inches" type="number" name="height_inches" max="11" required>
                 <label for="height_inches">Height (inches)</label>
             </div>
 
             <!-- Weight -->
-            <div class="input-field col s4 m2">
+            <div class="input-field col s4">
                 <input id="weight" type="number" name="weight" max="999" required>
                 <label for="weight">Weight (pounds)</label>
             </div>

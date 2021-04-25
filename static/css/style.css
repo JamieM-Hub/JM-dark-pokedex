@@ -20,6 +20,10 @@ body {
     color: seashell;
 }
 
+.btn-type {
+    width: 85%;
+}
+
 .fav-pokemon {
     background-color: black;
     color: #e7d75c;
@@ -125,7 +129,7 @@ section {
 /* POKEDEX */
 
 .pokedex-entry {
-    padding: 15px 0;
+    padding: 2vh 0 1vh 0;
     background-color: rgba(255, 255, 255, 1);
 }
 
@@ -151,6 +155,14 @@ section {
     margin: 0;
 }
 
+.pokemon-desc {
+    height: 13vh;
+}
+
+.pokemon-stats {
+    letter-spacing: 0.05vw;
+}
+
 .pokedex-id {
     padding-top: 0.5vh !important;
 }
@@ -167,8 +179,11 @@ section {
 }
 
 .trainer-bio {
-    padding: 20px;
+    padding: 3.5vh 0 0 3vw;
     font-size: medium;
+    height: 18vh;
+    margin: 0;
+    text-align: center;
 }
 
 /* THEMES */

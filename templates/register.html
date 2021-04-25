@@ -3,7 +3,7 @@
 
 <!-- info section -->
 <div class="row card theme">
-    <h4 class="center-align header-color">Register</h4>
+    <h4 class="center-align header-color">So you want to become a Trainer, huh?</h4>
     <p>
         Pretium quam vulputate dignissim suspendisse in.
         Vestibulum mattis ullamcorper velit sed. Varius vel pharetra vel turpis nunc eget. Sit amet luctus
@@ -24,24 +24,27 @@
 <!-- form -->
 <div class="row card theme">
     <form class="col s12" method="POST" action="" autocomplete="off">
-
-        <!-- top section -->
-
-
         <div class="row">
-            <!-- Name -->
-            <div class="input-field col s6 m3">
-                <input id="name" type="text" name="name" required>
-                <label for="name">Name</label>
-            </div>
-            <!-- Hometown -->
-            <div class="input-field col s6 m3">
-                <input id="hometown" type="text" name="hometown" required>
-                <label for="hometown">Hometown</label>
-            </div>
 
+            <!-- Top Left column -->
+            <div class="col s12">
+                <div class="row">
+
+                    <!-- Name -->
+                    <div class="input-field col s6">
+                        <input id="name" type="text" name="name" maxlength="20" required>
+                        <label for="name">Name</label>
+                    </div>
+                    <!-- Hometown -->
+                    <div class="input-field col s6">
+                        <input id="hometown" type="text" name="hometown" maxlength="20" required>
+                        <label for="hometown">Hometown</label>
+                    </div>
+
+                </div>
+            </div>
             <!-- favourite type -->
-            <div class="input-field col s6 m3">
+            <div class="input-field col s6">
                 <select name="type_1" required>
                     <option value="none" selected>-</option>
                     <!-- display each type in the types list as options, with current selected -->
@@ -54,7 +57,7 @@
             </div>
 
             <!-- Favourite Pokemon -->
-            <div class="input-field col s6 m3">
+            <div class="input-field col s6">
                 <select name="fav_pokemon">
                     <option value="none" selected>-</option>
                     {% for pokemon in pokedex %}
@@ -63,8 +66,8 @@
                 </select>
                 <label for="fav_pokemon">Favourite Pokemon</label>
             </div>
-        </div>
 
+        </div>
         <!-- Squad section -->
         <div class="row">
 
@@ -88,7 +91,7 @@
 
             <!-- Bio -->
             <div class="input-field col s12">
-                <input id="bio" name="bio" type="text" required>
+                <textarea id="bio" name="bio" maxlength="387" class="materialize-textarea white-text" required></textarea>
                 <label for="bio">Bio</label>
             </div>
 
@@ -100,13 +103,13 @@
 
             <!-- username -->
             <div class="input-field col s6">
-                <input id="username" name="username" type="text" required>
+                <input id="username" name="username" type="text" maxlength="20" required>
                 <label for="username">Username</label>
             </div>
 
             <!-- password -->
             <div class="input-field col s6">
-                <input id="password" name="password" type="password" required>
+                <input id="password" name="password" type="password" maxlength="30" required>
                 <label for="password">Password</label>
             </div>
 
