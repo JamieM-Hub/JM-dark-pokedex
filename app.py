@@ -104,9 +104,13 @@ def edit_pokemon(dex_id):
             "in_squad": selected_pokemon['in_squad'],
             "rated_by": selected_pokemon['rated_by']
         }
-        mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
-        flash(submit["name"].capitalize() + " updated!")
-        return redirect(url_for("get_pokemon", id=submit['dex_id']))
+        if submit['type'][0] == submit['type'][1]:
+            flash("Pokemon types can't be identical.")
+            return redirect (url_for('edit_pokemon', dex_id=dex_id))           
+        else:
+            mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
+            flash(submit["name"].capitalize() + " updated!")
+            return redirect(url_for("get_pokemon", id=submit['dex_id']))
 
     return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon, types=types)
 
@@ -287,9 +291,13 @@ def contribute():
             "rated_by": []
 
         }
-        mongo.db.pokemon.insert_one(new_pokemon)
-        flash("Pokemon discovered!")
-        return redirect(url_for('get_pokemon'))
+        if new_pokemon['type'][0] == new_pokemon['type'][1]:
+            flash("Pokemon types can't be identical.")
+            return redirect(url_for('contribute'))           
+        else:
+            mongo.db.pokemon.insert_one(new_pokemon)
+            flash("Pokemon discovered!")
+            return redirect(url_for('get_pokemon'))
 
     return render_template("contribute.html", types=types)
 
