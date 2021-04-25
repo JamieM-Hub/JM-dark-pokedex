@@ -110,7 +110,7 @@ def edit_pokemon(dex_id):
         else:
             mongo.db.pokemon.update({"_id": ObjectId(dex_id)}, submit)
             flash(submit["name"].capitalize() + " updated!")
-            return redirect(url_for("get_pokemon", id=submit['dex_id']))
+            return redirect(url_for("profile", username=session['user']))
 
     return render_template("edit_pokemon.html", pokedex=pokedex, pokemon=selected_pokemon, types=types)
 
@@ -297,7 +297,7 @@ def contribute():
         else:
             mongo.db.pokemon.insert_one(new_pokemon)
             flash("Pokemon discovered!")
-            return redirect(url_for('get_pokemon'))
+            return redirect(url_for('profile', username=session['user']))
 
     return render_template("contribute.html", types=types)
 
