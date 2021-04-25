@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card theme">
+<!-- info -->
+<div class="card pokedex-entry text-shadow">
     <div class="card-content">
-        <span class="card-title header-color">Edit Pokemon</span>
+        <span class="card-title center-align header-color">Edit Pokemon</span>
+        <br>
         <p>
             Lorem ipsum dolor sit amet. Et labore veniam ut reprehenderit expedita est labore ullam in vitae consectetur
             in dolore optio. Sit minima perspiciatis nam maiores consequatur aut quibusdam nostrum qui repellat quae aut
@@ -15,87 +17,102 @@
     </div>
 </div>
 
-<div class="card pokedex-entry theme">
-    <div class="row">
+<!-- preview -->
+<div class="row card pokedex-entry theme text-shadow" id="{{ pokemon.dex_id }}">
+    {% if pokemon.dex_id > 1000 %}
+    {% set display_id = -(pokemon.dex_id - 1000) %}
+    {% endif %}
 
-        <!-- column 1 -->
-        <div class="col s4 center-align">
+    <!-- column 1 -->
+    <div class="col s4 center-align">
 
-            <!-- image -->
-            <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ pokemon.img_src }}');">
-            </div>
-
-            <!-- edit/delete buttons -->
-            <div class="row pokedex-under-img">
-                <div class="col s4 offset-s4 pokedex-id header-color">
-                    {% if pokemon.dex_id < 1000 %}
-                    <strong>No. {{ pokemon.dex_id }}</strong>
-                    {% else %}
-                    <strong>No. {{ display_id }}</strong>
-                    {% endif %}
-                </div>
-            </div>
-
+        <!-- image -->
+        <div class="col s10 offset-s1 pokemon-img" style="background-image: url('{{ pokemon.img_src }}');">
         </div>
 
-
-        <!-- column 2 -->
-        <div class="col s4">
-            <br>
-            <!-- name and species-->
-            <h4 class="center-align">{{ pokemon.name|upper }}</h4>
-            <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
-            <br>
-            <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-                {% if not pokemon.type[1] %}
-                <div class="col s12 pokemon-type">
-                    <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[0]|upper }}">
-                </div>
+        <!-- edit/delete buttons -->
+        <div class="row pokedex-under-img">
+            <div class="col s4 offset-s4 pokedex-id header-color">
+                {% if pokemon.dex_id < 1000 %}
+                <strong>No. {{ pokemon.dex_id }}</strong>
                 {% else %}
-                <div class="col s6 pokemon-type">
-                    <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[0]|upper }}">
-                </div>
-                <div class="col s6 pokemon-type">
-                    <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[1]|upper }}">
-                </div>
+                <strong>No. {{ display_id }}</strong>
                 {% endif %}
-            </form>
-        </div>
-
-        <!-- column 3 -->
-        <div class="col s4 center-align">
-            <div class="row header-color">
-                <br>
-                <!-- height -->
-                <div class="col s6">
-                    <h6><i class="fas fa-arrows-alt-v"></i>{{ pokemon.height[0] }}'{{ pokemon.height[1] }}"</h6>
-                </div>
-                <!-- weight -->
-                <div class="col s6">
-                    <h6><i class="fas fa-weight-hanging"></i>{{ pokemon.weight }} lb</h6>
-                </div>
             </div>
-
-            <!-- description -->
-            <div class="row">
-                <p>{{ pokemon.desc }}</p>
-            </div>
-            <!-- <div class="row"><em>by {{ pokemon.created_by }}</em></div> -->
-            <!-- rating -->
-            <!-- <h5 class="right-align">
-                {{ pokemon.rating }}
-                <i class="far fa-arrow-alt-circle-up"></i>
-            </h5> -->
         </div>
 
     </div>
+
+    <!-- column 2 -->
+    <div class="col s4">
+
+        <!-- name and species-->
+        <h4 class="center-align">{{ pokemon.name|upper }}</h4>
+        <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
+        <br>
+        <!-- type(s)-->
+        <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+            {% if pokemon.type[1] == "" %}
+            <div class="col s6 offset-s3 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[0]|upper }}">
+            </div>
+            {% else %}
+            <div class="col s6 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[0]|upper }}">
+            </div>
+            <div class="col s6 pokemon-type">
+                <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                    value="{{ pokemon.type[1]|upper }}">
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- column 3 -->
+    <div class="col s4 center-align">
+        <div class="row">
+
+            <!-- created by -->
+            <div class="col s12">
+                <em class="header-color">Discovered by {{ pokemon.created_by }}</em>  
+            </div>
+            
+            <!-- description -->
+            <div class="col s12 pokemon-desc">
+                <p>{{ pokemon.desc }}</p>
+            </div>
+
+            <!-- height -->
+            <div class="col s5 offset-s1">
+                <span class="pokemon-stats">
+                    {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                    <i class="fas fa-arrows-alt-v header-color"></i>
+                </span>
+            </div>
+
+            <!-- weight -->
+            <div class="col s5">
+                <span class="pokemon-stats">
+                    <i class="fas fa-weight-hanging header-color"></i>
+                    {{ pokemon.weight }} lb
+                </span>
+            </div>
+
+        </div>
+
+        <!-- rating -->
+        <!-- <h5 class="right-align">
+                {{ pokemon.rating }}
+                <i class="far fa-arrow-alt-circle-up"></i>
+            </h5> -->
+    </div>
+
 </div>
 
-<div class="row card theme center-align">
+<!-- form -->
+<div class="row card pokedex-entry text-shadow center-align">
     <form id="edit-pokemon" class="col s12" action="{{ url_for('edit_pokemon', dex_id=pokemon._id) }}" method="POST">
         <div class="row">
             <!-- Top row -->
@@ -218,13 +235,14 @@
                     Cancel <i class="fas fa-window-close right"></i>
                 </a>
 
+                <br>
             </div>
         </div>
 
     </form>
 </div>
 
-<!-- Edit Modal -->
+<!-- edit modal -->
 <div id="edit-modal" class="modal theme">
     <div class="modal-content center-align">
         <h4 class="header-color">Edit Pokemon</h4>
@@ -232,17 +250,19 @@
     </div>
     <div class="modal-footer center-align">
         <button class="btn modal-close waves-effect waves-green grey">
-            Cancel <i class="fas fa-window-close right"></i>
+            Cancel 
+            <i class="fas fa-window-close right"></i>
         </button>
         <button type="submit" form="edit-pokemon"
             formaction="{{ url_for('edit_pokemon', _anchor=pokemon.dex_id, dex_id=pokemon._id) }}"
             class="btn modal-close waves-effect waves-green yellow darken-3">
-            Confirm <i class="fas fa-check right"></i>
+            Confirm 
+            <i class="fas fa-check right"></i>
         </button>
     </div> 
 </div>
 
-<!-- Delete Modal -->
+<!-- delete modal -->
 <div id="delete-modal" class="modal theme">
     <div class="modal-content center-align">
         <h4 class="header-color">Delete Pokemon</h4>
