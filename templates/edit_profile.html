@@ -43,15 +43,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-                <!-- edit/delete buttons -->
-                <div class="row pokedex-under-img">
-                    <div class="col s4 offset-s4 pokedex-id center-align header-color">
-                        <strong>No. {{ trainer.trainer_id }}</strong>
-
-                    </div>
-                </div>
-=======
             <!-- middle column-->
             <div class="col s6">
                 <div class="row">
@@ -72,23 +63,11 @@
                         <div class="pokemon-img" style="background-image: url('{{ trainer.img_src }}');">
                         </div>
                     </div>
->>>>>>> de65af2 (add new styling and new row of buttons to edit profile page)
 
 
 
-<<<<<<< HEAD
-                <!-- name & hometown -->
-                <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name }}</strong>
-                </div>
-                <div class="trainer-hometown center-align"><em class="header-color">from
-                        {{ trainer.hometown }}</em></div>
-                <br>
-                <!-- <div class="trainer-rating center-align"><i class="far fa-arrow-alt-circle-up"></i> {{ trainer.rating }}
-                </div> -->
-=======
                 </div>
             </div>
->>>>>>> de65af2 (add new styling and new row of buttons to edit profile page)
 
             <!-- right column -->
             <div class="col s3">
@@ -147,7 +126,8 @@
 
     <!-- cancel -->
     <div class="col s4">
-        <a href="{{ url_for('profile', username=session['user']) }}" class="btn btn-large waves-effect waves-light grey">
+        <a href="{{ url_for('profile', username=session['user']) }}"
+            class="btn btn-large waves-effect waves-light grey">
             Cancel
             <i class="fas fa-window-close right"></i>
         </a>
@@ -165,8 +145,8 @@
 
     <!-- update -->
     <div class="col s4">
-        <a class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3"
-            href="#edit-modal" type="submit" name="action">
+        <a class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3" href="#edit-modal" type="submit"
+            name="action">
             Update
             <i class="fas fa-clipboard-check right"></i>
         </a>
@@ -175,12 +155,6 @@
 </div>
 
 <!-- edit profile -->
-<<<<<<< HEAD
-<div class="row card theme">
-    <form class="col s12" method="POST" action="" autocomplete="off">
-        <div class="row">
-
-=======
 <div class="row card pokedex-entry">
     <form class="col s12" method="POST" action="" id="edit-profile" autocomplete="off">
         <div class="row">
@@ -205,7 +179,6 @@
                 <label for="password">Password</label>
             </div>
 
->>>>>>> de65af2 (add new styling and new row of buttons to edit profile page)
             <!-- Top Left column -->
             <div class="col s12">
                 <div class="row">
@@ -228,7 +201,6 @@
 
             <!-- Top Right column -->
 
-<<<<<<< HEAD
 
             <!-- Favourite Type -->
             <div class="input-field col s6">
@@ -241,20 +213,6 @@
                     <option value="none" selected>-</option>
                     {% endif %}
 
-=======
-
-            <!-- Favourite Type -->
-            <div class="input-field col s6">
-                <select name="fav_type" required>
-
-                    <!-- display "-" option if trainer does not have a favourite type -->
-                    {% if trainer.fav_type %}
-                    <option value="none">-</option>
-                    {% else %}
-                    <option value="none" selected>-</option>
-                    {% endif %}
-
->>>>>>> de65af2 (add new styling and new row of buttons to edit profile page)
                     <!-- display each type in the types list as options, with current favourite selected -->
                     {% for type in types %}
                     {% if trainer.fav_type == type %}
@@ -271,7 +229,6 @@
             <!-- Favourite Pokemon -->
             <div class="input-field col s12 m6">
                 <select name="fav_pokemon">
-<<<<<<< HEAD
 
                     <!-- generate empty option -->
                     {% if trainer.squad[n] %}
@@ -289,25 +246,6 @@
                     {% endif %}
                     {% endfor %}
 
-=======
-
-                    <!-- generate empty option -->
-                    {% if trainer.squad[n] %}
-                    <option value="none">-</option>
-                    {% else %}
-                    <option value="none" selected>-</option>
-                    {% endif %}
-
-                    <!-- display pokemon in pokedex as options, with current favourite selected-->
-                    {% for pokemon in pokedex %}
-                    {% if trainer.fav_pokemon == pokemon.name %}
-                    <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
-                    {% else %}
-                    <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
-                    {% endif %}
-                    {% endfor %}
-
->>>>>>> de65af2 (add new styling and new row of buttons to edit profile page)
                 </select>
                 <label for="fav_pokemon">Favourite Pokemon</label>
             </div>
@@ -374,40 +312,6 @@
                 <input id="username" name="username" type="text" maxlength="20" value="{{ trainer.username }}" disabled required>
                 <label for="username">Username</label>
             </div> -->
-<<<<<<< HEAD
-            <!-- private/public switch -->
-            <div class="switch center-align">
-                <label for="private">
-                    Private
-                    {% if trainer.private %}
-                    <input type="checkbox" id="private" name="private">
-                    {% else %}
-                    <input type="checkbox" id="private" name="private" checked>
-                    {% endif %}
-                    <span class="lever"></span>
-                    Public
-                </label>
-            </div>
-            <!-- password -->
-            <div class="input-field col s6 offset-s3">
-                <input id="password" name="password" type="password" maxlength="30" value="" required>
-                <label for="password">Password</label>
-            </div>
-
-
-
-            <!-- Confirm/cancel buttons -->
-            <div class="input-field col s12 center-align">
-                <button class="btn waves-effect waves-light yellow darken-3" type="submit" name="action">Update
-                    <i class="fas fa-clipboard-check right"></i>
-                </button>
-                <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light grey">
-                    Cancel <i class="fas fa-circle right"></i>
-                </a>
-            </div>
-
-=======
->>>>>>> de65af2 (add new styling and new row of buttons to edit profile page)
         </div>
     </form>
 </div>
