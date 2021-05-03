@@ -233,7 +233,7 @@
             <br>
             <!-- type(s)-->
             <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-                {% if pokemon.type[1] == "null" %} <div class="col s12 pokemon-type">
+                <div class="col s12 pokemon-type">
 
                     {% if pokemon.type[1] == "" %}
                     <div class="col s6 offset-s3 pokemon-type">
