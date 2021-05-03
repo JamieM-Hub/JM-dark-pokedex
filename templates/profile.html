@@ -164,6 +164,7 @@
     <!-- column 2 -->
     <div class="col s4 center-align">
         <div class="row">
+
             <!-- image -->
             <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
                 style="background-image: url('{{ pokemon.img_src }}');">
@@ -182,6 +183,7 @@
 
         </div>
     </div>
+
     <!-- column 1 -->
     <div class="col s4 center-align">
         <div class="row">
@@ -227,30 +229,6 @@
                 {{ pokemon.weight }} lb
             </h6>
 
-            <!-- name and species-->
-            <h4 class="center-align">{{ pokemon.name|upper }}</h4>
-            <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
-            <br>
-            <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-                <div class="col s12 pokemon-type">
-
-                    {% if pokemon.type[1] == "" %}
-                    <div class="col s6 offset-s3 pokemon-type">
-                        <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                            value="{{ pokemon.type[0]|upper }}">
-                    </div>
-                    {% else %}
-                    <div class="col s6 pokemon-type">
-                        <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                            value="{{ pokemon.type[0]|upper }}">
-                    </div>
-                    <div class="col s6 pokemon-type">
-                        <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                            value="{{ pokemon.type[1]|upper }}">
-                    </div>
-                    {% endif %}
-            </form>
         </div>
     </div>
 
