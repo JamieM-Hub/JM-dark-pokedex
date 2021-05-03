@@ -40,31 +40,12 @@
                             value="{{ trainer.fav_pokemon|upper }}">
                     </form>
 
-<<<<<<< HEAD
-                <!-- trainer ID -->
-                <div class="pokemon-id center-align header-color"><strong>No. {{ trainer.trainer_id }}</strong>
-=======
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
                 </div>
             </div>
 
             <!-- middle column-->
             <div class="col s6">
-<<<<<<< HEAD
-                <br>
-
-                <!-- name & hometown -->
-                <div class="trainer-name center-align"><strong class="flow-text">{{ trainer.name|upper }}</strong>
-                </div>
-                <div class="trainer-hometown center-align header-color"><em>from {{ trainer.hometown }}</em>
-                </div>
-                <br>
-                <div class="trainer-rating center-align header-color"><i class="far fa-arrow-alt-circle-up"></i>
-                    {{ trainer.rating }}
-                </div>
-=======
                 <div class="row">
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
 
                     <!-- name -->
                     <div class="col s12 center-align">
@@ -85,16 +66,6 @@
 
 
 
-<<<<<<< HEAD
-        <!-- favourite pokemon -->
-        <form class="row center-align" method="POST" action="{{url_for('search_pokemon') }}">
-            <div class="col s12">
-                <div class="">
-                    Favourite Pokemon<br>
-                    <input class="btn btn-small btn-pokemon yellow darken-3 id="query" name="query" type="submit"
-                        value="{{ trainer.fav_pokemon|upper }}">
-=======
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
                 </div>
             </div>
 
@@ -150,18 +121,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-
-
-<!-- display pokemon created by user -->
-{% if pokedex %}
-
-<!-- header -->
-<div class="transparent center-align">
-    <h4 class="white-text text-shadow">Pokemon discovered by {{trainer.name}}</h4>
-</div>
-
-=======
 <!-- buttons -->
 <div class="row center-align">
 
@@ -175,8 +134,7 @@
 
     <!-- add to pokedex -->
     <div class="col s4">
-        <a href="{{ url_for('contribute') }}"
-            class="btn btn-large waves-effect waves-light theme">
+        <a href="{{ url_for('contribute') }}" class="btn btn-large waves-effect waves-light theme">
             Add To Pokedex
             <i class="fas fa-dragon right"></i>
         </a>
@@ -193,10 +151,8 @@
 
 </div>
 
-
 {% if pokedex %}
 <!-- display list of pokemon created by user -->
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
 {% for pokemon in pokedex %}
 
 <!-- pokedex entry -->
@@ -243,17 +199,17 @@
             <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
                 {% if pokemon.type[1] == "" %}
                 <div class="col s6 offset-s3 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[0]|upper }}">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[0]|upper }}">
                 </div>
                 {% else %}
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[0]|upper }}">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[0]|upper }}">
                 </div>
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[1]|upper }}">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[1]|upper }}">
                 </div>
                 {% endif %}
             </form>
@@ -271,60 +227,38 @@
                 {{ pokemon.weight }} lb
             </h6>
 
-<<<<<<< HEAD
-        <!-- name and species-->
-        <h4 class="center-align">{{ pokemon.name|upper }}</h4>
-        <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
-        <br>
-        <!-- type(s)-->
-        <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-<<<<<<< HEAD
-            {% if pokemon.type[1] == "null" %}
-            <div class="col s12 pokemon-type">
-=======
-            {% if pokemon.type[1] == "" %}
-            <div class="col s6 offset-s3 pokemon-type">
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
-                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[0]|upper }}">
-            </div>
-            {% else %}
-            <div class="col s6 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[0]|upper }}">
-            </div>
-            <div class="col s6 pokemon-type">
-                <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                    value="{{ pokemon.type[1]|upper }}">
-            </div>
-            {% endif %}
-        </form>
-<<<<<<< HEAD
+            <!-- name and species-->
+            <h4 class="center-align">{{ pokemon.name|upper }}</h4>
+            <h6 class="center-align"><em class="header-color">{{ pokemon.species|capitalize }} Pokemon</em></h6>
+            <br>
+            <!-- type(s)-->
+            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+                {% if pokemon.type[1] == "null" %} <div class="col s12 pokemon-type">
 
-
-=======
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
-=======
+                    {% if pokemon.type[1] == "" %}
+                    <div class="col s6 offset-s3 pokemon-type">
+                        <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                            value="{{ pokemon.type[0]|upper }}">
+                    </div>
+                    {% else %}
+                    <div class="col s6 pokemon-type">
+                        <input class="btn btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                            value="{{ pokemon.type[0]|upper }}">
+                    </div>
+                    <div class="col s6 pokemon-type">
+                        <input class="btn btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                            value="{{ pokemon.type[1]|upper }}">
+                    </div>
+                    {% endif %}
+            </form>
         </div>
->>>>>>> f4acf34 (copy pokedex entry template to profile page)
     </div>
 
-
-
     <!-- column 3 -->
-<<<<<<< HEAD
-    <div class="col s4 center-align">
-<<<<<<< HEAD
-        <div class="row header-color">
-=======
-        <div class="row">
-
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
-=======
     <div class="col s4 center-align pokedex-text">
         <div class="row">
             <br>
->>>>>>> f4acf34 (copy pokedex entry template to profile page)
+
             <!-- modify button -->
             <div class="col s12 center-align">
                 <a href="{{ url_for('edit_pokemon', index=pokemon._id) }}"
@@ -333,16 +267,12 @@
                     <i class="fas fa-recycle right"></i>
                 </a>
             </div>
-<<<<<<< HEAD
-=======
 
             <br><br>
             <!-- description -->
             <div class="col s12 pokemon-desc">
                 <p>{{ pokemon.desc }}</p>
             </div>
->>>>>>> 9980f8d (add new styling and arrangement to trainer profile and created pokemon in profile page)
-
         </div>
 
         <!-- rating -->
@@ -352,7 +282,6 @@
             </h5> -->
 
     </div>
-
 </div>
 
 {% endfor %}
