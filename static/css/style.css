@@ -137,10 +137,6 @@ section {
 /* POKEDEX */
 
 .pokedex-entry {
-<<<<<<< HEAD
-    padding: 2vh 0 1vh 0;
-    background-color: rgba(255, 255, 255, 1);
-=======
     padding: 2vh 0;
     background-color: rgba(214, 197, 142, 0.35) !important;
     /* background-color: rgba(88, 89, 38, 0.7) !important; */
@@ -148,7 +144,6 @@ section {
     margin-bottom: 6vh;
     border: ridge 2vh rgba(77, 16, 77, 0.9);
     margin: 3vh 0;
->>>>>>> 2b24b86 (make style and structure adjusts for pokedex entry, trainer bio and divider)
 }
 
 .pokemon-img {
@@ -174,10 +169,6 @@ section {
     margin: 0;
 }
 
-<<<<<<< HEAD
-.pokemon-desc {
-    height: 13vh;
-=======
 .pokedex-text {
     font-size: 1.75vh;
 }
@@ -193,7 +184,6 @@ section {
 
 .pokemon-desc {
     height: auto;
->>>>>>> 2b24b86 (make style and structure adjusts for pokedex entry, trainer bio and divider)
 }
 
 .pokemon-stats {
@@ -228,13 +218,6 @@ hr {
 }
 
 .trainer-bio {
-<<<<<<< HEAD
-    padding: 3.5vh 0 0 3vw;
-    font-size: medium;
-    height: 18vh;
-    margin: 0;
-    text-align: center;
-=======
     padding: 2vh;
     padding-bottom: 0 !important;
     font-size: medium;
@@ -244,7 +227,6 @@ hr {
     width: 75%;
     left: 12.5%;
     position: relative;
->>>>>>> 2b24b86 (make style and structure adjusts for pokedex entry, trainer bio and divider)
 }
 
 /* THEMES */
