@@ -369,11 +369,11 @@ def contribute():
             "rating": 0,
             "in_squad": [],
             "rated_by": []
-
         }
+
         if new_pokemon['type'][0] == new_pokemon['type'][1]:
             flash("Pokemon types can't be identical.")
-            return redirect(url_for('contribute'))           
+            return redirect(url_for('contribute'))
         else:
             mongo.db.pokemon.insert_one(new_pokemon)
             flash("Pokemon discovered!")
@@ -430,9 +430,11 @@ def preview_contribute():
             "in_squad": [],
             "rated_by": []
         }
-        print(preview)
+        # print(preview)
         return render_template("preview_contribute.html", pokemon=preview, types=types)
-    
+    else:
+        return
+
 
 @app.route("/trainers")
 def trainers():

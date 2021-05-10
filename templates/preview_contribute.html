@@ -57,6 +57,7 @@
 
         </div>
     </div>
+
     <!-- column 1 -->
     <div class="col s4 center-align">
         <div class="row">
@@ -71,16 +72,23 @@
             <br><br><br>
 
             <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+            <div class="row center-align">
+                {% if pokemon.type[1] == "" %}
+                <div class="col s6 offset-s3 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[0]|upper }}">
+                </div>
+                {% else %}
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[0] }}" id="query" name="query"
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
                         type="submit" value="{{ pokemon.type[0]|upper }}">
                 </div>
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[1] }}" id="query" name="query"
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query"
                         type="submit" value="{{ pokemon.type[1]|upper }}">
                 </div>
-            </form>
+                {% endif %}
+            </div>
             <br>
 
             <!-- height -->
@@ -97,8 +105,6 @@
 
         </div>
     </div>
-
-
 
     <!-- column 3 -->
     <div class="col s4 center-align pokedex-text">
@@ -166,13 +172,7 @@
             <div class="col s12">
                 <div class="row">
 
-                    <!-- hidden inputs to fix update bug -->
-                    <div class="hide">
-                        <input type="text" name="dex_id" id="dex_id" value="{{ pokemon.dex_id }}">
-                        <input type="text" name="rating" id="rating" value="{{ pokemon.rating }}">
-                    </div>
-
-                    <!-- Name (3-14 letters only) -->
+                    <!-- Name (3-14 letters only, no spaces) -->
                     <div class="input-field col s6 m3">
                         <input id="name" type="text" name="name" pattern="^[a-zA-Z]{3,14}$"
                             value="{{ pokemon.name|capitalize }}" required>
@@ -182,7 +182,7 @@
                     <!-- Species (3-14 letters only, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6 m3">
                         <input id="species" type="text" name="species" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
-                            value="{{ pokemon.species|capitalize }}" required>
+                            minlength="3" maxlength="14" value="{{ pokemon.species|capitalize  }}" required>
                         <label for="species">Species</label>
                     </div>
 
@@ -205,7 +205,7 @@
 
                     <!-- Type 2 -->
                     <div class="input-field col s6 m3">
-                        <select name="type_2" required>
+                        <select name="type_2">
 
                             <!-- display "-" option if pokemon does not have a secondary type -->
                             {% if pokemon.type[1] != "none" %}
@@ -252,23 +252,22 @@
                         <input id="weight" type="number" name="weight" max="999" value="{{ pokemon.weight }}" required>
                         <label for="weight">Weight (pounds)</label>
                     </div>
+
                 </div>
             </div>
 
             <!-- Description (3-387 any characters) -->
             <div class="input-field col s12">
-                <input id="desc" type="text" name="desc" value="{{ pokemon.desc }}" minlength="3" maxlength="387"
+                <input id="desc" type="text" name="desc" minlength="3" maxlength="387" value="{{ pokemon.desc }}"
                     required>
                 <label for="desc">Description</label>
             </div>
-
 
             <!-- image URL -->
             <div class="input-field col s12">
                 <input id="img_src" type="text" name="img_src" value="{{ pokemon.img_src }}" required>
                 <label for="img_src">Image URL</label>
             </div>
-
 
         </div>
 
@@ -279,7 +278,7 @@
 <div id="contribute-modal" class="modal theme">
 
     <div class="modal-content center-align">
-        <h4 class="header-color">Add To Pokedex</h4>
+        <h4 class="header-color">Confirm Discovery</h4>
         <p>Are you sure you got that right?</p>
     </div>
 
@@ -289,12 +288,13 @@
             <i class="fas fa-window-close right"></i>
         </button>
 
-        <button type="submit" form="contribute" name="action" formaction="{{ url_for('contribute') }}"
+        <button type="submit" form="contribute" formaction="{{ url_for('contribute') }}"
             class="btn btn-large modal-close waves-effect waves-light theme">
             Confirm
             <i class="fas fa-check right"></i>
         </button>
     </div> 
+
 </div>
 
 {% endblock %}

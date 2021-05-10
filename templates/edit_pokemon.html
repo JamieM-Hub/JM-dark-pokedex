@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<!-- preview -->
+<!-- edited pokemon preview -->
 <div class="row card pokedex-entry theme text-shadow" id="{{ pokemon.dex_id }}">
     {% if pokemon.dex_id > 1000 %}
     {% set display_id = -(pokemon.dex_id - 1000) %}
@@ -58,7 +58,7 @@
             <br><br><br>
 
             <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+            <div class="row center-align">
                 {% if pokemon.type[1] == "" %}
                 <div class="col s6 offset-s3 pokemon-type">
                     <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
@@ -74,7 +74,7 @@
                         type="submit" value="{{ pokemon.type[1]|upper }}">
                 </div>
                 {% endif %}
-            </form>
+            </div>
             <br>
 
             <!-- height -->
@@ -210,7 +210,7 @@
 
                     <!-- Type 2 -->
                     <div class="input-field col s6 m3">
-                        <select name="type_2" required>
+                        <select name="type_2">
 
                             <!-- display "-" option if pokemon does not have a secondary type -->
                             {% if pokemon.type[1] != "none" %}
