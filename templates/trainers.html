@@ -110,7 +110,7 @@
                         <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
                             <div class="row">
                                 {% for n in range(6) %}
-                                {% if trainer.squad[n] %}
+                                {% if trainer.squad[n] and trainer.squad[n] != "none" %}
                                 <div class="col s12">
                                     <div class="">
                                         <input class="btn btn-small btn-pokemon theme" id="query" name="query"
