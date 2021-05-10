@@ -14,33 +14,36 @@
                     <br>
 
                     <!-- hometown-->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                    <div class="col s12 center-align">
                         <br>
                         Hometown<br>
-                        <!-- <input class="btn btn-small btn-pokemon theme" id="query" name="query" type="submit"
-                            value="{{ trainer.hometown }}"> -->
-                        <span class="header-color">{{ trainer.hometown|upper }}</span>
-                    </form>
+                        <div class="btn-small btn-pokemon theme">
+                            {{ trainer.hometown|upper }}
+                        </div>
+                        <!-- <span class="header-color">{{ trainer.hometown|upper }}</span> -->
+                    </div>
 
                     <!-- favourite type -->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                    <div class="col s12 center-align">
                         <br>
                         Favourite Type<br>
                         {% if trainer.fav_type %}
-                        <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
-                            type="submit" value="{{ trainer.fav_type|upper }}">
+                        <div class="btn-small btn-pokemon type-{{ trainer.fav_type }}">
+                            {{ trainer.fav_type|upper }}
+                        </div>
                         {% else %}
-                        <div class="btn btn-small btn-pokemon grey">-</div>
+                        <div class="btn-small btn-pokemon grey">-</div>
                         {% endif %}
-                    </form>
+                    </div>
 
                     <!-- favourite pokemon -->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                    <div class="col s12 center-align">
                         <br>
                         Favourite Pokemon<br>
-                        <input class="btn btn-small btn-pokemon yellow darken-3" id="query" name="query" type="submit"
-                            value="{{ trainer.fav_pokemon|upper }}">
-                    </form>
+                        <div class="btn-small btn-pokemon yellow darken-3">
+                            {{ trainer.fav_pokemon|upper }}
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -83,14 +86,15 @@
                         <br>
                         {% if trainer.squad %}
 
-                        <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                        <div class="center-align">
                             <div class="row">
                                 {% for n in range(6) %}
-                                {% if trainer.squad[n] %}
+                                {% if trainer.squad[n] != "none" %}
                                 <div class="col s12">
                                     <div class="">
-                                        <input class="btn btn-small btn-pokemon theme" id="query" name="query"
-                                            type="submit" value="{{ trainer.squad[n]|upper }}">
+                                        <div class="btn btn-small btn-pokemon theme">
+                                            {{ trainer.squad[n]|upper }}
+                                        </div>
                                     </div>
                                 </div>
                                 {% else %}
@@ -102,7 +106,7 @@
                                 {% endif %}
                                 {% endfor %}
                             </div>
-                        </form>
+                        </div>
 
                         {% endif %}
                     </div>
@@ -156,8 +160,8 @@
 
 </div>
 
-<!-- edit profile -->
-<div class="row card pokedex-entry">
+<!-- form -->
+<div class="row card pokedex-entry center-align">
     <form class="col s12" method="POST" action="" id="edit-profile" autocomplete="off">
         <div class="row">
 
@@ -298,8 +302,8 @@
 
             <!-- Bio (3-387 any characters) -->
             <div class="input-field col s12">
-                <textarea id="bio" name="bio" minlength="3" maxlength="387" class="materialize-textarea white-text"
-                    required>{{ trainer.bio }}</textarea>
+                <textarea id="bio" name="bio" minlength="3" maxlength="387"
+                    class="materialize-textarea white-text center-align" required>{{ trainer.bio }}</textarea>
                 <label for="bio">Bio</label>
             </div>
 

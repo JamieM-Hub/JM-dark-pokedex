@@ -71,17 +71,19 @@
             <br><br>
             <br><br><br>
 
-            <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+            <!-- types -->
+            <div class="row center-align">
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
+                    <div class="btn-large btn-type theme">
+                        TYPE
+                    </div>
                 </div>
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[1] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[1]|upper }}">
+                    <div class="btn-large btn-type theme">
+                        TYPE
+                    </div>
                 </div>
-            </form>
+            </div>
             <br>
 
             <!-- height -->

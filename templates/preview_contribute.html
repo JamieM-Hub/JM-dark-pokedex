@@ -75,17 +75,20 @@
             <div class="row center-align">
                 {% if pokemon.type[1] == "" %}
                 <div class="col s6 offset-s3 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
+                    <div class="btn-large btn-type type-{{ pokemon.type[0] }}">
+                        {{ pokemon.type[0]|upper }}
+                    </div>
                 </div>
                 {% else %}
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
+                    <div class="btn-large btn-type type-{{ pokemon.type[0] }}">
+                        {{ pokemon.type[0]|upper }}
+                    </div>
                 </div>
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[1]|upper }}">
+                    <div class="btn-large btn-type type-{{ pokemon.type[1] }}">
+                        {{ pokemon.type[1]|upper }}
+                    </div>
                 </div>
                 {% endif %}
             </div>
