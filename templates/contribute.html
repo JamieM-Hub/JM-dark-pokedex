@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- regex for input validation taken from: -->
+<!-- https://stackoverflow.com/questions/46147700/html-5-regex-that-allow-space-between-characters#46147710 -->
+
+<!-- information regarding contributions -->
 <div class="card pokedex-entry text-shadow">
     <div class="card-content">
         <span class="card-title center-align header-color">Think you've spotted a Dark Pokemon?</span>
@@ -29,7 +33,7 @@
     </div> -->
 </div>
 
-<!-- pokedex entry -->
+<!-- pokedex entry preview -->
 <div class="row card pokedex-entry theme text-shadow" id="{{ pokemon.dex_id }}">
     {% if pokemon.dex_id > 1000 %}
     {% set display_id = -(pokemon.dex_id - 1000) %}
@@ -72,12 +76,12 @@
             <!-- type(s)-->
             <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[0]|upper }}">
+                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[0] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[0]|upper }}">
                 </div>
                 <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
-                        value="{{ pokemon.type[1]|upper }}">
+                    <input class="btn btn-large btn-type theme type-{{ pokemon.type[1] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[1]|upper }}">
                 </div>
             </form>
             <br>
@@ -139,8 +143,7 @@
     <!-- preview -->
     <div class="col s4">
         <button class="btn btn-large waves-effect waves-light theme" form="contribute"
-            formaction="{{ url_for('preview_contribute') }}" type="submit"
-            name="action">
+            formaction="{{ url_for('preview_contribute') }}" type="submit" name="action">
             Preview
             <i class="fas fa-eye right"></i>
         </button>
@@ -148,8 +151,8 @@
 
     <!-- add to pokedex -->
     <div class="col s4">
-        <a href="#contribute"
-            class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3" name="action" type="submit">
+        <a href="#contribute" class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3" name="action"
+            type="submit">
             Add To Pokedex
             <i class="fas fa-dragon right"></i>
         </a>
@@ -163,14 +166,15 @@
         <div class="row">
             <div class="col s12">
                 <div class="row">
-                    <!-- Name -->
+                    <!-- Name (3-14 letters only) -->
                     <div class="input-field col s6">
-                        <input id="name" type="text" name="name" required>
+                        <input id="name" type="text" name="name" pattern="^[a-zA-Z]{3,14}$" required>
                         <label for="name">Name</label>
                     </div>
-                    <!-- Species -->
+                    <!-- Species (3-14 letters only, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6">
-                        <input id="species" type="text" name="species" required>
+                        <input id="species" type="text" name="species" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
+                            minlength="3" maxlength="14" required>
                         <label for="species">Species</label>
                     </div>
                 </div>
@@ -223,7 +227,7 @@
 
             <!-- Description -->
             <div class="input-field col s12">
-                <input id="desc" type="text" name="desc" required>
+                <input id="desc" type="text" name="desc" minlength="3" maxlength="387" required>
                 <label for="desc">Description</label>
             </div>
 
