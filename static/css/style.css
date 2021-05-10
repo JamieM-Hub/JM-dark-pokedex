@@ -56,7 +56,13 @@ body {
 .input-field input {
     color: whitesmoke;
     text-align: center;
+    border-bottom-color: #e7d75c !important;
 }
+
+label.active {
+    color: #e7d75c !important;
+}
+
 
 /* HEADER */
 
