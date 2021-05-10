@@ -37,7 +37,11 @@
                     <span class="title">Dark Pokedex</span>
                 </a>
                 <ul class="right hide-on-med-and-down">
+                    {% if session.user %}
                     <li><a href="{{ url_for('contribute') }}" class="header-color">Contribute</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}" class="header-color">Contribute</a></li>
+                    {% endif %}
                     <li><a href="{{ url_for('contact') }}" class="header-color">Contact</a></li>
                     <li><a href="{{ url_for('about') }}" class="header-color">About</a></li>
                 </ul>

@@ -74,9 +74,15 @@
 
     <div class="col s6 home-grid">
         <div class="btn waves-effect waves-light pokedex-entry home-button theme">
+            {% if session.user %}
             <a href="{{ url_for('contribute') }}">
                 <span class="home-link"></span>
             </a>
+            {% else %}
+            <a href="{{ url_for('login') }}">
+                <span class="home-link"></span>
+            </a>
+            {% endif %}
 
             <span class="home-header header-color">Contribute</span>
             <p class="home-p">
