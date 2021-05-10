@@ -2,46 +2,51 @@
 {% block content %}
 
 <!-- info section -->
-<div class="row card theme">
-    <h4 class="center-align header-color">Log In</h4>
-    <p>
-        Pretium quam vulputate dignissim suspendisse in.
-        Vestibulum mattis ullamcorper velit sed. Varius vel pharetra vel turpis nunc eget. Sit amet luctus
-        venenatis lectus magna fringilla. Ornare arcu dui vivamus arcu felis bibendum. Pretium nibh ipsum
-        consequat nisl vel pretium. Orci ac auctor augue mauris augue neque. In nulla posuere sollicitudin
-        aliquam ultrices sagittis orci a. Posuere ac ut consequat semper viverra nam. Semper viverra nam
-        libero justo laoreet sit amet cursus sit. Augue neque gravida in fermentum et sollicitudin ac orci
-        phasellus. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu. Vel fringilla est
-        ullamcorper eget.
-    </p>
+<div class="row card pokedex-entry theme">
+    <div class="card-content">
+        <span class="card-title center-align header-color">Log In</span>
+        <br>
+        <p>
+            Pretium quam vulputate dignissim suspendisse in.
+            Vestibulum mattis ullamcorper velit sed. Varius vel pharetra vel turpis nunc eget. Sit amet luctus
+            venenatis lectus magna fringilla. Ornare arcu dui vivamus arcu felis bibendum. Pretium nibh ipsum
+            consequat nisl vel pretium. Orci ac auctor augue mauris augue neque. In nulla posuere sollicitudin
+            aliquam ultrices sagittis orci a. Posuere ac ut consequat semper viverra nam. Semper viverra nam
+            libero justo laoreet sit amet cursus sit. Augue neque gravida in fermentum et sollicitudin ac orci
+            phasellus. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu. Vel fringilla est
+            ullamcorper eget.
+        </p>
+        <br><br>
 
-    <a href="{{ url_for('register') }}" class="btn waves-effect waves-light grey right">
-        BECOME A TRAINER
-    </a>
+        <form action="{{ url_for('login') }}" method="POST" class="col s12">
+            <div class="row">
+                <!-- username -->
+                <div class="input-field col s6">
+                    <input id="username" name="username" type="text" required>
+                    <label for="username">Username</label>
+                </div>
 
+                <!-- password -->
+                <div class="input-field col s6">
+                    <input id="password" name="password" type="password" required>
+                    <label for="password">Password</label>
+                </div>
 
-    <form action="{{ url_for('login') }}" method="POST" class="col s12">
-        <div class="row">
-            <!-- username -->
-            <div class="input-field col s6">
-                <input id="username" name="username" type="text" required>
-                <label for="username">Username</label>
+                <!-- Confirm/cancel buttons -->
+                <div class="input-field col s12">
+                    <a href="{{ url_for('register') }}" class="btn waves-effect waves-light theme">
+                        JOIN THE LEAGUE
+                        <i class="fab fa-superpowers right"></i>
+                    </a>
+                    <button class="btn waves-effect waves-light yellow darken-3 right" type="submit" name="action">
+                        Log In
+                        <i class="fas fa-user right"></i>
+                    </button>
+                </div>
             </div>
+        </form>
 
-            <!-- password -->
-            <div class="input-field col s6">
-                <input id="password" name="password" type="password" required>
-                <label for="password">Password</label>
-            </div>
-
-            <!-- Confirm/cancel buttons -->
-            <div class="input-field col s12">
-                <button class="btn waves-effect waves-light yellow darken-3 right" type="submit" name="action">Log In
-                    <i class="fas fa-user right"></i>
-                </button>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
 
 {% endblock %}
