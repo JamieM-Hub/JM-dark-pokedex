@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <br>
+
 <!-- display profile -->
 <div class="row transparent pokedex-entry text-shadow">
     <div class="col s12">
@@ -11,6 +12,7 @@
                 <div class="row">
                     <br>
                     <br>
+
                     <!-- hometown-->
                     <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
                         <br>
@@ -173,9 +175,9 @@
                 </label>
             </div>
 
-            <!-- password -->
+            <!-- password (5-20 any non-whitespace characters) -->
             <div class="input-field col s6 offset-s3">
-                <input id="password" name="password" type="password" maxlength="30" value="" required>
+                <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" value="" required>
                 <label for="password">Password</label>
             </div>
 
@@ -183,16 +185,17 @@
             <div class="col s12">
                 <div class="row">
 
-                    <!-- Name -->
+                    <!-- Name (3-20 letters, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6">
-                        <input id="name" type="text" name="name" maxlength=20 value="{{ trainer.name }}" required>
+                        <input id="name" type="text" name="name" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$" minlength="3"
+                            maxlength="20" value="{{ trainer.name }}" required>
                         <label for="name">Name</label>
                     </div>
 
-                    <!-- Hometown -->
+                    <!-- Hometown (3-20 letters, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6">
-                        <input id="hometown" type="text" name="hometown" maxlength=14 value="{{ trainer.hometown }}"
-                            required>
+                        <input id="hometown" type="text" name="hometown" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
+                            minlength="3" maxlength="20" value="{{ trainer.hometown }}" required>
                         <label for="hometown">Hometown</label>
                     </div>
 
@@ -293,23 +296,23 @@
         <!-- Bottom section -->
         <div class="row">
 
-            <!-- Bio -->
+            <!-- Bio (3-387 any characters) -->
             <div class="input-field col s12">
-                <textarea id="bio" name="bio" maxlength="387" class="materialize-textarea white-text"
+                <textarea id="bio" name="bio" minlength="3" maxlength="387" class="materialize-textarea white-text"
                     required>{{ trainer.bio }}</textarea>
                 <label for="bio">Bio</label>
             </div>
 
             <!-- Image URL -->
             <div class="input-field col s12">
-                <input id="img_src" name="img_src" type="url" value="{{ trainer.img_src }}" required>
+                <input id="img_src" name="img_src" type="url" value="{{ trainer.img_src }}">
                 <label for="img_src">Image URL</label>
             </div>
             <br>
 
-            <!-- username -->
+            <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
             <!-- <div class="input-field col s6">
-                <input id="username" name="username" type="text" maxlength="20" value="{{ trainer.username }}" disabled required>
+                <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$" value="{{ trainer.username }}" disabled required>
                 <label for="username">Username</label>
             </div> -->
         </div>
