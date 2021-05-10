@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- regex for input validation taken from: -->
-<!-- https://stackoverflow.com/questions/46147700/html-5-regex-that-allow-space-between-characters#46147710 -->
-
 <!-- information regarding contributions -->
 <div class="card pokedex-entry text-shadow">
     <div class="card-content">
@@ -166,11 +163,13 @@
         <div class="row">
             <div class="col s12">
                 <div class="row">
-                    <!-- Name (3-14 letters only) -->
+
+                    <!-- Name (3-14 letters only, no spaces) -->
                     <div class="input-field col s6">
                         <input id="name" type="text" name="name" pattern="^[a-zA-Z]{3,14}$" required>
                         <label for="name">Name</label>
                     </div>
+
                     <!-- Species (3-14 letters only, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6">
                         <input id="species" type="text" name="species" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
@@ -179,6 +178,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Type 1 -->
             <div class="input-field col s6">
                 <select name="type_1" required>
@@ -225,7 +225,7 @@
                 <label for="weight">Weight (pounds)</label>
             </div>
 
-            <!-- Description -->
+            <!-- Description (3-387 any characters) -->
             <div class="input-field col s12">
                 <input id="desc" type="text" name="desc" minlength="3" maxlength="387" required>
                 <label for="desc">Description</label>

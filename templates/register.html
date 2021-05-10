@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- regex for input validation taken from: -->
-<!-- https://stackoverflow.com/questions/46147700/html-5-regex-that-allow-space-between-characters#46147710 -->
-
 <!-- info section -->
 <div class="row card theme">
     <h4 class="center-align header-color">So you want to become a Trainer, huh?</h4>
@@ -48,6 +45,7 @@
 
                 </div>
             </div>
+
             <!-- favourite type -->
             <div class="input-field col s6">
                 <select name="type_1" required>
@@ -73,6 +71,7 @@
             </div>
 
         </div>
+
         <!-- Squad section -->
         <div class="row">
 
@@ -118,8 +117,8 @@
                 <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" required>
                 <label for="password">Password</label>
             </div>
-
             <br>
+
             <!-- private/public switch -->
             <div class="switch center-align">
                 <label for="private">
@@ -130,6 +129,7 @@
                 </label>
             </div>
             <br>
+
             <!-- Confirm/cancel buttons -->
             <div class="input-field col s12 center-align">
                 <button class="btn waves-effect waves-light yellow darken-3" type="submit" name="action">Register
