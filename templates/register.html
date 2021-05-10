@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- regex for input validation taken from: -->
+<!-- https://stackoverflow.com/questions/46147700/html-5-regex-that-allow-space-between-characters#46147710 -->
+
 <!-- info section -->
 <div class="row card theme">
     <h4 class="center-align header-color">So you want to become a Trainer, huh?</h4>
@@ -30,14 +33,16 @@
             <div class="col s12">
                 <div class="row">
 
-                    <!-- Name -->
+                    <!-- Name (3-20 letters, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6">
-                        <input id="name" type="text" name="name" maxlength="20" required>
+                        <input id="name" type="text" name="name" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$" minlength="3"
+                            maxlength="20" required>
                         <label for="name">Name</label>
                     </div>
-                    <!-- Hometown -->
+                    <!-- Hometown (3-20 letters, spaces allowed within string but not at start or end) -->
                     <div class="input-field col s6">
-                        <input id="hometown" type="text" name="hometown" maxlength="20" required>
+                        <input id="hometown" type="text" name="hometown" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
+                            minlength="3" maxlength="20" required>
                         <label for="hometown">Hometown</label>
                     </div>
 
@@ -91,7 +96,8 @@
 
             <!-- Bio -->
             <div class="input-field col s12">
-                <textarea id="bio" name="bio" maxlength="387" class="materialize-textarea white-text" required></textarea>
+                <textarea id="bio" name="bio" minlength="5" maxlength="387" class="materialize-textarea white-text"
+                    required></textarea>
                 <label for="bio">Bio</label>
             </div>
 
@@ -101,15 +107,15 @@
                 <label for="img_src">Image URL</label>
             </div>
 
-            <!-- username -->
+            <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
             <div class="input-field col s6">
-                <input id="username" name="username" type="text" maxlength="20" required>
+                <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$" required>
                 <label for="username">Username</label>
             </div>
 
-            <!-- password -->
+            <!-- password (5-20 any non-whitespace characters)-->
             <div class="input-field col s6">
-                <input id="password" name="password" type="password" maxlength="30" required>
+                <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" required>
                 <label for="password">Password</label>
             </div>
 
@@ -130,7 +136,7 @@
                     <i class="fas fa-clipboard-check right"></i>
                 </button>
                 <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light red">
-                    Cancel 
+                    Cancel
                     <i class="fas fa-window-close right"></i>
                 </a>
             </div>
