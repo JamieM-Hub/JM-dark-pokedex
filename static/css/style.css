@@ -32,6 +32,14 @@ body {
     width: 85%;
 }
 
+.btn:hover,
+.btn-large:hover,
+.btn-small:hover,
+.btn-pokemon,
+.btn-type {
+    background-color: rgb(74, 0, 74);
+}
+
 .fav-pokemon {
     background-color: black;
     color: #e7d75c;
