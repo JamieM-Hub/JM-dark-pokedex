@@ -10,7 +10,7 @@ body {
 
 }
 
-.pokedex-entry > form {
+.pokedex-entry>form {
     padding: 1vh 3vh !important;
 }
 
@@ -138,8 +138,9 @@ section {
 
 .pokedex-entry {
     padding: 2vh 0;
-    background-color: rgba(214, 197, 142, 0.35) !important;
+    /* background-color: rgba(214, 197, 142, 0.35) !important; */
     /* background-color: rgba(88, 89, 38, 0.7) !important; */
+    background-color: rgba(49, 4, 45, 0.85) !important;
     color: whitesmoke;
     margin-bottom: 6vh;
     border: ridge 2vh rgba(77, 16, 77, 0.9);
@@ -198,8 +199,8 @@ section {
 
 hr {
     width: 30vw;
-    left:35vw;
-    border:none;
+    left: 35vw;
+    border: none;
     border-top: dotted 1vh rgba(77, 16, 77, 0.9);
     /* border: ridge 2vh rgba(77, 16, 77, 0.9); */
 
