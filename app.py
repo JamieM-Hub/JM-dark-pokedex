@@ -160,7 +160,7 @@ def preview_pokemon(username, index):
 def delete_pokemon(index):
     mongo.db.pokemon.remove({"_id": ObjectId(index)})
     flash("Pokemon deleted :(")
-    return redirect(url_for("get_pokemon"))
+    return redirect(url_for('profile', username=session['user']))
 
 
 @app.route("/login", methods=["GET", "POST"])
