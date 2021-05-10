@@ -26,7 +26,7 @@ types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting",
 
 # link to default image for pokemon or trainer creation preview
 default_img_p = "https://i.pinimg.com/originals/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f.png"
-default_img_t = "https://i.pinimg.com/originals/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f.png"
+default_img_t = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Man_standing_silhouette.svg/253px-Man_standing_silhouette.svg.png"
 
 # Global funcs
 
@@ -307,6 +307,11 @@ def register():
         trainers_length = mongo.db.trainers.count()
         trainer_id = trainers_length + 1
         private = False if request.form.get("private") else True
+        if (request.form.get("img_src") == ""):
+            img_src = default_img_t
+        else:
+            img_src = request.form.get("img_src")
+
         new_trainer = {
             "name": request.form.get("name"),
             "trainer_id": trainer_id,
@@ -314,7 +319,7 @@ def register():
             "fav_type": request.form.get("fav_type"),
             "fav_pokemon": request.form.get("fav_pokemon"),
             "bio": request.form.get("bio"),
-            "img_src": request.form.get("img_src"),
+            "img_src": img_src,
             "squad": [
                 request.form.get("squad_1 "),
                 request.form.get("squad_2 "),
