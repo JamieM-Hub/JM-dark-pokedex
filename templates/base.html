@@ -72,12 +72,12 @@
 
     <section>
         <!-- flash messages -->
-        <div class="row flashes">
+        <div class="row flashes center-align yellow darken-4">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
 
-            <h4 class="center-align">{{ message }}</h4>
+            <span class="center-align">{{ message }}</span>
 
             {% endfor %}
             {% endif %}
