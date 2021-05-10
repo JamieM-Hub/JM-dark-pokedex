@@ -284,39 +284,43 @@
 <!-- edit modal -->
 <div id="edit-modal" class="modal theme">
     <div class="modal-content center-align">
+
         <h4 class="header-color">Edit Pokemon</h4>
-        <p>Are you sure you want to edit {{ pokemon.name}}?</p>
-    </div>
-    <div class="modal-footer center-align">
+        <p>Are you sure you want to edit {{ pokemon.name|upper }}?</p>
+
         <button class="btn modal-close waves-effect waves-light grey">
             Cancel
             <i class="fas fa-window-close right"></i>
         </button>
+
         <button type="submit" form="edit-pokemon"
             formaction="{{ url_for('edit_pokemon', index=index, _anchor=pokemon.dex_id+1) }}"
-            class="btn modal-close waves-effect waves-light theme">
+            class="btn modal-close waves-effect waves-light yellow darken-4">
             Confirm
             <i class="fas fa-check right"></i>
         </button>
+
     </div> 
 </div>
 
 <!-- delete modal -->
 <div id="delete-modal" class="modal theme">
     <div class="modal-content center-align">
+
         <h4 class="header-color">Delete Pokemon</h4>
-        <p>Are you sure you want to delete {{ pokemon.name}}?</p>
+        <p>Are you sure you want to delete {{ pokemon.name|upper }}?</p>
         <p>*** {{ pokemon.name|upper }} WILL BE DELETED PERMANENTLY ***</p>
-    </div>
-    <div class="modal-footer center-align">
+
         <button class="btn modal-close waves-effect waves-green grey">
             Cancel <i class="fas fa-window-close right"></i>
         </button>
+
         <a href="{{ url_for('delete_pokemon', index=pokemon._id) }}"
             class="btn modal-close waves-effect waves-green red">
             Confirm
             <i class="fas fa-skull-crossbones right"></i>
         </a>
+
     </div>
 </div>
 

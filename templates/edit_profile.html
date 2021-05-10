@@ -329,18 +329,19 @@
 <div id="edit-modal" class="modal theme">
     <div class="modal-content center-align">
         <p>Are you happy with your changes?</p>
-    </div>
-    <div class="modal-footer center-align">
-        <button class="btn btn-large modal-close waves-effect waves-light grey">
+
+        <button class="btn modal-close waves-effect waves-light grey">
             Cancel
             <i class="fas fa-window-close right"></i>
         </button>
-        <button class="btn btn-large modal-close waves-effect waves-light yellow darken-3" form="edit-profile"
+
+        <button class="btn modal-close waves-effect waves-light yellow darken-3" form="edit-profile"
             formaction="{{ url_for('edit_profile', username=session['user'], index=index) }}" type="submit"
             name="action">
             Confirm
             <i class="fas fa-clipboard-check right"></i>
         </button>
+
     </div> 
 </div>
 
