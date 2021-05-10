@@ -34,7 +34,7 @@ def process_search(data, query, returned, url):
     if returned:
         return render_template(url, data=returned)
     else:
-        flash("nothing found")
+        flash("No results for your search query.")
         return redirect(url_for('get_pokemon'))
         
 
@@ -42,7 +42,7 @@ def process_search(data, query, returned, url):
 @app.route("/")
 @app.route("/index")
 def index():
-    flash("Helloooooooooo!!")
+    flash("Welcome to the Dark Pokedex!")
     return render_template("index.html")
 
 
@@ -115,11 +115,11 @@ def edit_pokemon(index):
             "rated_by": selected_pokemon['rated_by']
         }
         if submit['type'][0] == submit['type'][1]:
-            flash("Pokemon types can't be identical.")
+            flash("Pokemon cannot have two identical types.")
             return redirect (url_for('edit_pokemon', index=index))           
         else:
             mongo.db.pokemon.update({"_id": ObjectId(index)}, submit)
-            flash(submit["name"].capitalize() + " updated!")
+            flash(submit["name"].upper() + " updated!")
             return redirect(url_for("profile", username=session['user']))
 
     return render_template("edit_pokemon.html", pokedex=pokedex, index=index, pokemon=selected_pokemon, types=types)
@@ -159,7 +159,7 @@ def preview_pokemon(username, index):
 @app.route("/delete_pokemon/<index>")
 def delete_pokemon(index):
     mongo.db.pokemon.remove({"_id": ObjectId(index)})
-    flash("Pokemon deleted :(")
+    flash("Your POKEMON was deleted from the Dark Pokedex.")
     return redirect(url_for('profile', username=session['user']))
 
 
@@ -176,17 +176,17 @@ def login():
                     existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 print(session["user"])
-                flash("Welcome, {}".format(request.form.get("username")))
+                flash("Welcome back " + existing_user['name'] + ", we missed you!")
                 return redirect(url_for("profile", username=session["user"]))
 
             else:
                 # invalid password match
-                flash("Incorrect Username and/or Password :(")
+                flash("Login details do not match any existing Trainer.")
                 return redirect(url_for("login"))
 
         else:
             # username doesn't exist
-            flash("Incorrect Username and/or Password :(")
+            flash("Login details do not match any existing Trainer.")
             return redirect(url_for("login"))
 
     return render_template("login.html")
@@ -195,7 +195,7 @@ def login():
 @app.route("/logout")
 def logout():
     # remove user from session cookies
-    flash("Logged out. Bye!")
+    flash("Come back soon! Enjoy the real world!")
     session.pop("user")
 
     return redirect(url_for("login"))
@@ -247,12 +247,12 @@ def edit_profile(username, index):
         # ensure hashed password matches user input
         if not check_password_hash(trainer['password'], request.form.get("password")):
             # invalid password
-            flash("Incorrect Password :(")
+            flash("Password incorrect!")
             return render_template("edit_profile.html", index=index, trainer=submit, pokedex=pokedex, types=types)
         else:
             # valid password
             # submit['password'] = trainer['password']
-            flash("Trainer profile updated!")
+            flash(trainer['name'] + "'s profile updated! Looking fresh.")
             mongo.db.trainers.update({"_id": ObjectId(index)}, submit)
             return redirect(url_for('profile', username=session['user'], index=index))
             
@@ -304,7 +304,7 @@ def register():
             {"username": request.form.get("username")})
 
         if username_taken:
-            flash("Username unavailable!")
+            flash("That username is taken!")
             return redirect(url_for("register"))
 
         trainers_length = mongo.db.trainers.count()
@@ -341,7 +341,7 @@ def register():
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
-        flash("Trainer registered!")
+        flash("Welcome to the Dark Pokedex, " + new_trainer['name'] + "! We hope you like it around here.")
         return redirect(url_for("profile", username=session["user"]))
 
     pokedex = list(mongo.db.pokemon.find())
@@ -375,11 +375,11 @@ def contribute():
         }
 
         if new_pokemon['type'][0] == new_pokemon['type'][1]:
-            flash("Pokemon types can't be identical.")
+            flash("Pokemon cannot have two identical types.")
             return redirect(url_for('contribute'))
         else:
             mongo.db.pokemon.insert_one(new_pokemon)
-            flash("Pokemon discovered!")
+            flash(new_pokemon['name'].upper() + " discovered!")
             return redirect(url_for('profile', username=session['user']))
 
     else:
