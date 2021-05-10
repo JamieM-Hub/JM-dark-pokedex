@@ -214,6 +214,7 @@ def edit_profile(username, index):
     # grab Trainer profile for session user and full sorted Pokedex
     trainer = mongo.db.trainers.find_one({"username": username})
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
+
     if request.method == "POST":
         # serialize form input into new_profile
         private = False if request.form.get("private") else True
@@ -234,24 +235,26 @@ def edit_profile(username, index):
                 request.form.get("squad_6 "),
             ],
             "username": trainer['username'],
-            "password": request.form.get("password"),
+            "password": trainer['password'],
             "private": private,
             "rating": trainer['rating'],
             "rated_by": trainer['rated_by']
-        }       
-        print(f"\n{submit['username']}: {submit['password']}\n")
-        print(f"{trainer['username']}: {trainer['password']}\n")
+        }
+
+        print(f"Submitted\n{submit['username']}: {submit['password']}\n")
+        print(f"Existing\n{trainer['username']}: {trainer['password']}\n")
+
         # ensure hashed password matches user input
-        if not check_password_hash(trainer['password'], submit['password']):
+        if not check_password_hash(trainer['password'], request.form.get("password")):
             # invalid password
             flash("Incorrect Password :(")
-            return render_template("edit_profile.html", trainer=submit, pokedex=pokedex, types=types)
+            return render_template("edit_profile.html", index=index, trainer=submit, pokedex=pokedex, types=types)
         else:
             # valid password
-            submit['password'] = trainer['password']
-            flash("Trainer ID updated!")
+            # submit['password'] = trainer['password']
+            flash("Trainer profile updated!")
             mongo.db.trainers.update({"_id": ObjectId(index)}, submit)
-            return redirect(url_for('profile', username=session['user']))
+            return redirect(url_for('profile', username=session['user'], index=index))
             
     trainer = mongo.db.trainers.find_one({"username": username})
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))        
