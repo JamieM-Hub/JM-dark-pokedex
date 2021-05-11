@@ -168,7 +168,7 @@
         <div class="row">
 
             <!-- private/public switch -->
-            <div class="switch center-align">
+            <div class="col s12 switch center-align">
                 <label for="private">
                     Private
                     {% if trainer.private %}
@@ -181,10 +181,25 @@
                 </label>
             </div>
 
+            <!-- username -->
+            <div class="input-field col s6">
+                <input id="username" name="username" type="text" pattern="" value="{{ trainer.username }}" disabled>
+                <label for="username">Username</label>
+            </div>
             <!-- password (5-20 any non-whitespace characters) -->
-            <div class="input-field col s6 offset-s3">
+            <div class="input-field col s6">
                 <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" value="" required>
-                <label for="password">Password</label>
+                <label for="password">Enter current Password to confirm</label>
+            </div>
+            <!-- CHANGE password (5-20 any non-whitespace characters) -->
+            <div class="input-field col s6">
+                <input id="change_password" name="change_password" type="password" pattern="^([\S]){5,20}$" value="">
+                <label for="change_password">Change Password</label>
+            </div>
+            <!-- CONFIRM password (5-20 any non-whitespace characters) -->
+            <div class="input-field col s6">
+                <input id="confirm_password" name="confirm_password" type="password" pattern="^([\S]){5,20}$" value="">
+                <label for="confirm_password">Confirm new Password</label>
             </div>
 
             <!-- Top Left column -->

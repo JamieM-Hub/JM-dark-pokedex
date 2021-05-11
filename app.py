@@ -249,6 +249,16 @@ def edit_profile(username, index):
         print(f"Submitted\n{submit['username']}: {submit['password']}\n")
         print(f"Existing\n{trainer['username']}: {trainer['password']}\n")
 
+        # if user attempts password change
+        if request.form.get("change_password") or request.form.get("confirm_password"):
+            # check change_password matches confirm_password
+            if request.form.get("change_password") == request.form.get("confirm_password"):
+                # update user password to new password
+                submit['password'] = generate_password_hash(request.form.get("change_password"))
+            else:
+                flash("New password fields did not match - please try again.")
+                return render_template("edit_profile.html", index=index, trainer=submit, pokedex=pokedex, types=types)
+
         # ensure hashed password matches user input
         if not check_password_hash(trainer['password'], request.form.get("password")):
             # invalid password
