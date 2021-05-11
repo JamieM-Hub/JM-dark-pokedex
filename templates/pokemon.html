@@ -60,7 +60,8 @@
 
             <!-- name and species-->
             <div class="col s12 center-align">
-                <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6>
+                <!-- <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6> -->
+                <h6 class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</h6>
                 <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
             </div>
             <br><br>
@@ -108,7 +109,6 @@
         <div class="row">
             <br>
             <!-- created by -->
-            <div class="col s12"><em class="header-color">by {{ pokemon.created_by }}</em></div>
             <div class="col s12">
                 <em>Discovered by <span class="header-color">{{ pokemon.created_by }}</span></em>
             </div>
