@@ -53,6 +53,7 @@
 
         </div>
     </div>
+
     <!-- column 1 -->
     <div class="col s4 center-align">
         <div class="row">
@@ -102,20 +103,47 @@
         </div>
     </div>
 
-
-
     <!-- column 3 -->
     <div class="col s4 center-align pokedex-text">
         <div class="row">
-            {% for trainer in trainers if pokemon.created_by|lower == trainer.username|lower %}
-            {% set display_name = trainer.name %}
+
             <br>
+
+            <!-- rating -->
+            <form class="col s12">
+
+                {% if session['user'] and session['user'] not in pokemon.rated_by %}
+                <button class="theme right" type="submit" name="action"
+                    formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=False) }}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                {% elif session['user'] and session['user'] in pokemon.rated_by %}
+                <button class="theme-reverse right" type="submit" name="action"
+                    formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=True) }}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                {% elif not session['user'] %}
+                <button class="theme right" type="submit" name="action" formaction="{{ url_for('login') }}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                {% endif %}
+
+                <div>Rating: <span class="header-color">{{ pokemon.rating }}</span></div>
+                <!-- <div>Rated By: <span class="header-color">{{ pokemon.rated_by }}</span></div> -->
+
+            </form>
+
             <!-- created by -->
-            <div class="col s12">
+            <div class=" col s12">
+                {% for trainer in trainers if pokemon.created_by|lower == trainer.username|lower %}
+                {% set display_name = trainer.name %}
                 <em>Discovered by <span class="header-color">{{ display_name }}</span></em>
+                {% endfor %}
             </div>
             <br><br>
-            {% endfor %}
 
             <!-- description -->
             <div class="col s12 pokemon-desc">
