@@ -161,10 +161,27 @@ def preview_pokemon(username, index):
     return
 
 
-@app.route("/delete_pokemon/<index>")
+@app.route("/delete_pokemon/<index>", methods=["GET", "POST"])
 def delete_pokemon(index):
-    mongo.db.pokemon.remove({"_id": ObjectId(index)})
-    flash("Your POKEMON was deleted from the Dark Pokedex.")
+    # grab user info from db
+    user = mongo.db.trainers.find_one(
+        {"username": session['user']})
+
+    print("\n\n\nform: " + request.form.get("password") + "\n\n\n")
+    print("\n\n\n" + user['username'] + ": " + user['password'] + "\n\n\n")
+    # check user entered correct password
+    if check_password_hash(
+            user["password"], request.form.get("password")):
+        print("\n\n\nPASSWORD CORRECT")
+        deleted_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
+        mongo.db.pokemon.remove({"_id": ObjectId(index)})
+        flash(deleted_pokemon['name'].upper() + " was deleted from the Dark Pokedex.")
+        return redirect(url_for('profile', username=session['user']))
+    else:
+        flash("Password incorrect.")
+        return render_template("edit_pokemon.html", pokemon=deleted_pokemon, index=index, types=types)
+
+    flash("Deletion failed.")
     return redirect(url_for('profile', username=session['user']))
 
 

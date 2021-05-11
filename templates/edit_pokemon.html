@@ -304,23 +304,37 @@
 </div>
 
 <!-- delete modal -->
-<div id="delete-modal" class="modal theme">
+<div id="delete-modal" class="modal">
     <div class="modal-content center-align">
 
-        <h4 class="header-color">Delete Pokemon</h4>
-        <p>Are you sure you want to delete {{ pokemon.name|upper }}?</p>
-        <p>*** {{ pokemon.name|upper }} WILL BE DELETED PERMANENTLY ***</p>
+        <form class="row" id="delete" action="" method="POST">
+            <h4 class="header-color">Delete Pokemon</h4>
+            <p>Are you sure you want to delete {{ pokemon.name|upper }}?</p>
+            <p>*** {{ pokemon.name|upper }} WILL BE DELETED PERMANENTLY ***</p>
+            <br>
+            <!-- confirm password to delete -->
+            <div class="input-field col s6 offset-s3">
+                <input id="password" name="password" type="password" required>
+                <label for="password">Enter Password to confirm deletion</label>
+            </div>
+        </form>
+
 
         <button class="btn modal-close waves-effect waves-green grey">
             Cancel <i class="fas fa-window-close right"></i>
         </button>
 
-        <a href="{{ url_for('delete_pokemon', index=pokemon._id) }}"
+        <!-- <a href="{{ url_for('delete_pokemon', index=pokemon._id) }}" type="submit" name="action"
+        class="btn modal-close waves-effect waves-green red">
+        Confirm
+        <i class="fas fa-skull-crossbones right"></i>
+    </a> -->
+
+        <button type="submit" form="delete" formaction="{{ url_for('delete_pokemon', index=pokemon._id) }}"
             class="btn modal-close waves-effect waves-green red">
             Confirm
             <i class="fas fa-skull-crossbones right"></i>
-        </a>
-
+        </button>
     </div>
 </div>
 
