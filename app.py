@@ -382,6 +382,10 @@ def register():
 
 @app.route("/contribute", methods=["GET", "POST"])
 def contribute():
+    # get user info from db
+    user = mongo.db.trainers.find_one(
+        {"username": session['user']})
+
     if request.method == "POST":
         last_created_pokemon = list(mongo.db.pokemon.find().sort("dex_id", pymongo.DESCENDING).limit(1))
         dex_id = last_created_pokemon[0]['dex_id'] + 1
@@ -400,7 +404,7 @@ def contribute():
             "weight": request.form.get("weight"),
             "desc": request.form.get("desc"),
             "img_src": request.form.get("img_src"),
-            "created_by": session['user'],
+            "created_by": user,
             "rating": 0,
             "in_squad": [],
             "rated_by": []
@@ -411,7 +415,7 @@ def contribute():
             return redirect(url_for('contribute'))
         else:
             mongo.db.pokemon.insert_one(new_pokemon)
-            flash(new_pokemon['name'].upper() + " discovered!")
+            flash(user['name'] + " discovered " + new_pokemon['name'].upper() + "!")
             return redirect(url_for('profile', username=session['user']))
 
     else:
