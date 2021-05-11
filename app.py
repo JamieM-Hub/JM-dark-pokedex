@@ -126,6 +126,41 @@ def rate_pokemon(index, unrate):
     return redirect(url_for('get_pokemon', id=id))
 
 
+@app.route("/rate_trainer/<index>/<unrate>", methods=["GET", "POST"])
+def rate_trainer(index, unrate):
+    # get rated trainer
+    trainers = mongo.db.trainers.find()
+    rated_trainer = mongo.db.trainers.find_one({"_id": ObjectId(index)})
+    rating = rated_trainer['rating']
+
+    # logic
+    if unrate == "False":
+        # add user to trainer's rated_by array
+        mongo.db.trainers.update(
+            {"_id": ObjectId(index)},
+            {"$push": {"rated_by": session['user']}}
+        )
+        rating += 1;
+    else:
+        # remove user from trainer's rated_by array
+        mongo.db.trainers.update(
+            {"_id": ObjectId(index)},
+            {"$pull": {"rated_by": session['user']}}
+        )
+        rating -= 1;
+
+    # update trainer rating number according to sum of trainer and their pokemons' rated_by
+    mongo.db.trainers.update(
+        {"_id": ObjectId(index)},
+        {"$set": {"rating": rating}}
+    )
+
+    # get rated trainer's id for anchor
+    id = rated_trainer['trainer_id']
+
+    return redirect(url_for('trainers', id=id))
+
+
 @app.route("/search_trainers", methods=["GET", "POST"])
 def search_trainers():
     if request.method == "POST":
@@ -538,6 +573,15 @@ def trainers():
     # get trainers
     trainers = mongo.db.trainers.find()
     return render_template("trainers.html", trainers=trainers, pokedex=pokedex, default_img=default_img_p)
+
+
+@app.route("/trainers/<id>")
+def get_selected_trainer(id):
+    # get pokedex
+    pokedex = list(mongo.db.pokemon.find())
+    # get trainers
+    trainers = mongo.db.trainers.find()
+    return render_template("trainers.html", trainers=trainers, pokedex=pokedex, default_img=default_img_p, anchor=id)
 
 
 @app.route("/contact", methods=["GET", "POST"])
