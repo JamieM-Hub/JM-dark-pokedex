@@ -231,7 +231,7 @@
 
                 <!-- favourite type -->
                 <div class="input-field col s6">
-                    <select name="type_1" required>
+                    <select name="fav_type" required>
                         <option value="none" selected>-</option>
                         <!-- display each type in the types list as options, with current selected -->
                         {% for type in types %}
@@ -239,7 +239,7 @@
                         {% endfor %}
 
                     </select>
-                    <label for="type_1">Favourite Type</label>
+                    <label for="fav_type">Favourite Type</label>
                 </div>
 
                 <!-- Favourite Pokemon -->
@@ -262,8 +262,8 @@
                 <!-- first slot is required -->
                 <div class="input-field col s4">
 
-                    <select name="squad_1" required>
-                        <option value="" disabled selected>-</option>
+                    <select name="squad_1 " required>
+                        <option value="" selected>-</option>
                         {% for pokemon in pokedex %}
                         <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
                         {% endfor %}
@@ -272,7 +272,7 @@
 
                 </div>
 
-                <!-- slots 2-5 are optional -->
+                <!-- slots 2-6 are optional -->
                 {% for num in range(2,7) %}
                 <div class="input-field col s4">
 
