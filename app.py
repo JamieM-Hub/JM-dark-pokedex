@@ -44,7 +44,8 @@ def process_search(page, data, query, returned, url):
 @app.route("/")
 @app.route("/index")
 def index():
-    flash("Welcome to the Dark Pokedex!")
+    if not session:
+        flash("Welcome to the Dark Pokedex!")
     return render_template("index.html")
 
 
