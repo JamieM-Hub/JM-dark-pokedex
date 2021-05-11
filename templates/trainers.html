@@ -36,20 +36,9 @@
             <!-- left column -->
             <div class="col s3">
                 <div class="row">
-                    <br>
-                    <br>
-                    <!-- hometown-->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
-                        <br>
-                        Hometown<br>
-                        <!-- <input class="btn btn-small btn-pokemon theme" id="query" name="query" type="submit"
-                            value="{{ trainer.hometown }}"> -->
-                        <span class="header-color">{{ trainer.hometown|upper }}</span>
-                    </form>
 
                     <!-- favourite type -->
                     <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
-                        <br>
                         Favourite Type<br>
                         {% if trainer.fav_type and trainer.fav_type != "none" %}
                         <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
@@ -72,13 +61,19 @@
                         {% set type = pokemon.type[0] %}
                         <input class="btn btn-small btn-pokemon type-{{ type }}" id="query" name="query" type="submit"
                             value="{{ trainer.fav_pokemon|upper }}">
-
+                        <div>
+                            <br>
+                            <img src="{{ pokemon.img_src }}" alt="{{ pokemon.name }}" class="img-small">
+                        </div>
                         {% endif %}
                         {% endfor %}
 
                         {% else %}
                         <div class="btn btn-small btn-pokemon grey">-</div>
-
+                        <div>
+                            <br>
+                            <img src="{{ default_img }}" alt="no favourite pokemon" class="img-small">
+                        </div>
                         {% endif %}
 
                     </form>
@@ -107,15 +102,21 @@
                         </div>
                     </div>
 
-
-
                 </div>
             </div>
 
             <!-- right column -->
             <div class="col s3">
                 <div class="row">
-                    <br><br><br>
+
+                    <!-- hometown-->
+                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
+                        Hometown<br>
+                        <input class="btn btn-small btn-pokemon theme" id="query" name="query" type="submit"
+                            value="{{ trainer.hometown }}">
+                        <!-- <span class="header-color">{{ trainer.hometown|upper }}</span> -->
+                        <br><br>
+                    </form>
 
                     <!-- squad -->
                     <div class="col s12 center-align">

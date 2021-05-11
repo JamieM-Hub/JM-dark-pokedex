@@ -259,6 +259,12 @@ hr {
     position: relative;
 }
 
+.img-small {
+    max-height: 20vh;
+}
+
+/* TRAINER FORM */
+
 label {
     color: #e7d75cec;
 }

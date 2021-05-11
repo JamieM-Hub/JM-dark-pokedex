@@ -488,7 +488,7 @@ def trainers():
     pokedex = list(mongo.db.pokemon.find())
     # get trainers
     trainers = mongo.db.trainers.find()
-    return render_template("trainers.html", trainers=trainers, pokedex=pokedex)
+    return render_template("trainers.html", trainers=trainers, pokedex=pokedex, default_img=default_img_p)
 
 
 @app.route("/contact", methods=["GET", "POST"])
