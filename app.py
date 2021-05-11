@@ -30,13 +30,13 @@ default_img_t = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Man_s
 
 # Global funcs
 
-def process_search(data, query, returned, url):
+def process_search(page, data, query, returned, url):
     query = "\"" + query + "\""
     if returned:
-        flash(f"Search results for {query}")
+        flash(f"{page} found for {query}")
         return render_template(url, data=returned)
     else:
-        flash(f"No results for {query}")
+        flash(f"No {page} found for {query}")
         return redirect(url_for('get_pokemon'))
         
 
@@ -73,7 +73,7 @@ def search_pokemon():
         pokedex = mongo.db.pokemon.find()
         query = request.form.get("query")
         returned = list(mongo.db.pokemon.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
-        process_search(pokedex, query, returned, "pokemon.html")
+        process_search("Pokemon", pokedex, query, returned, "pokemon.html")
         data=returned
     else:
         data=pokedex
@@ -84,10 +84,10 @@ def search_pokemon():
 @app.route("/search_trainers", methods=["GET", "POST"])
 def search_trainers():
     if request.method == "POST":
-        league = mongo.db.trainers.find()
+        trainers = mongo.db.trainers.find()
         query = request.form.get("query")
         returned = list(mongo.db.trainers.find({"$text": {"$search": query}}).sort("name", pymongo.ASCENDING))
-        process_search(league, query, returned, "trainers.html")
+        process_search("Trainers", trainers, query, returned, "trainers.html")
         data=returned
     else:
         data=league
