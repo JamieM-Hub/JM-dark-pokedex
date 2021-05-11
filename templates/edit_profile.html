@@ -27,7 +27,7 @@
                     <div class="col s12 center-align">
                         <br>
                         Favourite Type<br>
-                        {% if trainer.fav_type %}
+                        {% if trainer.fav_type and trainer.fav_type != "none" %}
                         <div class="btn-small btn-pokemon type-{{ trainer.fav_type }}">
                             {{ trainer.fav_type|upper }}
                         </div>
@@ -40,9 +40,13 @@
                     <div class="col s12 center-align">
                         <br>
                         Favourite Pokemon<br>
+                        {% if trainer.fav_pokemon and trainer.fav_pokemon != "none" %}
                         <div class="btn-small btn-pokemon yellow darken-3">
                             {{ trainer.fav_pokemon|upper }}
                         </div>
+                        {% else %}
+                        <div class="btn-small btn-pokemon grey">-</div>
+                        {% endif %}
                     </div>
 
                 </div>

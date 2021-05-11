@@ -24,7 +24,7 @@
                     <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
                         <br>
                         Favourite Type<br>
-                        {% if trainer.fav_type %}
+                        {% if trainer.fav_type and trainer.fav_type != "none" %}
                         <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
                             type="submit" value="{{ trainer.fav_type|upper }}">
                         {% else %}
@@ -36,8 +36,12 @@
                     <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
                         <br>
                         Favourite Pokemon<br>
+                        {% if trainer.fav_pokemon and trainer.fav_pokemon != "none" %}
                         <input class="btn btn-small btn-pokemon yellow darken-3" id="query" name="query" type="submit"
                             value="{{ trainer.fav_pokemon|upper }}">
+                        {% else %}
+                        <div class="btn btn-small btn-pokemon grey">-</div>
+                        {% endif %}
                     </form>
 
                 </div>
