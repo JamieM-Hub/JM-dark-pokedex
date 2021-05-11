@@ -32,9 +32,9 @@
                                 maxlength="20" required>
                             <label for="name">Name</label>
                         </div>
-                        <!-- Hometown (3-20 letters, spaces allowed within string but not at start or end) -->
+                        <!-- Hometown (3-20 letters with apostrophe, spaces allowed within string but not at start or end) -->
                         <div class="input-field col s6">
-                            <input id="hometown" type="text" name="hometown" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
+                            <input id="hometown" type="text" name="hometown" pattern="^[a-zA-Z']+([ ]?[a-zA-Z']+)*$"
                                 minlength="3" maxlength="20" required>
                             <label for="hometown">Hometown</label>
                         </div>
