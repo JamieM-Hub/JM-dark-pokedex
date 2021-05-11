@@ -63,12 +63,24 @@
                     <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
                         <br>
                         Favourite Pokemon<br>
+
                         {% if trainer.fav_pokemon and trainer.fav_pokemon != "none" %}
-                        <input class="btn btn-small btn-pokemon yellow darken-3" id="query" name="query" type="submit"
+
+                        {% for pokemon in pokedex %}
+                        {% if trainer.fav_pokemon|lower == pokemon.name|lower %}
+
+                        {% set type = pokemon.type[0] %}
+                        <input class="btn btn-small btn-pokemon type-{{ type }}" id="query" name="query" type="submit"
                             value="{{ trainer.fav_pokemon|upper }}">
+
+                        {% endif %}
+                        {% endfor %}
+
                         {% else %}
                         <div class="btn btn-small btn-pokemon grey">-</div>
+
                         {% endif %}
+
                     </form>
 
                 </div>
@@ -121,6 +133,7 @@
 
                                         {% for pokemon in pokedex %}
                                         {% if trainer.squad[n]|lower == pokemon.name|lower %}
+
                                         {% set type = pokemon.type[0] %}
                                         <input class="btn btn-small btn-pokemon type-{{ type }}" id="query" name="query"
                                             type="submit" value="{{ trainer.squad[n]|upper }}">
@@ -154,8 +167,8 @@
             <div class="col s12">
                 <p class=" trainer-bio center-align ">"{{ trainer.bio }}"</span>
             </div>
-            <br>
-            <br>
+            <br><br>
+
         </div>
 
     </div>
