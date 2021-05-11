@@ -95,8 +95,14 @@ def search_trainers():
 
 @app.route("/edit_pokemon/<index>", methods=["GET", "POST"])
 def edit_pokemon(index):
+    # get pokedex and selected pokemon
     pokedex = mongo.db.pokemon.find()
     selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
+
+    # get user info
+    user = mongo.db.trainers.find_one(
+        {"username": session['user']})
+    trainer_name = user['name']
 
     if request.method == "POST":
         submit = {
@@ -127,7 +133,7 @@ def edit_pokemon(index):
             flash(submit["name"].upper() + " updated!")
             return redirect(url_for("profile", username=session['user']))
 
-    return render_template("edit_pokemon.html", pokedex=pokedex, index=index, pokemon=selected_pokemon, types=types)
+    return render_template("edit_pokemon.html", pokedex=pokedex, index=index, pokemon=selected_pokemon, trainer_name=trainer_name, types=types)
 
 
 @app.route("/preview_pokemon/<username>/<index>", methods=["GET", "POST"])
@@ -385,6 +391,7 @@ def contribute():
     # get user info from db
     user = mongo.db.trainers.find_one(
         {"username": session['user']})
+    trainer_name = user['name']
 
     if request.method == "POST":
         last_created_pokemon = list(mongo.db.pokemon.find().sort("dex_id", pymongo.DESCENDING).limit(1))
@@ -439,7 +446,7 @@ def contribute():
             "in_squad": [],
             "rated_by": []
         }
-        return render_template("contribute.html", pokemon=null_pokemon, types=types)
+        return render_template("contribute.html", pokemon=null_pokemon, trainer_name=trainer_name, types=types)
 
 
 @app.route("/preview_contribute/", methods=["GET", "POST"])
