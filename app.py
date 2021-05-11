@@ -31,10 +31,12 @@ default_img_t = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Man_s
 # Global funcs
 
 def process_search(data, query, returned, url):
+    query = "\"" + query + "\""
     if returned:
+        flash(f"Search results for {query}")
         return render_template(url, data=returned)
     else:
-        flash("No results for your search query.")
+        flash(f"No results for {query}")
         return redirect(url_for('get_pokemon'))
         
 
