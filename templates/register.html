@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- info section -->
 <div class="row card pokedex-entry theme">
     <div class="card-content">
-        <span class="card-title center-align header-color">Do you want to be the very best?</span>
+        <span class="card-title center-align header-color">Do you want to be the Very Best?</span>
         <br>
+        <!-- info section -->
         <p>
             Pretium quam vulputate dignissim suspendisse in.
             Vestibulum mattis ullamcorper velit sed. Varius vel pharetra vel turpis nunc eget. Sit amet luctus
@@ -18,7 +18,194 @@
         </p>
         <br><br>
 
-        <!-- form -->
+        {% if trainer %}
+        <!-- prefilled form -->
+        <form class="col s12" method="POST" action="" autocomplete="off">
+            <div class="row">
+
+                <!-- Top Left column -->
+                <div class="col s12">
+                    <div class="row">
+
+                        <!-- Name (3-20 letters, spaces allowed within string but not at start or end) -->
+                        <div class="input-field col s6">
+                            <input id="name" type="text" name="name" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
+                                value="{{ trainer.name }}" minlength="3" maxlength="20" required>
+                            <label for="name">Name *</label>
+                        </div>
+                        <!-- Hometown (3-20 letters with apostrophe, spaces allowed within string but not at start or end) -->
+                        <div class="input-field col s6">
+                            <input id="hometown" type="text" name="hometown" pattern="^[a-zA-Z']+([ ]?[a-zA-Z']+)*$"
+                                value="{{ trainer.hometown }}" minlength="3" maxlength="20" required>
+                            <label for="hometown">Hometown *</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Favourite Type -->
+                <div class="input-field col s6">
+                    <select name="fav_type" required>
+
+                        <!-- display "-" option if trainer does not have a favourite type -->
+                        {% if trainer.fav_type %}
+                        <option value="none">-</option>
+                        {% else %}
+                        <option value="none" selected>-</option>
+                        {% endif %}
+
+                        <!-- display each type in the types list as options, with current favourite selected -->
+                        {% for type in types %}
+                        {% if trainer.fav_type == type %}
+                        <option value="{{ type }}" selected>{{ type|capitalize }}</option>
+                        {% else %}
+                        <option value="{{ type }}">{{ type|capitalize }}</option>
+                        {% endif %}
+                        {% endfor %}
+
+                    </select>
+                    <label for="fav_type">Favourite Type</label>
+                </div>
+
+                <!-- Favourite Pokemon -->
+                <div class="input-field col s12 m6">
+                    <select name="fav_pokemon">
+
+                        <!-- generate empty option -->
+                        {% if trainer.squad[n] %}
+                        <option value="none">-</option>
+                        {% else %}
+                        <option value="none" selected>-</option>
+                        {% endif %}
+
+                        <!-- display pokemon in pokedex as options, with current favourite selected-->
+                        {% for pokemon in pokedex %}
+                        {% if trainer.fav_pokemon == pokemon.name %}
+                        <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
+                        {% else %}
+                        <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                        {% endif %}
+                        {% endfor %}
+
+                    </select>
+                    <label for="fav_pokemon">Favourite Pokemon</label>
+                </div>
+
+            </div>
+
+            <!-- Squad section -->
+            <div class="row">
+
+                <!-- Generate 6 Squad options -->
+                {% for n in range(6) %}
+
+                <div class="input-field col s4">
+                    <select name="squad_{{ n+1 }} ">
+
+                        <!-- forbid pokemon deselection in squad slot 1 -->
+                        {% if n > 0 %}
+
+                        {% if trainer.squad[n] %}
+                        <option value="none">-</option>
+                        {% else %}
+                        <option value="none" selected>-</option>
+                        {% endif %}
+
+                        {% endif %}
+
+                        <!-- print each pokemon in the pokedex as an option-->
+                        {% for pokemon in pokedex %}
+                        {% if trainer.squad[n] == pokemon.name %}
+                        <option value="{{ pokemon.name }}" selected>{{ pokemon.name|capitalize }}</option>
+                        {% else %}
+                        <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                        {% endif %}
+                        {% endfor %}
+
+                    </select>
+                    {% if n == 0 %}
+                    <label for="squad_{{ n+1 }}">Squad #{{ n+1 }} *</label>
+                    {% else %}
+                    <label for="squad_{{ n+1 }}">Squad #{{ n+1 }}</label>
+                    {% endif %}
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- Bottom section -->
+            <div class="row">
+
+                <!-- Bio -->
+                <div class="input-field col s12">
+                    <textarea id="bio" name="bio" minlength="5" maxlength="387"
+                        class="materialize-textarea white-text center-align" required>{{ trainer.bio }}</textarea>
+                    <label for="bio">Bio *</label>
+                </div>
+
+                <!-- Image URL -->
+                {% if trainer.img_src == default_img %}
+                {% set img_src = "" %}
+                {% else %}
+                {% set img_src = trainer.img_src %}
+
+                <div class="input-field col s12">
+                    <input id="img_src" name="img_src" type="url" value="{{ img_src }}">
+                    <label for="img_src">Image URL</label>
+                </div>
+
+                {% endif %}
+
+                <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
+                <div class="input-field col s6">
+                    <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$" required>
+                    <label for="username">Username *</label>
+                </div>
+
+                <!-- password (5-20 any non-whitespace characters)-->
+                <div class="input-field col s6">
+                    <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" required>
+                    <label for="password">Password *</label>
+                </div>
+                <br>
+
+                <!-- private/public switch -->
+                <div class="col s12 switch center-align">
+                    <label for="private">
+                        Private
+                        {% if trainer.private %}
+                        <input type="checkbox" id="private" name="private">
+                        {% else %}
+                        <input type="checkbox" id="private" name="private" checked>
+                        {% endif %}
+                        <span class="lever"></span>
+                        Public
+                    </label>
+                </div>
+                <br>
+
+                <!-- Confirm/cancel/login buttons -->
+                <div class="input-field col s12 center-align">
+                    <a href="{{ url_for('login') }}" class="btn waves-effect waves-light theme left">
+                        Log In
+                        <i class="fas fa-user right"></i>
+                    </a>
+                    <button class="btn waves-effect waves-light yellow darken-3 right" type="submit" name="action">
+                        Register
+                        <i class="fas fa-clipboard-check right"></i>
+                    </button>
+                    <a href="{{ url_for('index') }}" class="btn waves-effect waves-light grey">
+                        Cancel
+                        <i class="fas fa-window-close right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </form>
+
+        {% else %}
+        <!-- blank form -->
         <form class="col s12" method="POST" action="" autocomplete="off">
             <div class="row">
 
@@ -30,13 +217,13 @@
                         <div class="input-field col s6">
                             <input id="name" type="text" name="name" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$" minlength="3"
                                 maxlength="20" required>
-                            <label for="name">Name</label>
+                            <label for="name">Name *</label>
                         </div>
                         <!-- Hometown (3-20 letters with apostrophe, spaces allowed within string but not at start or end) -->
                         <div class="input-field col s6">
                             <input id="hometown" type="text" name="hometown" pattern="^[a-zA-Z']+([ ]?[a-zA-Z']+)*$"
                                 minlength="3" maxlength="20" required>
-                            <label for="hometown">Hometown</label>
+                            <label for="hometown">Hometown *</label>
                         </div>
 
                     </div>
@@ -72,46 +259,63 @@
             <div class="row">
 
                 <!-- Generate 6 Squad options -->
-                {% for num in range(1,7) %}
+                <!-- first slot is required -->
                 <div class="input-field col s4">
+
+                    <select name="squad_1" required>
+                        <option value="" disabled selected>-</option>
+                        {% for pokemon in pokedex %}
+                        <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="squad_1">Squad #1 *</label>
+
+                </div>
+
+                <!-- slots 2-5 are optional -->
+                {% for num in range(2,7) %}
+                <div class="input-field col s4">
+
                     <select name="squad_{{ num }} ">
-                        <option value="none" selected>-</option>
+                        <option value="" selected>-</option>
                         {% for pokemon in pokedex %}
                         <option value="{{ pokemon.name }}">{{ pokemon.name|capitalize }}</option>
                         {% endfor %}
                     </select>
                     <label for="squad_{{ num }}">Squad #{{ num }}</label>
+
                 </div>
                 {% endfor %}
 
             </div>
+
 
             <!-- Bottom section -->
             <div class="row">
 
                 <!-- Bio -->
                 <div class="input-field col s12">
-                    <textarea id="bio" name="bio" minlength="5" maxlength="387" class="materialize-textarea white-text"
-                        required></textarea>
-                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" minlength="5" maxlength="387"
+                        class="materialize-textarea white-text center-align" required></textarea>
+                    <label for="bio">Bio *</label>
                 </div>
 
                 <!-- Image URL -->
                 <div class="input-field col s12">
-                    <input id="img_src" name="img_src" type="url">
-                    <label for="img_src">Image URL</label>
+                    <input id="img_src" name="img_src" type="url" required>
+                    <label for="img_src">Image URL *</label>
                 </div>
 
                 <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
                 <div class="input-field col s6">
                     <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$" required>
-                    <label for="username">Username</label>
+                    <label for="username">Username *</label>
                 </div>
 
                 <!-- password (5-20 any non-whitespace characters)-->
                 <div class="input-field col s6">
                     <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" required>
-                    <label for="password">Password</label>
+                    <label for="password">Password *</label>
                 </div>
                 <br>
 
@@ -144,6 +348,8 @@
 
             </div>
         </form>
+
+        {% endif %}
 
     </div>
 </div>

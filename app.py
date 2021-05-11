@@ -338,15 +338,9 @@ def preview_profile(username, index):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    pokedex = list(mongo.db.pokemon.find())
     if request.method == "POST":
-        # check if username already exists in db
-        username_taken = mongo.db.trainers.find_one(
-            {"username": request.form.get("username").lower()})
-
-        if username_taken:
-            flash("That username is taken!")
-            return redirect(url_for("register"))
-
+        # calculate back-end record fields
         trainers_length = mongo.db.trainers.count()
         trainer_id = trainers_length + 1
         private = False if request.form.get("private") else True
@@ -355,6 +349,7 @@ def register():
         else:
             img_src = request.form.get("img_src")
 
+        # create new trainer record
         new_trainer = {
             "name": request.form.get("name"),
             "trainer_id": trainer_id,
@@ -377,15 +372,22 @@ def register():
             "rating": 0,
             "rated_by": []
         }
-        mongo.db.trainers.insert_one(new_trainer)
+        # check if username already exists in db
+        username_taken = mongo.db.trainers.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if username_taken:
+            flash("That username is taken!")
+            return render_template("register.html", trainer=new_trainer, pokedex=pokedex, types=types)
+        else:
+            mongo.db.trainers.insert_one(new_trainer)
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
-        flash("Welcome to the Dark Pokedex, " + new_trainer['name'] + "! We hope you like it around here.")
+        flash("Welcome to the Dark Pokedex, " + new_trainer['name'] + "!")
         return redirect(url_for("profile", username=session["user"]))
-
-    pokedex = list(mongo.db.pokemon.find())
-    return render_template("register.html", pokedex=pokedex, types=types)
+    else:
+        return render_template("register.html", pokedex=pokedex, types=types)
 
 
 @app.route("/contribute", methods=["GET", "POST"])
