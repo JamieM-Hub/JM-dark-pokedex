@@ -84,24 +84,35 @@ def search_pokemon():
 
 @app.route("/rate_pokemon/<index>/<unrate>", methods=["GET", "POST"])
 def rate_pokemon(index, unrate):
-    # get pokedex
+    # get rated pokemon
     pokedex = mongo.db.pokemon.find()
+    rated_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
 
     # logic
     if unrate == "False":
-        # add user to selected pokemon's rated_by array
+        # add user to pokemon's rated_by array
         mongo.db.pokemon.update(
             {"_id": ObjectId(index)},
             {"$push": {"rated_by": session['user']}}
         )
+        # increment trainer rating
+        mongo.db.trainers.update(
+            {"username": rated_pokemon['created_by']},
+            {"$inc": {"rating": 1}}
+        )
     else:
-        # remove user from selected pokemon's rated_by array
+        # remove user from pokemon's rated_by array
         mongo.db.pokemon.update(
             {"_id": ObjectId(index)},
             {"$pull": {"rated_by": session['user']}}
         )
+        # decrement trainer rating
+        mongo.db.trainers.update(
+            {"username": rated_pokemon['created_by']},
+            {"$inc": {"rating": -1}}
+        )
 
-    # update rating number according to length of rated_by
+    # update pokemon rating number according to new length of rated_by
     rated_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
     rating = len(rated_pokemon['rated_by'])
     mongo.db.pokemon.update(
@@ -110,9 +121,9 @@ def rate_pokemon(index, unrate):
     )
 
     # get rated pokemon's id for anchor
-    rated_pokemon_id = rated_pokemon['dex_id']
-    
-    return redirect(url_for('get_pokemon', id=rated_pokemon_id))
+    id = rated_pokemon['dex_id']
+
+    return redirect(url_for('get_pokemon', id=id))
 
 
 @app.route("/search_trainers", methods=["GET", "POST"])
