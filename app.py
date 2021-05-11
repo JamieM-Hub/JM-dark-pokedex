@@ -341,7 +341,7 @@ def register():
     if request.method == "POST":
         # check if username already exists in db
         username_taken = mongo.db.trainers.find_one(
-            {"username": request.form.get("username")})
+            {"username": request.form.get("username").lower()})
 
         if username_taken:
             flash("That username is taken!")
