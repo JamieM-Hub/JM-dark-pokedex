@@ -103,9 +103,8 @@
             <!-- right column -->
             <div class="col s3">
                 <div class="row">
-                    <br>
-                    <br>
-                    <br>
+                    <br><br><br>
+
                     <!-- squad -->
                     <div class="col s12 center-align">
                         Squad
@@ -115,29 +114,39 @@
                         <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
                             <div class="row">
                                 {% for n in range(6) %}
-                                {% if trainer.squad[n] and trainer.squad[n] != "none" %}
                                 <div class="col s12">
                                     <div class="">
-                                        <input class="btn btn-small btn-pokemon theme" id="query" name="query"
+
+                                        {% if trainer.squad[n] and trainer.squad[n] != "none" %}
+
+                                        {% for pokemon in pokedex %}
+                                        {% if trainer.squad[n]|lower == pokemon.name|lower %}
+                                        {% set type = pokemon.type[0] %}
+                                        <input class="btn btn-small btn-pokemon type-{{ type }}" id="query" name="query"
                                             type="submit" value="{{ trainer.squad[n]|upper }}">
-                                    </div>
-                                </div>
-                                {% else %}
-                                <div class="col s12">
-                                    <div class="">
+
+                                        {% endif %}
+                                        {% endfor %}
+
+                                        {% else %}
                                         <div class="btn btn-small btn-pokemon grey">-</div>
+
+                                        {% endif %}
+
                                     </div>
                                 </div>
-                                {% endif %}
                                 {% endfor %}
                             </div>
                         </form>
 
                         {% endif %}
                     </div>
+
                 </div>
             </div>
+
         </div>
+
         <!-- bottom row -->
         <div class="row">
 

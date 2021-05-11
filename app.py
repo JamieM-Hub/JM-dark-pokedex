@@ -484,8 +484,11 @@ def preview_contribute():
 
 @app.route("/trainers")
 def trainers():
+    # get pokedex
+    pokedex = list(mongo.db.pokemon.find())
+    # get trainers
     trainers = mongo.db.trainers.find()
-    return render_template("trainers.html", trainers=trainers)
+    return render_template("trainers.html", trainers=trainers, pokedex=pokedex)
 
 
 @app.route("/contact", methods=["GET", "POST"])
