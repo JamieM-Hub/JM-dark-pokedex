@@ -259,6 +259,22 @@ hr {
     position: relative;
 }
 
+label {
+    color: #e7d75cec;
+}
+
+.switch label input[type="checkbox"]:checked+.lever {
+    background-color: #e7d75cec;
+}
+
+span.lever::before {
+    background-color: initial !important;
+}
+
+span.lever::after {
+    background-color: #e7d75cec !important;
+}
+
 /* THEMES */
 
 .theme {
