@@ -44,6 +44,7 @@
 
         </div>
     </div>
+
     <!-- column 1 -->
     <div class="col s4 center-align">
         <div class="row">
@@ -257,7 +258,8 @@
 
                     <!-- Weight -->
                     <div class="input-field col s2">
-                        <input id="weight" type="number" name="weight" max="999" value="{{ pokemon.weight }}" required>
+                        <input id="weight" type="number" name="weight" step="0.1" max="999" value="{{ pokemon.weight }}"
+                            required>
                         <label for="weight">Weight (pounds)</label>
                     </div>
                 </div>
