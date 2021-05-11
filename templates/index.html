@@ -4,11 +4,13 @@
 <!-- code for clickable div links from: -->
 <!-- https://stackoverflow.com/questions/796087/make-a-div-into-a-link -->
 
+<br>
+
 <div class="row">
     {% if session.user %}
 
     <div class="col s6 home-grid">
-        <div class="btn waves-effect waves-light pokedex-entry home-button theme">
+        <div class="btn waves-effect waves-light home-button theme">
             <a href="{{ url_for('profile', username=session['user']) }}">
                 <span class="home-link"></span>
             </a>
@@ -16,8 +18,7 @@
             <span class="home-header header-color">{{ session["user"] }}</span>
             <p class="home-p">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                dolore magna aliqua.
             </p>
         </div>
     </div>
@@ -25,7 +26,7 @@
     {% else %}
 
     <div class="col s6 home-grid">
-        <div class="btn waves-effect waves-light pokedex-entry home-button theme">
+        <div class="btn waves-effect waves-light home-button theme">
             <a href="{{ url_for('login') }}">
                 <span class="home-link"></span>
             </a>
@@ -33,8 +34,7 @@
             <span class="home-header header-color">Log In</span>
             <p class="home-p">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                dolore magna aliqua.
             </p>
 
         </div>
@@ -43,7 +43,7 @@
     {% endif %}
 
     <div class="col s6 home-grid">
-        <div class="btn waves-effect waves-light pokedex-entry home-button theme">
+        <div class="btn waves-effect waves-light home-button theme">
             <a href="{{ url_for('get_pokemon') }}">
                 <span class="home-link"></span>
             </a>
@@ -51,14 +51,14 @@
             <span class="home-header header-color">Pokedex</span>
             <p class="home-p">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                dolore magna aliqua.
             </p>
+
         </div>
     </div>
 
     <div class="col s6 home-grid">
-        <div class=" btn waves-effect waves-light pokedex-entry home-button theme">
+        <div class=" btn waves-effect waves-light home-button theme">
             <a href="{{ url_for('trainers') }}">
                 <span class="home-link"></span>
             </a>
@@ -66,14 +66,14 @@
             <span class="home-header header-color">League</span>
             <p class="home-p">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                dolore magna aliqua.
             </p>
+
         </div>
     </div>
 
     <div class="col s6 home-grid">
-        <div class="btn waves-effect waves-light pokedex-entry home-button theme">
+        <div class="btn waves-effect waves-light home-button theme">
             {% if session.user %}
             <a href="{{ url_for('contribute') }}">
                 <span class="home-link"></span>
@@ -87,40 +87,43 @@
             <span class="home-header header-color">Contribute</span>
             <p class="home-p">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                dolore magna aliqua.
             </p>
+
         </div>
     </div>
 
-    <div class="col s6 home-grid"">
-        <div class=" btn waves-effect waves-light pokedex-entry home-button theme">
-        <a href="{{ url_for('contact') }}">
-            <span class="home-link"></span>
-        </a>
+    <div class="col s6 home-grid">
+        <div class=" btn waves-effect waves-light home-button theme">
+            <a href="{{ url_for('contact') }}">
+                <span class="home-link"></span>
+            </a>
 
-        <span class="home-header header-color">Contact</span>
-        <p class="home-p">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-            ex ea commodo consequat.
-        </p>
+            <span class="home-header header-color">Contact</span>
+            <p class="home-p">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.
+            </p>
+
+        </div>
     </div>
 
+    <div class="col s6 home-grid">
+        <div class=" btn waves-effect waves-light home-button theme">
+            <a href="{{ url_for('about') }}">
+                <span class="home-link"></span>
+            </a>
 
-    <div class="col s6 home-grid"">
-        <div class=" btn waves-effect waves-light pokedex-entry home-button theme">
-        <a href="{{ url_for('about') }}">
-            <span class="home-link"></span>
-        </a>
+            <span class="home-header header-color">About</span>
+            <p class="home-p">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et
+                dolore magna aliqua.
+            </p>
 
-        <span class="home-header header-color">About</span>
-        <p class="home-p">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-            ex ea commodo consequat.
-        </p>
+        </div>
     </div>
+
 </div>
 
 {% endblock %}

@@ -123,7 +123,11 @@ section {
     text-align: center;
     height: 100%;
     width: 100%;
-    padding: 5%;
+    /* padding: 5%; */
+    /* padding: 2vh 0; */
+    border: ridge 2vh rgba(77, 16, 77, 0.9);
+    background-color: rgba(49, 4, 45, 0.85) !important;
+    color: whitesmoke;
 }
 
 .home-link {
@@ -146,7 +150,7 @@ section {
 }
 
 .home-p {
-    text-transform: capitalize;
+    text-transform: initial;
     line-height: normal;
 }
 
