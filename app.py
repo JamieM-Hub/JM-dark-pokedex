@@ -82,6 +82,39 @@ def search_pokemon():
     return render_template("pokemon.html", pokedex=data)
 
 
+@app.route("/rate_pokemon/<index>/<unrate>", methods=["GET", "POST"])
+def rate_pokemon(index, unrate):
+    # get pokedex
+    pokedex = mongo.db.pokemon.find()
+
+    # logic
+    if unrate == "False":
+        # add user to selected pokemon's rated_by array
+        mongo.db.pokemon.update(
+            {"_id": ObjectId(index)},
+            {"$push": {"rated_by": session['user']}}
+        )
+    else:
+        # remove user from selected pokemon's rated_by array
+        mongo.db.pokemon.update(
+            {"_id": ObjectId(index)},
+            {"$pull": {"rated_by": session['user']}}
+        )
+
+    # update rating number according to length of rated_by
+    rated_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
+    rating = len(rated_pokemon['rated_by'])
+    mongo.db.pokemon.update(
+        {"_id": ObjectId(index)},
+        {"$set": {"rating": rating}}
+    )
+
+    # get rated pokemon's id for anchor
+    rated_pokemon_id = rated_pokemon['dex_id']
+    
+    return redirect(url_for('get_pokemon', id=rated_pokemon_id))
+
+
 @app.route("/search_trainers", methods=["GET", "POST"])
 def search_trainers():
     if request.method == "POST":
