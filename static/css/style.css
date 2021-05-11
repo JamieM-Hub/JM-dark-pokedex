@@ -150,6 +150,15 @@ section {
     line-height: normal;
 }
 
+/* MODALS */
+
+.modal {
+    padding: 2vh 0;
+    border: ridge 2vh rgba(77, 16, 77, 0.9);
+    background-color: rgba(49, 4, 45, 0.85) !important;
+    color: whitesmoke;
+}
+
 /* POKEDEX */
 
 .pokedex-entry {
