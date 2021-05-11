@@ -107,12 +107,15 @@
     <!-- column 3 -->
     <div class="col s4 center-align pokedex-text">
         <div class="row">
+            {% for trainer in trainers if pokemon.created_by == trainer.username %}
+            {% set display_name = trainer.name %}
             <br>
             <!-- created by -->
             <div class="col s12">
-                <em>Discovered by <span class="header-color">{{ pokemon.created_by }}</span></em>
+                <em>Discovered by <span class="header-color">{{ display_name }}</span></em>
             </div>
             <br><br>
+            {% endfor %}
 
             <!-- description -->
             <div class="col s12 pokemon-desc">

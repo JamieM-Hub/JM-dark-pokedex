@@ -48,10 +48,15 @@ def index():
 
 @app.route("/get_pokemon")
 def get_pokemon():
+    # display pokemon in ascending order from negative (user created pokemon) to positive (original pokemon)
     discovered = list(mongo.db.pokemon.find({ "dex_id" : {'$gt': 1000} }).sort("dex_id", pymongo.DESCENDING))
     original = list(mongo.db.pokemon.find({ "dex_id" : {'$lt': 1000} }).sort("dex_id", pymongo.ASCENDING))
     pokedex = discovered + original
-    return render_template("pokemon.html", pokedex=pokedex)
+
+    # supply trainers to display trainer's name next to created pokemon
+    trainers = list(mongo.db.trainers.find())
+
+    return render_template("pokemon.html", pokedex=pokedex, trainers=trainers)
 
 
 @app.route("/get_pokemon/<id>")
