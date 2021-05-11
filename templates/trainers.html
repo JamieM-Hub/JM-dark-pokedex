@@ -112,8 +112,11 @@
                     <!-- hometown-->
                     <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
                         Hometown<br>
-                        <input class="btn btn-small btn-pokemon theme" id="query" name="query" type="submit"
-                            value="{{ trainer.hometown }}">
+                        <div class="btn btn-small btn-pokemon theme">
+                            {{ trainer.hometown }}
+                        </div>
+                        <!-- <input class="btn btn-small btn-pokemon theme" id="query" name="query" type="submit"
+                            value="{{ trainer.hometown }}"> -->
                         <!-- <span class="header-color">{{ trainer.hometown|upper }}</span> -->
                         <br><br>
                     </form>
