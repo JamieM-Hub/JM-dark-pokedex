@@ -63,6 +63,22 @@ label.active {
     color: #e7d75c !important;
 }
 
+/* DROPDOWNS */
+
+.select-dropdown {
+    width: 100%;
+    /* border: ridge 2vh rgba(77, 16, 77, 0.9); */
+    background-color: rgba(49, 4, 45, 0.85) !important;
+}
+
+.select-dropdown li span {
+    color: whitesmoke;
+    text-align: center;
+}
+
+.dropdown-trigger {
+    background-color: transparent !important;
+}
 
 /* HEADER */
 
@@ -305,15 +321,8 @@ span.lever::after {
     color: #e7d75c;
 }
 
-.select-dropdown {
-    background-color: rgba(128, 0, 128, 0.9);
-    width: fit-content;
-}
 
-.select-dropdown li span {
-    color: whitesmoke;
-    text-align: center;
-}
+
 
 .active {
     color: red;
