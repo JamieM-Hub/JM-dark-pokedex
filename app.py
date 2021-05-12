@@ -121,6 +121,23 @@ def sort_pokemon():
     return render_template("pokemon.html", pokedex=sorted)
 
 
+@app.route("/sort_trainers", methods=["GET", "POST"])
+def sort_trainers():
+    # get user sort option
+    sort_by = request.form.get("sort_by")
+
+    # redirect to default page if sort by trainer_id
+    if sort_by == "trainer_id":
+        return redirect(url_for('trainers'))
+
+    # sort trainers according to sort option
+    sorted = process_sort("trainers", sort_by)
+
+    # get pokedex
+    pokedex = list(mongo.db.pokemon.find())
+    return render_template("trainers.html", trainers=sorted, pokedex=pokedex, default_img=default_img_p)
+
+
 @app.route("/rate_pokemon/<index>/<unrate>", methods=["GET", "POST"])
 def rate_pokemon(index, unrate):
     # get rated pokemon

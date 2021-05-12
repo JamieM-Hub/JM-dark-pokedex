@@ -24,6 +24,21 @@
     </div>
 </form>
 
+<!-- sort option -->
+<form action="{{ url_for('sort_trainers') }}" method="POST" class="transparent row">
+    <div class="col s6 offset-s3">
+        <label for="sort_by">Sort</label>
+        <select name="sort_by" id="sort_by">
+            <option value="" disabled selected></option>
+            <option value="trainer_id">Trainer No.</option>
+            <option value="name">Name</option>
+            <option value="hometown">Hometown</option>
+            <option value="rating">Rating</option>
+        </select>
+        <button type="submit">Sort</button>
+    </div>
+</form>
+
 {% if trainers %}
 {% for trainer in trainers %}
 {% if not trainer.private %}
@@ -72,7 +87,7 @@
                         <div class="btn btn-small btn-pokemon grey">-</div>
                         <div>
                             <br>
-                            <img src="{{ default_img }}" alt="no favourite pokemon" class="img-small">
+                            <img src="{{ default_img }}" alt="" class="img-small">
                         </div>
                         {% endif %}
 
