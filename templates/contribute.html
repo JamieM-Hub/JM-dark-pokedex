@@ -217,19 +217,19 @@
 
                     <!-- Height (feet) -->
                     <div class="input-field col s2 offset-s3">
-                        <input id="height_feet" type="number" name="height_feet" max="25" required>
+                        <input id="height_feet" type="number" name="height_feet" min="0" max="25" required>
                         <label for="height_feet">Height (feet)</label>
                     </div>
 
                     <!-- Height (inches) -->
                     <div class="input-field col s2">
-                        <input id="height_inches" type="number" name="height_inches" max="11" required>
+                        <input id="height_inches" type="number" name="height_inches" min="0" max="11" required>
                         <label for="height_inches">Height (inches)</label>
                     </div>
 
                     <!-- Weight -->
                     <div class="input-field col s2">
-                        <input id="weight" type="number" name="weight" step="0.1" max="999" required>
+                        <input id="weight" type="number" name="weight" step="0.1" min="0" max="999" required>
                         <label for="weight">Weight (pounds)</label>
                     </div>
 

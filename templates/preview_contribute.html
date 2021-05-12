@@ -238,22 +238,22 @@
 
                     <!-- Height (feet) -->
                     <div class="input-field col s2 offset-s3">
-                        <input id="height_feet" type="number" name="height_feet" max="25"
+                        <input id="height_feet" type="number" name="height_feet" min="0" max="25"
                             value="{{ pokemon.height[0] }}" required>
                         <label for="height_feet">Height (feet)</label>
                     </div>
 
                     <!-- Height (inches) -->
                     <div class="input-field col s2">
-                        <input id="height_inches" type="number" name="height_inches" max="11"
+                        <input id="height_inches" type="number" name="height_inches" min="0" max="11"
                             value="{{ pokemon.height[1] }}" required>
                         <label for="height_inches">Height (inches)</label>
                     </div>
 
                     <!-- Weight -->
                     <div class="input-field col s2">
-                        <input id="weight" type="number" name="weight" step="0.1" max="999" value="{{ pokemon.weight }}"
-                            required>
+                        <input id="weight" type="number" name="weight" step="0.1" min="0" max="999"
+                            value="{{ pokemon.weight }}" required>
                         <label for="weight">Weight (pounds)</label>
                     </div>
 
