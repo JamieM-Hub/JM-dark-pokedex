@@ -221,7 +221,7 @@ def edit_pokemon(index):
 
         # update record
         else:
-            mongo.db.pokemon.update({"_id": ObjectId(index)}, submit)
+            mongo.db.pokemon.update({"_id": ObjectId(index)}, updated_pokemon)
             flash(updated_pokemon['name'].upper() + " updated!")
             return redirect(url_for("profile", username=session['user']))
 
@@ -333,14 +333,16 @@ def profile(username):
 
 @app.route("/edit_profile/<username>/<index>", methods=["GET", "POST"])
 def edit_profile(username, index):
-    # grab Trainer profile for session user and full sorted Pokedex
+    # grab Trainer profile for session user
     trainer = mongo.db.trainers.find_one({"username": username})
+
+    # grab full sorted pokedex as list
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
 
     if request.method == "POST":
         # serialize form input into new_profile
         private = False if request.form.get("private") else True
-        submit = {
+        updated_trainer = {
             "name": request.form.get("name"),
             "hometown": request.form.get("hometown"),
             "trainer_id": trainer['trainer_id'],
@@ -356,36 +358,45 @@ def edit_profile(username, index):
                 request.form.get("squad_5 "),
                 request.form.get("squad_6 "),
             ],
-            "username": trainer['username'],
+            "username": request.form.get['username'].lower(),
             "password": trainer['password'],
             "private": private,
             "rating": trainer['rating'],
             "rated_by": trainer['rated_by']
         }
 
-        print(f"Submitted\n{submit['username']}: {submit['password']}\n")
-        print(f"Existing\n{trainer['username']}: {trainer['password']}\n")
+        # print(f"Submitted\n{submit['username']}: {submit['password']}\n")
+        # print(f"Existing\n{trainer['username']}: {trainer['password']}\n")
+
+        # VALIDATION
+        # prevent duplicate username
+        username_taken = mongo.db.trainers.find_one(
+            {"username": request.form.get("username")})
+        if username_taken:
+            flash("That username is taken! Usernames are not case sensitive so please try a different username.")
+            return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
 
         # if user attempts password change
         if request.form.get("change_password") or request.form.get("confirm_password"):
             # check change_password matches confirm_password
             if request.form.get("change_password") == request.form.get("confirm_password"):
                 # update user password to new password
-                submit['password'] = generate_password_hash(request.form.get("change_password"))
+                updated_trainer['password'] = generate_password_hash(request.form.get("change_password"))
             else:
+                # display error if new password fields do not match
                 flash("New password fields did not match - please try again.")
-                return render_template("edit_profile.html", index=index, trainer=submit, pokedex=pokedex, types=types)
+                return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
 
+        # VERIFICATION
         # ensure hashed password matches user input
         if not check_password_hash(trainer['password'], request.form.get("password")):
             # invalid password
             flash("Password incorrect!")
-            return render_template("edit_profile.html", index=index, trainer=submit, pokedex=pokedex, types=types)
+            return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
         else:
-            # valid password
-            # submit['password'] = trainer['password']
-            flash(trainer['name'] + "'s profile updated! Looking fresh.")
-            mongo.db.trainers.update({"_id": ObjectId(index)}, submit)
+            # valid password - update Trainer record
+            mongo.db.trainers.update({"_id": ObjectId(index)}, updated_trainer)
+            flash(updated_trainer['name'] + "'s profile updated. Looking fresh!")
             return redirect(url_for('profile', username=session['user'], index=index))
             
     trainer = mongo.db.trainers.find_one({"username": username})
@@ -430,7 +441,9 @@ def preview_profile(username, index):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    # get pokedex as list
     pokedex = list(mongo.db.pokemon.find())
+
     if request.method == "POST":
         # calculate back-end record fields
         trainers_length = mongo.db.trainers.count()
@@ -464,20 +477,29 @@ def register():
             "rating": 0,
             "rated_by": []
         }
-        # check if username already exists in db
+
+        # prevent duplicate trainer name
+        # name_taken = mongo.db.trainers.find_one(
+        #     {"name": request.form.get("name")})
+        # if name_taken:
+        #     flash("That Trainer Name is taken! Trainer Names are case sensitive so try a different case or a different name.")
+        #     return render_template("register.html", trainer=new_trainer, pokedex=pokedex, types=types)
+
+        # prevent duplicate username
         username_taken = mongo.db.trainers.find_one(
             {"username": request.form.get("username").lower()})
-
         if username_taken:
-            flash("That username is taken!")
+            flash("That username is taken! Usernames are not case sensitive so try a different username.")
             return render_template("register.html", trainer=new_trainer, pokedex=pokedex, types=types)
-        else:
-            mongo.db.trainers.insert_one(new_trainer)
+ 
+        # create new Trainer record
+        mongo.db.trainers.insert_one(new_trainer)
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Welcome to the Dark Pokedex, " + new_trainer['name'] + "!")
         return redirect(url_for("profile", username=session["user"]))
+
     else:
         return render_template("register.html", pokedex=pokedex, types=types)
 
