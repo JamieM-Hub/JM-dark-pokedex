@@ -51,16 +51,16 @@ def process_sort(page, sort_by):
     # process pokemon sort
     if page == "pokemon":
         if descending:
-            sorted = list(mongo.db.pokemon.find().sort(sort_by, pymongo.DESCENDING))
+            sorted = list(mongo.db.pokemon.find().collation({'locale':'en'}).sort(sort_by, pymongo.DESCENDING))
         else:
-            sorted = list(mongo.db.pokemon.find().sort(sort_by, pymongo.ASCENDING))
+            sorted = list(mongo.db.pokemon.find().collation({'locale':'en'}).sort(sort_by, pymongo.ASCENDING))
 
     # process trainer sort
     if page == "trainers":
         if descending:
-            sorted = list(mongo.db.trainers.find().sort(sort_by, pymongo.DESCENDING))
+            sorted = list(mongo.db.trainers.find().collation({'locale':'en'}).sort(sort_by, pymongo.DESCENDING))
         else:
-            sorted = list(mongo.db.trainers.find().sort(sort_by, pymongo.ASCENDING))
+            sorted = list(mongo.db.trainers.find().collation({'locale':'en'}).sort(sort_by, pymongo.ASCENDING))
 
     return sorted
     
