@@ -498,8 +498,8 @@ def preview_profile(username, index):
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    # get pokedex as list
-    pokedex = list(mongo.db.pokemon.find())
+    # grab full sorted pokedex as list
+    pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
 
     if request.method == "POST":
         # calculate back-end record fields
