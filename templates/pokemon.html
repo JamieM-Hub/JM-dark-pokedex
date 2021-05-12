@@ -105,7 +105,12 @@
 
             <!-- height -->
             <h6 class="col s6 pokemon-stats">
+                {% if pokemon.height[1]|int < 10 %}
+                {% set inches = "0" + pokemon.height[1] %}
+                {{ pokemon.height[0] }}' {{ inches }}"
+                {% else %}
                 {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                {% endif %}
                 <i class="fas fa-arrows-alt-v header-color"></i>
             </h6>
 
