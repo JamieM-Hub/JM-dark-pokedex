@@ -365,15 +365,12 @@ def edit_profile(username, index):
             "rated_by": trainer['rated_by']
         }
 
-        # print(f"Submitted\n{submit['username']}: {submit['password']}\n")
-        # print(f"Existing\n{trainer['username']}: {trainer['password']}\n")
-
         # VALIDATION
         # prevent duplicate username
         username_taken = mongo.db.trainers.find_one(
             {"username": request.form.get("username")})
         if updated_trainer['username'] != trainer['username'] and username_taken:
-            flash("That username is taken! Usernames are not case sensitive so please try a different username.")
+            flash(f"Username \"{updated_trainer['username']}\" is taken! Please try a different username.")
             return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
 
         # if user attempts password change
@@ -397,11 +394,13 @@ def edit_profile(username, index):
             # valid password - update Trainer record
             mongo.db.trainers.update({"_id": ObjectId(index)}, updated_trainer)
             flash(updated_trainer['name'] + "'s profile updated. Looking fresh!")
+
+            # update session user
+            session['user'] = updated_trainer['username']
             return redirect(url_for('profile', username=session['user'], index=index))
-            
-    trainer = mongo.db.trainers.find_one({"username": username})
-    pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))        
-    return render_template("edit_profile.html", trainer=trainer, index=index, pokedex=pokedex, types=types)
+
+    else:    
+        return render_template("edit_profile.html", trainer=trainer, index=index, pokedex=pokedex, types=types)
 
 
 @app.route("/preview_profile/<username>/<index>", methods=["GET", "POST"])
