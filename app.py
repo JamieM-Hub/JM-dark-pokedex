@@ -209,8 +209,8 @@ def edit_pokemon(index):
         }
 
         # prevent duplicate pokemon names
-        existing_pokemon = mongo.db.pokemon.find_one({"name": updated_pokemon['name']})
-        if existing_pokemon:
+        pokemon_exists = mongo.db.pokemon.find_one({"name": updated_pokemon['name']})
+        if updated_pokemon['name'] != selected_pokemon['name'] and pokemon_exists:
             flash(updated_pokemon['name'].upper() + " already exists!")     
             return render_template("edit_pokemon.html", index=index, pokemon=updated_pokemon, trainer_name=trainer_name, types=types)
 
@@ -535,9 +535,8 @@ def contribute():
         }
 
         # prevent duplicate pokemon names
-        existing_pokemon = mongo.db.pokemon.find_one({"name": new_pokemon['name']})
-        print(existing_pokemon)
-        if existing_pokemon:
+        pokemon_exists = mongo.db.pokemon.find_one({"name": new_pokemon['name']})
+        if pokemon_exists:
             flash(new_pokemon['name'].upper() + " already exists!")
             return render_template("preview_contribute.html", pokemon=new_pokemon, trainer_name=trainer_name, types=types)
 
