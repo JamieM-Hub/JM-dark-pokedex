@@ -177,8 +177,7 @@ def search_trainers():
 
 @app.route("/edit_pokemon/<index>", methods=["GET", "POST"])
 def edit_pokemon(index):
-    # get pokedex and selected pokemon
-    pokedex = mongo.db.pokemon.find()
+    # get selected pokemon
     selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
 
     # get user info
@@ -186,9 +185,10 @@ def edit_pokemon(index):
         {"username": session['user']})
     trainer_name = user['name']
 
+    # create updated record
     if request.method == "POST":
-        submit = {
-            "name": request.form.get("name"),
+        updated_pokemon = {
+            "name": request.form.get("name").lower(),
             "dex_id": selected_pokemon['dex_id'],
             "type": [
                 request.form.get("type_1"),
@@ -207,46 +207,54 @@ def edit_pokemon(index):
             "in_squad": selected_pokemon['in_squad'],
             "rated_by": selected_pokemon['rated_by']
         }
-        if submit['type'][0] == submit['type'][1]:
+
+        # prevent duplicate pokemon names
+        existing_pokemon = mongo.db.pokemon.find_one({"name": updated_pokemon['name']})
+        if existing_pokemon:
+            flash(updated_pokemon['name'].upper() + " already exists!")     
+            return render_template("edit_pokemon.html", index=index, pokemon=updated_pokemon, trainer_name=trainer_name, types=types)
+
+        # prevent duplicate types
+        if updated_pokemon['type'][0] == updated_pokemon['type'][1]:
             flash("Pokemon cannot have two identical types.")
-            return redirect (url_for('edit_pokemon', index=index))           
+            return render_template("edit_pokemon.html", index=index, pokemon=updated_pokemon, trainer_name=trainer_name, types=types)    
+
+        # update record
         else:
             mongo.db.pokemon.update({"_id": ObjectId(index)}, submit)
-            flash(submit["name"].upper() + " updated!")
+            flash(updated_pokemon['name'].upper() + " updated!")
             return redirect(url_for("profile", username=session['user']))
 
-    return render_template("edit_pokemon.html", pokedex=pokedex, index=index, pokemon=selected_pokemon, trainer_name=trainer_name, types=types)
+    return render_template("edit_pokemon.html", index=index, pokemon=selected_pokemon, trainer_name=trainer_name, types=types)
 
 
 @app.route("/preview_pokemon/<username>/<index>", methods=["GET", "POST"])
 def preview_pokemon(username, index):
-    pokedex = mongo.db.pokemon.find()
+    # get selected pokemon
     selected_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
 
-    if request.method == "POST":
-        preview = {
-            "name": request.form.get("name"),
-            "dex_id": selected_pokemon['dex_id'],
-            "type": [
-                request.form.get("type_1"),
-                request.form.get("type_2")
-            ],
-            "species": request.form.get("species"),
-            "height": [
-                request.form.get("height_feet"),
-                request.form.get("height_inches")
-            ],
-            "weight": request.form.get("weight"),
-            "desc": request.form.get("desc"),
-            "img_src": request.form.get("img_src"),
-            "created_by": selected_pokemon['created_by'],
-            "rating": selected_pokemon['rating'],
-            "in_squad": selected_pokemon['in_squad'],
-            "rated_by": selected_pokemon['rated_by']
-        }
-        return render_template("edit_pokemon.html", pokemon=preview, index=index, pokedex=pokedex, types=types)
-
-    return
+    # create preview record and render
+    preview = {
+        "name": request.form.get("name"),
+        "dex_id": selected_pokemon['dex_id'],
+        "type": [
+            request.form.get("type_1"),
+            request.form.get("type_2")
+        ],
+        "species": request.form.get("species"),
+        "height": [
+            request.form.get("height_feet"),
+            request.form.get("height_inches")
+        ],
+        "weight": request.form.get("weight"),
+        "desc": request.form.get("desc"),
+        "img_src": request.form.get("img_src"),
+        "created_by": selected_pokemon['created_by'],
+        "rating": selected_pokemon['rating'],
+        "in_squad": selected_pokemon['in_squad'],
+        "rated_by": selected_pokemon['rated_by']
+    }
+    return render_template("edit_pokemon.html", pokemon=preview, index=index, types=types)
 
 
 @app.route("/delete_pokemon/<index>", methods=["GET", "POST"])
@@ -255,20 +263,24 @@ def delete_pokemon(index):
     user = mongo.db.trainers.find_one(
         {"username": session['user']})
 
-    print("\n\n\nform: " + request.form.get("password") + "\n\n\n")
-    print("\n\n\n" + user['username'] + ": " + user['password'] + "\n\n\n")
-    # check user entered correct password
+    # user enters correct password
     if check_password_hash(
             user["password"], request.form.get("password")):
-        print("\n\n\nPASSWORD CORRECT")
+            
+        # remove record
         deleted_pokemon = mongo.db.pokemon.find_one({"_id": ObjectId(index)})
         mongo.db.pokemon.remove({"_id": ObjectId(index)})
+
+        # display deletion confirmation and return to user profile
         flash(deleted_pokemon['name'].upper() + " was deleted from the Dark Pokedex.")
         return redirect(url_for('profile', username=session['user']))
+
+    # user enters incorrect password
     else:
         flash("Password incorrect.")
         return render_template("edit_pokemon.html", pokemon=deleted_pokemon, index=index, types=types)
 
+    # catch error
     flash("Deletion failed.")
     return redirect(url_for('profile', username=session['user']))
 
