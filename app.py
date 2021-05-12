@@ -358,7 +358,7 @@ def edit_profile(username, index):
                 request.form.get("squad_5 "),
                 request.form.get("squad_6 "),
             ],
-            "username": request.form.get['username'].lower(),
+            "username": request.form.get('username').lower(),
             "password": trainer['password'],
             "private": private,
             "rating": trainer['rating'],
@@ -372,7 +372,7 @@ def edit_profile(username, index):
         # prevent duplicate username
         username_taken = mongo.db.trainers.find_one(
             {"username": request.form.get("username")})
-        if username_taken:
+        if updated_trainer['username'] != trainer['username'] and username_taken:
             flash("That username is taken! Usernames are not case sensitive so please try a different username.")
             return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
 

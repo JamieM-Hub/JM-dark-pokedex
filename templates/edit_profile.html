@@ -185,9 +185,10 @@
                 </label>
             </div>
 
-            <!-- username -->
+            <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
             <div class="input-field col s6">
-                <input id="username" name="username" type="text" pattern="" value="{{ trainer.username }}">
+                <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$"
+                    value="{{ trainer.username }}">
                 <label for="username">Username</label>
             </div>
             <!-- password (5-20 any non-whitespace characters) -->
