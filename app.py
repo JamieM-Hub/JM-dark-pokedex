@@ -481,7 +481,7 @@ def contribute():
         last_created_pokemon = list(mongo.db.pokemon.find().sort("dex_id", pymongo.DESCENDING).limit(1))
         dex_id = last_created_pokemon[0]['dex_id'] + 1
         new_pokemon = {
-            "name": request.form.get("name"),
+            "name": request.form.get("name").lower(),
             "dex_id": dex_id,
             "type": [
                 request.form.get("type_1"),
@@ -501,15 +501,25 @@ def contribute():
             "rated_by": []
         }
 
+        # prevent duplicate pokemon names
+        existing_pokemon = mongo.db.pokemon.find_one({"name": new_pokemon['name']})
+        print(existing_pokemon)
+        if existing_pokemon:
+            flash(new_pokemon['name'].upper() + " already exists!")
+            return render_template("preview_contribute.html", pokemon=new_pokemon, trainer_name=trainer_name, types=types)
+
+        # prevent duplicate types
         if new_pokemon['type'][0] == new_pokemon['type'][1]:
             flash("Pokemon cannot have two identical types.")
-            return redirect(url_for('contribute'))
-        else:
-            mongo.db.pokemon.insert_one(new_pokemon)
-            flash(user['name'] + " discovered " + new_pokemon['name'].upper() + "!")
-            return redirect(url_for('profile', username=session['user']))
+            return render_template("preview_contribute.html", pokemon=new_pokemon, trainer_name=trainer_name, types=types)
+
+        # create new record
+        mongo.db.pokemon.insert_one(new_pokemon)
+        flash(user['name'] + " discovered " + new_pokemon['name'].upper() + "!")
+        return redirect(url_for('profile', username=session['user']))
 
     else:
+        # object used to populate blank pokemon preview
         null_pokemon = {
             "name": "NAME",
             "dex_id": 0,
@@ -535,7 +545,10 @@ def contribute():
 
 @app.route("/preview_contribute/", methods=["GET", "POST"])
 def preview_contribute():
-    pokedex = mongo.db.pokemon.find()
+    # get user info from db
+    user = mongo.db.trainers.find_one(
+        {"username": session['user']})
+    trainer_name = user['name']
 
     if request.method == "POST":
         last_created_pokemon = list(mongo.db.pokemon.find().sort("dex_id", pymongo.DESCENDING).limit(1))
@@ -561,7 +574,7 @@ def preview_contribute():
             "rated_by": []
         }
         # print(preview)
-        return render_template("preview_contribute.html", pokemon=preview, types=types)
+        return render_template("preview_contribute.html", pokemon=preview, trainer_name=trainer_name, types=types)
     else:
         return
 
