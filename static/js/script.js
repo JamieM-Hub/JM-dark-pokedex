@@ -15,7 +15,7 @@
           "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon"
       ]
       types.forEach(type => {
-          $(".select-dropdown li span:contains(" + type + ")").addClass(
+          $(".type-select .select-wrapper .select-dropdown li span:contains(" + type + ")").addClass(
               ["type-" + type.toLowerCase(), "text-shadow"]);
       });
 
