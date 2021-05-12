@@ -24,6 +24,21 @@
     </div>
 </form>
 
+<!-- sort option -->
+<form action="{{ url_for('sort_pokemon') }}" method="POST" class="transparent row">
+    <div class="col s6 offset-s3">
+        <label for="sort_by">Sort</label>
+        <select name="sort_by" id="sort_by">
+            <option value="" disabled selected></option>
+            <option value="dex_id">Pokedex No.</option>
+            <option value="name">Name</option>
+            <option value="species">Species</option>
+            <option value="rating">Rating</option>
+        </select>
+        <button type="submit">Sort</button>
+    </div>
+</form>
+
 {% if pokedex %}
 {% for pokemon in pokedex %}
 

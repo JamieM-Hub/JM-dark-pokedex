@@ -40,6 +40,31 @@ def process_search(page, data, query, returned, url):
         return redirect(url_for('get_pokemon'))
         
 
+def process_sort(page, sort_by):
+    # display highest first for rating
+    if sort_by == "rating":
+        descending = True
+    # otherwise display alphabetical order
+    else:
+        descending = False
+
+    # process pokemon sort
+    if page == "pokemon":
+        if descending:
+            sorted = list(mongo.db.pokemon.find().sort(sort_by, pymongo.DESCENDING))
+        else:
+            sorted = list(mongo.db.pokemon.find().sort(sort_by, pymongo.ASCENDING))
+
+    # process trainer sort
+    if page == "trainers":
+        if descending:
+            sorted = list(mongo.db.trainers.find().sort(sort_by, pymongo.DESCENDING))
+        else:
+            sorted = list(mongo.db.trainers.find().sort(sort_by, pymongo.ASCENDING))
+
+    return sorted
+    
+
 # Routes
 @app.route("/")
 @app.route("/index")
@@ -80,6 +105,20 @@ def search_pokemon():
         data=pokedex
 
     return render_template("pokemon.html", pokedex=data)
+
+
+@app.route("/sort_pokemon", methods=["GET", "POST"])
+def sort_pokemon():
+    # get user sort option
+    sort_by = request.form.get("sort_by")
+
+    # redirect to default page if sort by dex_id
+    if sort_by == "dex_id":
+        return redirect(url_for('get_pokemon'))
+
+    # sort pokedex according to sort option
+    sorted = process_sort("pokemon", sort_by)
+    return render_template("pokemon.html", pokedex=sorted)
 
 
 @app.route("/rate_pokemon/<index>/<unrate>", methods=["GET", "POST"])
@@ -194,7 +233,7 @@ def edit_pokemon(index):
                 request.form.get("type_1"),
                 request.form.get("type_2")
             ],
-            "species": request.form.get("species"),
+            "species": request.form.get("species").lower(),
             "height": [
                 request.form.get("height_feet"),
                 request.form.get("height_inches")
@@ -235,13 +274,13 @@ def preview_pokemon(username, index):
 
     # create preview record and render
     preview = {
-        "name": request.form.get("name"),
+        "name": request.form.get("name").lower(),
         "dex_id": selected_pokemon['dex_id'],
         "type": [
             request.form.get("type_1"),
             request.form.get("type_2")
         ],
-        "species": request.form.get("species"),
+        "species": request.form.get("species").lower(),
         "height": [
             request.form.get("height_feet"),
             request.form.get("height_inches")
@@ -316,10 +355,12 @@ def login():
 
 @app.route("/logout")
 def logout():
-    # remove user from session cookies
-    flash("Come back soon! Enjoy the real world!")
-    session.pop("user")
+    # get user's Trainer name and say goodbye
+    trainer = mongo.db.trainers.find_one({"username": session['user']})
+    flash(f"Bye, {trainer['name']}!")
 
+    # remove user from session cookies
+    session.pop("user")
     return redirect(url_for("login"))
 
 
@@ -520,7 +561,7 @@ def contribute():
                 request.form.get("type_1"),
                 request.form.get("type_2")
             ],
-            "species": request.form.get("species"),
+            "species": request.form.get("species").lower(),
             "height": [
                 request.form.get("height_feet"),
                 request.form.get("height_inches")
