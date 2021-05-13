@@ -1,43 +1,67 @@
 {% extends "base.html" %}
 {% block content %}
 
-<br>
-<!-- Search bar -->
-<form class="transparent" action="{{url_for('search_pokemon') }}" method="POST">
-    <div class="row center-align">
-        <div class="col s2 search-button">
-            <button type="submit" class="btn theme text-shadow">
-                <i class="fas fa-search header-color"></i>
-            </button>
-        </div>
-        <div class="col s8">
-            <div class="input-field">
-                <input class="search-bar" type="text" name="query" id="query" autofocus required>
+<div class="card pokedex-entry">
+    <div class="card-content">
+        <span class="card-title header-color center-align">The Dark Pokedex</span>
+        <br>
+
+        <!-- info -->
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla facere assumenda, sit nobis optio ipsa
+            possimus
+            maiores debitis molestias eum rem architecto adipisci ab quos, soluta doloremque accusantium vitae tenetur?
+        </p>
+
+        <div class="row">
+
+            <!-- Search bar -->
+            <form id="search" class="col s6 offset-s1 input-field" action="{{url_for('search_pokemon') }}"
+                method="POST">
+                <input class="search-bar" type="text" name="query" id="query" required>
                 <label for="query">Search</label>
+            </form>
+
+            <!-- sort option -->
+            <form id="sort" class="col s3 offset-s1 input-field" action="{{ url_for('sort_pokemon') }}" method="POST">
+                <label for="sort_by">Sort</label>
+                <select name="sort_by" id="sort_by">
+                    <option value="" disabled selected></option>
+                    <option value="dex_id">Pokedex No.</option>
+                    <option value="name">Name</option>
+                    <option value="species">Species</option>
+                    <option value="rating">Rating</option>
+                </select>
+            </form>
+
+        </div>
+        <br>
+        <!-- buttons -->
+        <div class="row center-align">
+
+            <!-- search -->
+            <div class="col s4">
+                <button type="submit" form="search" class="btn theme text-shadow">
+                    Search
+                    <i class="fas fa-search right"></i>
+                </button>
+            </div>
+            <!-- reset -->
+            <div class="col s4">
+                <a href="{{ url_for('get_pokemon') }}" class="btn red text-shadow">
+                    Reset
+                    <i class="far fa-times-circle right"></i>
+                </a>
+            </div>
+            <!-- sort -->
+            <div class="col s4">
+                <button type="submit" form="sort" class="btn theme text-shadow">
+                    Sort
+                    <i class="fas fa-sort right"></i>
+                </button>
             </div>
         </div>
-        <div class="col s2 search-button">
-            <a href="{{ url_for('get_pokemon') }}" class="btn theme text-shadow">
-                <i class="far fa-times-circle header-color"></i>
-            </a>
-        </div>
     </div>
-</form>
-
-<!-- sort option -->
-<form action="{{ url_for('sort_pokemon') }}" method="POST" class="transparent row">
-    <div class="col s6 offset-s3">
-        <label for="sort_by">Sort</label>
-        <select name="sort_by" id="sort_by">
-            <option value="" disabled selected></option>
-            <option value="dex_id">Pokedex No.</option>
-            <option value="name">Name</option>
-            <option value="species">Species</option>
-            <option value="rating">Rating</option>
-        </select>
-        <button type="submit">Sort</button>
-    </div>
-</form>
+</div>
 
 {% if pokedex %}
 {% for pokemon in pokedex %}
