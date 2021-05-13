@@ -16,7 +16,7 @@
 <body class="">
 
     <header>
-        <nav class="nav-extended"></nav>
+        <!-- <nav class="nav-extended"></nav> -->
         <!-- main nav -->
         <nav class="nav-extended text-shadow theme header-color">
             <div class="nav-wrapper">
@@ -72,12 +72,12 @@
 
     <section>
         <!-- flash messages -->
-        <div class="row flashes center-align yellow darken-4">
+        <div class="row flashes center-align theme">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             {% for message in messages %}
 
-            <span class="center-align">{{ message }}</span>
+            <span class="header-color">{{ message }}</span>
 
             {% endfor %}
             {% endif %}
@@ -86,6 +86,7 @@
     </section>
 
     <div class="container content">
+        <br>
         {% block content %}
         {% endblock %}
     </div>

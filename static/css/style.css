@@ -10,6 +10,10 @@ body {
 
 }
 
+.container {
+    margin-top: 10vh;
+}
+
 .pokedex-entry>form {
     padding: 1vh 3vh !important;
 }
@@ -108,11 +112,14 @@ nav .brand-logo .title {
 
 /* FLASHES */
 section {
-    margin-top: 10vh;
+    width: 100vw;
+    top: 10vh;
+    position: fixed;
+    z-index: 10;
+    text-align: center;
 }
 
 .flashes span {
-    color: whitesmoke;
     padding: 2vh;
     font-size: 3vh;
 }
