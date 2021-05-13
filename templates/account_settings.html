@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="card pokedex-entry" action="{{ url_for('account_settings', username=trainer.username) }}" method="POST">
+    <div class="row card-content">
+        <h4 class="header-color center-align">Account Settings</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores sunt vitae minima recusandae
+            minus,
+            ea
+            culpa non earum obcaecati illum laudantium voluptates ex velit consequatur, distinctio, dicta quos.
+            Praesentium, laborum?</p>
+
+        <br><br>
+
+        <!-- private/public switch -->
+        <div class="col s12 switch center-align">
+            <label for="private">
+                Private
+                {% if trainer.private %}
+                <input type="checkbox" id="private" name="private">
+                {% else %}
+                <input type="checkbox" id="private" name="private" checked>
+                {% endif %}
+                <span class="lever"></span>
+                Public
+            </label>
+        </div>
+
+        <br><br>
+
+        <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
+        <div class="input-field col s6 offset-s3">
+            <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$"
+                value="{{ trainer.username }}">
+            <label for="username">Username</label>
+        </div>
+
+        <!-- New password (5-20 any non-whitespace characters) -->
+        <div class="input-field col s6 offset-s3">
+            <input id="change_password" name="change_password" type="password" pattern="^([\S]){5,20}$" value="">
+            <label for="change_password">New Password</label>
+        </div>
+
+        <!-- confirm new password (5-20 any non-whitespace characters) -->
+        <div class="input-field col s6 offset-s3">
+            <input id="confirm_password" name="confirm_password" type="password" pattern="^([\S]){5,20}$" value="">
+            <label for="confirm_password">Confirm New Password</label>
+        </div>
+
+        <!-- confirm old password -->
+        <div class="col s6 input-field offset-s3">
+            <input id="password" name="password" type="password" value="" required>
+            <label for="password">Enter Old Password</label>
+        </div>
+    </div>
+
+    <!-- buttons -->
+    <div class="row center-align">
+
+        <!-- log out -->
+        <div class="col s4">
+            <a href="{{ url_for('logout') }}" class="btn btn-large waves-effect waves-light red">
+                Log Out
+                <i class="fas fa-power-off right"></i>
+            </a>
+        </div>
+
+        <!-- cancel -->
+        <div class="col s4">
+            <a href="{{ url_for('profile', username=session['user']) }}"
+                class="btn btn-large waves-effect waves-light grey">
+                Cancel
+                <i class="fas fa-window-close right"></i>
+            </a>
+        </div>
+
+        <!-- confirm -->
+        <div class="col s4">
+            <button class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3" type="submit"
+                name="action">
+                Confirm
+                <i class="fas fa-clipboard-check right"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -146,7 +146,7 @@
     </div>
 
     <!-- preview -->
-    <div class="col s4">
+    <div class="col s4" id="preview-trainer">
         <button class="btn btn-large waves-effect waves-light theme" form="edit-profile"
             formaction="{{ url_for('preview_profile', username=session['user'], index=index) }}" type="submit"
             name="action">
@@ -170,42 +170,6 @@
 <div class="row card pokedex-entry center-align">
     <form class="col s12" method="POST" action="" id="edit-profile" autocomplete="off">
         <div class="row">
-
-            <!-- private/public switch -->
-            <div class="col s12 switch center-align">
-                <label for="private">
-                    Private
-                    {% if trainer.private %}
-                    <input type="checkbox" id="private" name="private">
-                    {% else %}
-                    <input type="checkbox" id="private" name="private" checked>
-                    {% endif %}
-                    <span class="lever"></span>
-                    Public
-                </label>
-            </div>
-
-            <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
-            <div class="input-field col s6">
-                <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$"
-                    value="{{ trainer.username }}">
-                <label for="username">Username</label>
-            </div>
-            <!-- password (5-20 any non-whitespace characters) -->
-            <div class="input-field col s6">
-                <input id="password" name="password" type="password" pattern="^([\S]){5,20}$" value="" required>
-                <label for="password">Enter current Password to confirm</label>
-            </div>
-            <!-- CHANGE password (5-20 any non-whitespace characters) -->
-            <div class="input-field col s6">
-                <input id="change_password" name="change_password" type="password" pattern="^([\S]){5,20}$" value="">
-                <label for="change_password">Change Password</label>
-            </div>
-            <!-- CONFIRM password (5-20 any non-whitespace characters) -->
-            <div class="input-field col s6">
-                <input id="confirm_password" name="confirm_password" type="password" pattern="^([\S]){5,20}$" value="">
-                <label for="confirm_password">Confirm new Password</label>
-            </div>
 
             <!-- Top Left column -->
             <div class="col s12">
@@ -336,33 +300,31 @@
             </div>
             <br>
 
-            <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
-            <!-- <div class="input-field col s6">
-                <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$" value="{{ trainer.username }}" disabled required>
-                <label for="username">Username</label>
-            </div> -->
+        </div>
+
+        <!-- edit modal -->
+        <div id="edit-modal" class="modal theme center-align">
+            <div class="col s12">
+                <p>Are you happy with your changes?</p>
+            </div>
+
+            <!-- cancel/confirm buttons -->
+            <div class="col s12">
+                <button class="btn modal-close waves-effect waves-light grey">
+                    Cancel
+                    <i class="fas fa-window-close right"></i>
+                </button>
+
+                <button class="btn modal-close waves-effect waves-light yellow darken-3" form="edit-profile"
+                    formaction="{{ url_for('edit_profile', username=session['user'], index=index) }}" type="submit"
+                    name="action">
+                    Confirm
+                    <i class="fas fa-clipboard-check right"></i>
+                </button>
+            </div>
         </div>
     </form>
 </div>
 
-<!-- edit modal -->
-<div id="edit-modal" class="modal theme">
-    <div class="modal-content center-align">
-        <p>Are you happy with your changes?</p>
-
-        <button class="btn modal-close waves-effect waves-light grey">
-            Cancel
-            <i class="fas fa-window-close right"></i>
-        </button>
-
-        <button class="btn modal-close waves-effect waves-light yellow darken-3" form="edit-profile"
-            formaction="{{ url_for('edit_profile', username=session['user'], index=index) }}" type="submit"
-            name="action">
-            Confirm
-            <i class="fas fa-clipboard-check right"></i>
-        </button>
-
-    </div> 
-</div>
 
 {% endblock %}

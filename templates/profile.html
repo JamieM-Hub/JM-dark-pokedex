@@ -130,9 +130,10 @@
 
     <!-- log out -->
     <div class="col s4">
-        <a href="{{ url_for('logout') }}" class="btn btn-large waves-effect waves-light red">
-            Log Out
-            <i class="fas fa-power-off right"></i>
+        <a href="{{ url_for('account_settings', username=session['user'], index=trainer._id) }}"
+            class="btn btn-large waves-effect waves-light grey">
+            Account Settings
+            <i class="fas fa-cog right"></i>
         </a>
     </div>
 

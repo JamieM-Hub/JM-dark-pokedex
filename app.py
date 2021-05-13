@@ -389,6 +389,69 @@ def profile(username):
     return render_template("profile.html", trainer=trainer, pokedex=created)
 
 
+@app.route("/account_settings/<username>", methods=["GET", "POST"])
+def account_settings(username):
+    # get user's Trainer record
+    trainer = mongo.db.trainers.find_one({"username":username})
+
+    # create new record
+    if request.method == "POST":
+        private = False if request.form.get("private") else True
+        updated_trainer = {
+            "name": trainer['name'],
+            "hometown": trainer['hometown'],
+            "trainer_id": trainer['trainer_id'],
+            "fav_type": trainer['fav_type'],
+            "fav_pokemon": trainer['fav_pokemon'],
+            "bio": trainer['bio'],
+            "img_src": trainer['img_src'],
+            "squad": trainer['squad'],
+            "username": request.form.get("username"),
+            "password": trainer['password'],
+            "private": private,
+            "rating": trainer['rating'],
+            "rated_by": trainer['rated_by']
+        }
+
+        # VALIDATION
+        # prevent duplicate username
+        username_taken = mongo.db.trainers.find_one(
+            {"username": request.form.get("username")})
+        if updated_trainer['username'] != trainer['username'] and username_taken:
+            flash(f"Username \"{updated_trainer['username']}\" is taken! Please try a different username.")
+            return render_template("account_settings.html", trainer=trainer, username=username)
+
+        # if user attempts password change
+        if request.form.get("change_password") or request.form.get("confirm_password"):
+            # check change_password matches confirm_password
+            if request.form.get("change_password") == request.form.get("confirm_password"):
+                # update user password to new password
+                updated_trainer['password'] = generate_password_hash(request.form.get("change_password"))
+            else:
+                # display error if new password fields do not match
+                flash("New password fields did not match - please try again.")
+                return render_template("account_settings.html", trainer=trainer, username=username)
+
+        # VERIFICATION
+        # ensure hashed password matches user input
+        if not check_password_hash(trainer['password'], request.form.get("password")):
+
+            # invalid password
+            flash("Password incorrect!")
+            return render_template("account_settings.html", trainer=trainer, username=username)
+        else:
+            # valid password - update Trainer record
+            mongo.db.trainers.update({"username":username}, updated_trainer)
+            flash(updated_trainer['name'] + "'s account settings updated successfully.")
+
+            # update session user
+            session['user'] = updated_trainer['username']
+            return redirect(url_for('profile', username=session['user']))
+
+    # initial view        
+    return render_template("account_settings.html", trainer=trainer, username=username)
+
+
 @app.route("/edit_profile/<username>/<index>", methods=["GET", "POST"])
 def edit_profile(username, index):
     # grab Trainer profile for session user
@@ -399,7 +462,6 @@ def edit_profile(username, index):
 
     if request.method == "POST":
         # serialize form input into new_profile
-        private = False if request.form.get("private") else True
         updated_trainer = {
             "name": request.form.get("name"),
             "hometown": request.form.get("hometown"),
@@ -416,48 +478,19 @@ def edit_profile(username, index):
                 request.form.get("squad_5 "),
                 request.form.get("squad_6 "),
             ],
-            "username": request.form.get('username').lower(),
+            "username": trainer['username'],
             "password": trainer['password'],
-            "private": private,
+            "private": trainer['private'],
             "rating": trainer['rating'],
             "rated_by": trainer['rated_by']
         }
 
-        # VALIDATION
-        # prevent duplicate username
-        username_taken = mongo.db.trainers.find_one(
-            {"username": request.form.get("username")})
-        if updated_trainer['username'] != trainer['username'] and username_taken:
-            flash(f"Username \"{updated_trainer['username']}\" is taken! Please try a different username.")
-            return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
+        # update Trainer record
+        mongo.db.trainers.update({"_id": ObjectId(index)}, updated_trainer)
+        flash(updated_trainer['name'] + "'s profile updated. Looking fresh!")
+        return redirect(url_for('profile', username=session['user'], index=index))
 
-        # if user attempts password change
-        if request.form.get("change_password") or request.form.get("confirm_password"):
-            # check change_password matches confirm_password
-            if request.form.get("change_password") == request.form.get("confirm_password"):
-                # update user password to new password
-                updated_trainer['password'] = generate_password_hash(request.form.get("change_password"))
-            else:
-                # display error if new password fields do not match
-                flash("New password fields did not match - please try again.")
-                return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
-
-        # VERIFICATION
-        # ensure hashed password matches user input
-        if not check_password_hash(trainer['password'], request.form.get("password")):
-            # invalid password
-            flash("Password incorrect!")
-            return render_template("edit_profile.html", index=index, trainer=updated_trainer, pokedex=pokedex, types=types)
-        else:
-            # valid password - update Trainer record
-            mongo.db.trainers.update({"_id": ObjectId(index)}, updated_trainer)
-            flash(updated_trainer['name'] + "'s profile updated. Looking fresh!")
-
-            # update session user
-            session['user'] = updated_trainer['username']
-            return redirect(url_for('profile', username=session['user'], index=index))
-
-    else:    
+    else:
         return render_template("edit_profile.html", trainer=trainer, index=index, pokedex=pokedex, types=types)
 
 
