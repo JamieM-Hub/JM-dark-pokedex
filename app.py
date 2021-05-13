@@ -1,5 +1,6 @@
 # Import
 import os
+from urllib.request import urlopen
 
 from bson.objectid import ObjectId
 from flask import (Flask, flash, redirect, render_template, request, session,
@@ -64,6 +65,20 @@ def process_sort(page, sort_by):
 
     return sorted
     
+
+# https://stackoverflow.com/questions/10543940/check-if-a-url-to-an-image-is-up-and-exists-in-python
+def url_is_image(url):
+    image_formats = ("image/png", "image/jpeg", "image/jpg")
+    try:
+        site = urlopen(url)
+        meta = site.info()  # get header of the http request
+        if meta["content-type"] in image_formats:  # check if the content-type is an image
+            return True
+        else:
+            return False
+    except:
+        return False
+
 
 # Routes
 @app.route("/")
@@ -461,6 +476,11 @@ def edit_profile(username, index):
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
 
     if request.method == "POST":
+        # check image URL returns image
+        url = request.form.get("img_src")
+        if not url_is_image(url):
+            url = default_img_t
+
         # serialize form input into new_profile
         updated_trainer = {
             "name": request.form.get("name"),
@@ -469,7 +489,7 @@ def edit_profile(username, index):
             "fav_type": request.form.get("fav_type"),
             "fav_pokemon": request.form.get("fav_pokemon"),
             "bio": request.form.get("bio"),
-            "img_src": request.form.get("img_src"),
+            "img_src": url,
             "squad": [
                 request.form.get("squad_1 "),
                 request.form.get("squad_2 "),
@@ -535,14 +555,14 @@ def register():
     pokedex = list(mongo.db.pokemon.find().sort("name", pymongo.ASCENDING))
 
     if request.method == "POST":
+        # check image URL returns image
+        url = request.form.get("img_src")
+        if not url_is_image(url):
+            url = default_img_t
+
         # calculate back-end record fields
         trainers_length = mongo.db.trainers.count()
         trainer_id = trainers_length + 1
-        private = False if request.form.get("private") else True
-        if (request.form.get("img_src") == ""):
-            img_src = default_img_t
-        else:
-            img_src = request.form.get("img_src")
 
         # create new trainer record
         new_trainer = {
@@ -552,7 +572,7 @@ def register():
             "fav_type": request.form.get("fav_type"),
             "fav_pokemon": request.form.get("fav_pokemon"),
             "bio": request.form.get("bio"),
-            "img_src": img_src,
+            "img_src": url,
             "squad": [
                 request.form.get("squad_1 "),
                 request.form.get("squad_2 "),
@@ -563,7 +583,7 @@ def register():
             ],
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password")),
-            "private": private,
+            "private": False if request.form.get("private") else True,
             "rating": 0,
             "rated_by": []
         }
