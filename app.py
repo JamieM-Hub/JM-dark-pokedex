@@ -102,10 +102,10 @@ def get_pokemon():
     return render_template("pokemon.html", pokedex=pokedex, trainers=trainers)
 
 
-@app.route("/get_pokemon/<id>")
-def get_selected_pokemon(id):
-    pokedex = mongo.db.pokemon.find()
-    return redirect(url_for('get_pokemon', _anchor=id))
+# @app.route("/get_pokemon/<id>")
+# def get_selected_pokemon(id):
+#     pokedex = mongo.db.pokemon.find()
+#     return redirect(url_for('get_pokemon', _anchor=id))
 
 
 @app.route("/search_pokemon", methods=["GET", "POST"])
