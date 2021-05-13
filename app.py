@@ -84,8 +84,8 @@ def url_is_image(url):
 @app.route("/")
 @app.route("/index")
 def index():
-    if not session:
-        flash("Welcome to the Dark Pokedex!")
+    # if not session:
+    #     flash("Welcome to the Dark Pokedex!")
     return render_template("index.html")
 
 
