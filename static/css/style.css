@@ -417,3 +417,8 @@ span.lever::after {
     background-color: #7766ee;
 
 }
+
+
+/* MEDIA QUERIES */
+
+@media (max-width: 400px) {}
