@@ -273,7 +273,7 @@ hr {
 .trainer-bio {
     padding: 2vh;
     padding-bottom: 0 !important;
-    font-size: medium;
+    font-size: inherit;
     height: auto;
     margin: 0;
     text-align: center;
@@ -421,4 +421,41 @@ span.lever::after {
 
 /* MEDIA QUERIES */
 
-@media (max-width: 400px) {}
+@media (orientation: landscape) {}
+
+@media (orientation: portrait) {
+    .pokemon-img {
+        height: 14vh;
+    }
+
+    .img-small {
+        height: 14vh;
+    }
+}
+
+@media (max-width: 400px) {
+    body {
+        font-size: 1.2vh !important;
+    }
+
+    .btn {
+        font-size: 1.2vh !important;
+    }
+
+    input {
+        text-align: center;
+        padding: 0;
+    }
+
+    .btn-pokemon {
+        width: 100%;
+        height: 3vh;
+        padding: 0;
+        line-height: inherit;
+    }
+
+    .trainer-name,
+    .pokemon-name {
+        font-size: 2vh;
+    }
+}
