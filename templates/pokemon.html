@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- top card -->
 <div class="card pokedex-entry">
     <div class="card-content">
         <span class="card-title header-color center-align">The Dark Pokedex</span>
@@ -71,6 +72,7 @@
 {% for pokemon in pokedex %}
 
 <div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+    <!-- ensure user created pokemon display correct negative number -->
     {% if pokemon.dex_id > 1000 %}
     {% set display_id = -(pokemon.dex_id - 1000) %}
     {% endif %}
@@ -197,29 +199,8 @@
             <div class="col s12 pokemon-desc">
                 <p>{{ pokemon.desc }}</p>
             </div>
-            <!-- height -->
-            <div class="col s5 offset-s1">
-                <span class="pokemon-stats">
-                    {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
-                    <i class="fas fa-arrows-alt-v header-color"></i>
-                </span>
-            </div>
-
-            <!-- weight -->
-            <div class="col s5">
-                <span class="pokemon-stats">
-                    <i class="fas fa-weight-hanging header-color"></i>
-                    {{ pokemon.weight }} lb
-                </span>
-            </div>
 
         </div>
-
-        <!-- rating -->
-        <!-- <h5 class="right-align">
-                {{ pokemon.rating }}
-                <i class="far fa-arrow-alt-circle-up"></i>
-            </h5> -->
     </div>
 
 </div>
