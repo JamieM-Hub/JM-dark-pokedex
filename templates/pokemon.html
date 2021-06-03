@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <!-- column 1 -->
+    <!-- name, species, height and weight -->
     <div class="col s6 m4 center-align">
         <div class="row">
 
@@ -131,6 +131,10 @@
         </div>
     </div>
 
+    <!-- description (small devices) -->
+    <div class="col m4 hide-on-small-and-down pokemon-desc center-align valign-wrapper">
+        <p>{{ pokemon.desc }}</p>
+    </div>
 
     <!-- type(s)-->
     <form class="col s12 center-align" method="POST" action="{{ url_for('search_pokemon') }}">
@@ -151,8 +155,8 @@
         {% endif %}
     </form>
 
-    <!-- description -->
-    <div class="col s12 pokemon-desc center-align">
+    <!-- description (small devices) -->
+    <div class="col s12 hide-on-med-and-up pokemon-desc center-align">
         <p>{{ pokemon.desc }}</p>
     </div>
 
