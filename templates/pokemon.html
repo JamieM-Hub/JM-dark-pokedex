@@ -77,8 +77,8 @@
     {% set display_id = -(pokemon.dex_id - 1000) %}
     {% endif %}
 
-    <!-- column 2 -->
-    <div class="col s4 center-align">
+    <!-- image and ID -->
+    <div class="col s6 m4 center-align">
         <div class="row">
             <!-- image -->
             <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
@@ -100,52 +100,30 @@
     </div>
 
     <!-- column 1 -->
-    <div class="col s4 center-align">
+    <div class="col s6 m4 center-align">
         <div class="row">
-            <br>
 
             <!-- name and species-->
             <div class="col s12 center-align">
-                <!-- <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6> -->
-                <h6 class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</h6>
                 <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
+                <!-- <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6> -->
+                <h6 class="header-color pokemon-species">{{ pokemon.species|capitalize }}</h6>
             </div>
             <br><br>
-            <br><br><br>
-
-            <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-                {% if pokemon.type[1] == "" %}
-                <div class="col s6 offset-s3 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
-                </div>
-                {% else %}
-                <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
-                </div>
-                <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[1]|upper }}">
-                </div>
-                {% endif %}
-            </form>
-            <br>
 
             <!-- height -->
-            <h6 class="col s6 pokemon-stats">
+            <h6 class="col s12 m6 pokemon-stats">
+                <i class="fas fa-arrows-alt-v header-color"></i>
                 {% if pokemon.height[1]|int < 10 %}
                 {% set inches = "0" + pokemon.height[1] %}
                 {{ pokemon.height[0] }}' {{ inches }}"
                 {% else %}
                 {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
                 {% endif %}
-                <i class="fas fa-arrows-alt-v header-color"></i>
             </h6>
 
             <!-- weight -->
-            <h6 class="col s6 pokemon-stats">
+            <h6 class="col s12 m6 pokemon-stats">
                 <i class="fas fa-weight-hanging header-color"></i>
                 {{ pokemon.weight }} lb
             </h6>
@@ -153,55 +131,66 @@
         </div>
     </div>
 
-    <!-- column 3 -->
-    <div class="col s4 center-align pokedex-text">
-        <div class="row">
 
-            <br>
-
-            <!-- rating -->
-            <form class="col s12">
-
-                {% if session['user'] and session['user'] not in pokemon.rated_by %}
-                <button class="theme right" type="submit" name="action"
-                    formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=False, _anchor=pokemon.dex_id+1) }}">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                </button>
-
-                {% elif session['user'] and session['user'] in pokemon.rated_by %}
-                <button class="theme-reverse right" type="submit" name="action"
-                    formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=True, _anchor=pokemon.dex_id+1) }}">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                </button>
-
-                {% elif not session['user'] %}
-                <button class="theme right" type="submit" name="action" formaction="{{ url_for('login') }}">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                </button>
-
-                {% endif %}
-
-                <div>Rating: <span class="header-color">{{ pokemon.rating }}</span></div>
-                <!-- <div>Rated By: <span class="header-color">{{ pokemon.rated_by }}</span></div> -->
-
-            </form>
-
-            <!-- created by -->
-            <div class=" col s12">
-                {% for trainer in trainers if pokemon.created_by|lower == trainer.username|lower %}
-                {% set display_name = trainer.name %}
-                <em>Discovered by <span class="header-color">{{ display_name }}</span></em>
-                {% endfor %}
-            </div>
-            <br><br>
-
-            <!-- description -->
-            <div class="col s12 pokemon-desc">
-                <p>{{ pokemon.desc }}</p>
-            </div>
-
+    <!-- type(s)-->
+    <form class="col s12 center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+        {% if pokemon.type[1] == "" %}
+        <div class="col s6 offset-s3 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[0]|upper }}">
         </div>
+        {% else %}
+        <div class="col s6 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[0]|upper }}">
+        </div>
+        <div class="col s6 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[1]|upper }}">
+        </div>
+        {% endif %}
+    </form>
+
+    <!-- description -->
+    <div class="col s12 pokemon-desc center-align">
+        <p>{{ pokemon.desc }}</p>
     </div>
+
+    <!-- created by -->
+    <form class="col s6">
+        {% for trainer in trainers if pokemon.created_by|lower == trainer.username|lower %}
+        {% set display_name = trainer.name %}
+        <em>Discovered by <span class="header-color">{{ display_name }}</span></em>
+        {% endfor %}
+    </form>
+
+    <!-- rating -->
+    <form class="col s6 right-align">
+
+        <span>Rating: <span class="header-color">{{ pokemon.rating }}</span> </span>
+        <!-- <div>Rated By: <span class="header-color">{{ pokemon.rated_by }}</span></div> -->
+
+        {% if session['user'] and session['user'] not in pokemon.rated_by %}
+        <button class="theme" type="submit" name="action"
+            formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=False, _anchor=pokemon.dex_id+1) }}">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        </button>
+
+        {% elif session['user'] and session['user'] in pokemon.rated_by %}
+        <button class="theme-reverse" type="submit" name="action"
+            formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=True, _anchor=pokemon.dex_id+1) }}">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        </button>
+
+        {% elif not session['user'] %}
+        <button class="theme" type="submit" name="action" formaction="{{ url_for('login') }}">
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+        </button>
+
+        {% endif %}
+
+
+    </form>
 
 </div>
 
