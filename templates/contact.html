@@ -28,50 +28,51 @@
             adipiscing enim eu. Est velit egestas dui id. Amet volutpat consequat mauris nunc congue nisi vitae
             suscipit tellus. </p>
         <br>
-        <div class="row">
-            <form action="{{ url_for('contact') }}" method="POST" class="col s12">
-                <div class="row">
 
-                    <!-- name -->
-                    <div class="input-field col s12">
-                        <input id="name" name="name" type="text" required>
-                        <label for="name">Your name</label>
-                    </div>
-
-                    <!-- feedback -->
-                    <div class="input-field col s12">
-                        <textarea id="feedback" name="feedback" class="materialize-textarea"></textarea>
-                        <label for="feedback">Feedback</label>
-                    </div>
-
-                    <!-- github -->
-                    <div class="input-field col s4 left">
-                        <a href="https://github.com/JamieM-Hub" target="_blank" id="github" class="btn theme">
-                            <i class="fab fa-github "></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/jamie-mckenzie-1a0999189/" target="_blank" id="linkedin" class="btn theme">
-                            <i class="fab fa-linkedin-in "></i>
-                        </a>
-                    </div>
-
-                    <!-- submit button -->
-                    <div class="input-field col s4 center-align">
-                        <button class="btn waves-effect waves-light yellow darken-4" type="submit" name="action">
-                            Submit
-                            <i class="fas fa-align-left right"></i>
-                        </button>
-                    </div>
-
-                    <!-- cancel button -->
-                    <div class="input-field col s4 right">
-                        <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light grey right">
-                            Cancel <i class="fas fa-window-close right"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </form>
+        <!-- github -->
+        <div class="right">
+            <a href="https://github.com/JamieM-Hub" target="_blank" id="github" class="btn theme">
+                <i class="fab fa-github "></i>
+            </a>
+            <a href="https://www.linkedin.com/in/jamie-mckenzie-1a0999189/" target="_blank" id="linkedin"
+                class="btn theme">
+                <i class="fab fa-linkedin-in "></i>
+            </a>
         </div>
+
+        <form action="{{ url_for('contact') }}" method="POST" class="row">
+
+            <!-- name -->
+            <div class="input-field col s12">
+                <input id="name" name="name" type="text" required>
+                <label for="name">Your name</label>
+            </div>
+
+            <!-- feedback -->
+            <div class="input-field col s12">
+                <textarea id="feedback" name="feedback" class="materialize-textarea"></textarea>
+                <label for="feedback">Feedback</label>
+            </div>
+
+            <!-- buttons -->
+            <div class="row center-align">
+
+                <!-- cancel button -->
+                <div class="input-field col s4 offset-s2">
+                    <a href="{{ url_for('get_pokemon') }}" class="btn waves-effect waves-light grey right">
+                        Cancel <i class="fas fa-window-close right hide-on-small-and-down"></i>
+                    </a>
+                </div>
+
+                <!-- submit button -->
+                <div class="input-field col s4">
+                    <button class="btn waves-effect waves-light yellow darken-4" type="submit" name="action">
+                        Submit
+                        <i class="fas fa-align-left right hide-on-small-and-down"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
 
     </div>
 </div>
