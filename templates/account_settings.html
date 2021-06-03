@@ -29,26 +29,26 @@
         <br><br>
 
         <!-- username (5-20 alphanumeric characters plus underscore and dash) -->
-        <div class="input-field col s6 offset-s3">
+        <div class="input-field col s12 m6">
             <input id="username" name="username" type="text" pattern="^(?!^ +$)([\w-]+){5,20}$"
                 value="{{ trainer.username }}">
             <label for="username">Username</label>
         </div>
 
         <!-- New password (5-20 any non-whitespace characters) -->
-        <div class="input-field col s6 offset-s3">
+        <div class="input-field col s12 m6">
             <input id="change_password" name="change_password" type="password" pattern="^([\S]){5,20}$" value="">
             <label for="change_password">New Password</label>
         </div>
 
         <!-- confirm new password (5-20 any non-whitespace characters) -->
-        <div class="input-field col s6 offset-s3">
+        <div class="input-field col s12 m6">
             <input id="confirm_password" name="confirm_password" type="password" pattern="^([\S]){5,20}$" value="">
             <label for="confirm_password">Confirm New Password</label>
         </div>
 
         <!-- confirm old password -->
-        <div class="col s6 input-field offset-s3">
+        <div class="input-field col s12 m6">
             <input id="password" name="password" type="password" value="" required>
             <label for="password">Enter Old Password</label>
         </div>
@@ -61,7 +61,7 @@
         <div class="col s4">
             <a href="{{ url_for('logout') }}" class="btn btn-large waves-effect waves-light red">
                 Log Out
-                <i class="fas fa-power-off right"></i>
+                <i class="fas fa-power-off right hide-on-small-and-down"></i>
             </a>
         </div>
 
@@ -70,7 +70,7 @@
             <a href="{{ url_for('profile', username=session['user']) }}"
                 class="btn btn-large waves-effect waves-light grey">
                 Cancel
-                <i class="fas fa-window-close right"></i>
+                <i class="fas fa-window-close right hide-on-small-and-down"></i>
             </a>
         </div>
 
@@ -79,7 +79,7 @@
             <button class="btn btn-large modal-trigger waves-effect waves-light yellow darken-3" type="submit"
                 name="action">
                 Confirm
-                <i class="fas fa-clipboard-check right"></i>
+                <i class="fas fa-clipboard-check right hide-on-small-and-down"></i>
             </button>
         </div>
     </div>
