@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!-- top card -->
 <div class="card pokedex-entry">
     <div class="card-content">
         <span class="card-title header-color center-align">The Dark Trainers</span>
@@ -43,7 +44,7 @@
             <div class="col s4">
                 <button type="submit" form="search" class="btn theme text-shadow">
                     Search
-                    <i class="fas fa-search right"></i>
+                    <i class="fas fa-search right hide-on-small-and-down"></i>
                 </button>
             </div>
 
@@ -51,7 +52,7 @@
             <div class="col s4">
                 <a href="{{ url_for('trainers') }}" class="btn red text-shadow">
                     Reset
-                    <i class="far fa-times-circle right"></i>
+                    <i class="far fa-times-circle right hide-on-small-and-down"></i>
                 </a>
             </div>
 
@@ -59,7 +60,7 @@
             <div class="col s4">
                 <button type="submit" form="sort" class="btn theme text-shadow">
                     Sort
-                    <i class="fas fa-sort right"></i>
+                    <i class="fas fa-sort right hide-on-small-and-down"></i>
                 </button>
             </div>
         </div>
