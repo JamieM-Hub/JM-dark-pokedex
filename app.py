@@ -399,7 +399,7 @@ def logout():
 @app.route("/profile/<username>")
 def profile(username):
     trainer = mongo.db.trainers.find_one({"username": username})
-    created = mongo.db.pokemon.find({"created_by": username}).sort("dex_id", pymongo.DESCENDING)
+    created = list(mongo.db.pokemon.find({"created_by": username}).sort("dex_id", pymongo.DESCENDING))
     
     return render_template("profile.html", trainer=trainer, pokedex=created)
 
