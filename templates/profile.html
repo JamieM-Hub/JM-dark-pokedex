@@ -1,126 +1,128 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- profile -->
-<div class="row transparent pokedex-entry text-shadow">
+<!-- trainer profile -->
+<div class="row transparent pokedex-entry text-shadow" id="{{ trainer.trainer_id }}">
+
+    <!-- image and ID -->
+    <div class="col s6 m4 center-align">
+        <div class="pokemon-img" style="background-image: url('{{ trainer.img_src }}');"></div>
+        <div>
+            <strong class="pokemon-id header-color">Trainer #{{ trainer.trainer_id }}</strong>
+        </div>
+    </div>
+
+    <!-- name, favourite type and favourite pokemon -->
+    <div class="col s6 m4 center-align">
+        <!-- name -->
+        <strong class="flow-text text-shadow trainer-name">{{ trainer.name|upper }}</strong>
+
+        <!-- hometown-->
+        <div class="center-align header-color">{{ trainer.hometown }}</div>
+        <br>
+        <!-- favourite type -->
+        <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
+            Favourite Type<br>
+            {% if trainer.fav_type and trainer.fav_type != "none" %}
+            <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query" type="submit"
+                value="{{ trainer.fav_type|upper }}">
+            {% else %}
+            <div class="btn btn-small btn-pokemon grey">-</div>
+            {% endif %}
+        </form>
+
+        <!-- favourite pokemon -->
+        <form class="center-align">
+            <br>
+            Favourite Pokemon<br>
+
+            {% if trainer.fav_pokemon and trainer.fav_pokemon != "none" %}
+            {% for pokemon in pokedex %}
+
+            {% if pokemon.dex_id > 1000 %}
+            {% set anchor = pokemon.dex_id + 1 %}
+            {% else %}
+            {% set anchor = pokemon.dex_id - 1 %}
+            {% endif %}
+
+            {% if trainer.fav_pokemon|lower == pokemon.name|lower %}
+            {% set type = pokemon.type[0] %}
+
+            <input class="btn btn-small btn-pokemon type-{{ type }}" type="submit"
+                value="{{ trainer.fav_pokemon|upper }}" formaction="{{url_for('get_pokemon', _anchor=anchor) }}">
+
+
+            {% endif %}
+            {% endfor %}
+
+            {% else %}
+            <div class="btn btn-small btn-pokemon grey">-</div>
+
+            {% endif %}
+        </form>
+
+    </div>
+
+    <!-- squad -->
+    <div class="col s12 m4 center-align">
+        Squad
+        <br>
+        {% if trainer.squad %}
+
+        <form class="center-align">
+            <div class="row">
+
+                {% for n in range(6) %}
+                <div class="col s4 m12">
+                    <div class="">
+
+                        {% if trainer.squad[n] and trainer.squad[n] != "none" %}
+                        {% for pokemon in pokedex %}
+
+                        {% if pokemon.dex_id > 1000 %}
+                        {% set anchor = pokemon.dex_id + 1 %}
+                        {% else %}
+                        {% set anchor = pokemon.dex_id - 1 %}
+                        {% endif %}
+
+                        {% if trainer.squad[n]|lower == pokemon.name|lower %}
+                        {% set type = pokemon.type[0] %}
+
+                        <input class="btn btn-small btn-pokemon type-{{ type }}" type="submit"
+                            value="{{ trainer.squad[n]|upper }}"
+                            formaction="{{url_for('get_pokemon', _anchor=anchor) }}">
+
+
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% else %}
+
+                        <div class="btn btn-small btn-pokemon grey">-</div>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </form>
+
+        {% endif %}
+    </div>
+
+    <!-- bio -->
     <div class="col s12">
-        <div class="row">
+        <p class="trainer-bio center-align ">"{{ trainer.bio }}"</span>
+    </div>
 
-            <!-- left column -->
-            <div class="col s3">
-                <div class="row">
-                    <br>
-                    <br>
-                    <!-- hometown-->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
-                        <br>
-                        Hometown<br>
-                        <!-- <input class="btn btn-small btn-pokemon theme" id="query" name="query" type="submit"
-                            value="{{ trainer.hometown }}"> -->
-                        <span class="header-color">{{ trainer.hometown|upper }}</span>
-                    </form>
+    <!-- rating -->
+    <div class="col s12">
 
-                    <!-- favourite type -->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
-                        <br>
-                        Favourite Type<br>
-                        {% if trainer.fav_type and trainer.fav_type != "none" %}
-                        <input class="btn btn-small btn-pokemon type-{{ trainer.fav_type }}" id="query" name="query"
-                            type="submit" value="{{ trainer.fav_type|upper }}">
-                        {% else %}
-                        <div class="btn btn-small btn-pokemon grey">-</div>
-                        {% endif %}
-                    </form>
-
-                    <!-- favourite pokemon -->
-                    <form class="col s12 center-align" method="POST" action="{{url_for('search_pokemon') }}">
-                        <br>
-                        Favourite Pokemon<br>
-                        {% if trainer.fav_pokemon and trainer.fav_pokemon != "none" %}
-                        <input class="btn btn-small btn-pokemon yellow darken-3" id="query" name="query" type="submit"
-                            value="{{ trainer.fav_pokemon|upper }}">
-                        {% else %}
-                        <div class="btn btn-small btn-pokemon grey">-</div>
-                        {% endif %}
-                    </form>
-
-                </div>
-            </div>
-
-            <!-- middle column-->
-            <div class="col s6">
-                <div class="row">
-
-                    <!-- name -->
-                    <div class="col s12 center-align">
-                        <strong class="flow-text text-shadow trainer-name">{{ trainer.name|upper }}</strong>
-                        <!-- trainer ID -->
-                        <div class="col s12 text-shadow center-align">
-                            <strong class="pokemon-id header-color">Trainer #{{ trainer.trainer_id }}</strong>
-                            <br>
-                            <br>
-                        </div>
-                    </div>
-
-                    <!-- image -->
-                    <div class="col s12">
-                        <div class="pokemon-img" style="background-image: url('{{ trainer.img_src }}');">
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-
-            <!-- right column -->
-            <div class="col s3">
-                <div class="row">
-                    <br>
-                    <br>
-                    <br>
-                    <!-- squad -->
-                    <div class="col s12 center-align">
-                        Squad
-                        <br>
-                        {% if trainer.squad %}
-
-                        <form class="center-align" method="POST" action="{{url_for('search_pokemon') }}">
-                            <div class="row">
-                                {% for n in range(6) %}
-                                {% if trainer.squad[n] and trainer.squad[n] != "none" %}
-                                <div class="col s12">
-                                    <div class="">
-                                        <input class="btn btn-small btn-pokemon theme" id="query" name="query"
-                                            type="submit" value="{{ trainer.squad[n]|upper }}">
-                                    </div>
-                                </div>
-                                {% else %}
-                                <div class="col s12">
-                                    <div class="">
-                                        <div class="btn btn-small btn-pokemon grey">-</div>
-                                    </div>
-                                </div>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                        </form>
-
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- bottom row -->
-        <div class="row">
-
-            <!-- bio -->
-            <div class="col s12">
-                <p class=" trainer-bio center-align ">"{{ trainer.bio }}"</span>
-            </div>
-            <br>
-            <br>
-        </div>
+        <span class="right">Rating: <span class="header-color">{{ trainer.rating }}</span></span>
+        <!-- <div>Rated By: <span class="header-color">{{ trainer.rated_by }}</span></div> -->
 
     </div>
 </div>
@@ -132,16 +134,16 @@
     <div class="col s4">
         <a href="{{ url_for('account_settings', username=session['user'], index=trainer._id) }}"
             class="btn btn-large waves-effect waves-light grey">
-            Account Settings
-            <i class="fas fa-cog right"></i>
+            Account
+            <i class="fas fa-cog right hide-on-med-and-down"></i>
         </a>
     </div>
 
     <!-- add to pokedex -->
     <div class="col s4">
         <a href="{{ url_for('contribute') }}" class="btn btn-large waves-effect waves-light theme">
-            Add To Pokedex
-            <i class="fas fa-dragon right"></i>
+            Contribute
+            <i class="fas fa-dragon right hide-on-med-and-down"></i>
         </a>
     </div>
 
@@ -150,7 +152,7 @@
         <a href="{{ url_for('edit_profile', username=session['user'], index=trainer._id) }}"
             class="btn btn-large waves-effect waves-light yellow darken-3">
             Edit Profile
-            <i class="fas fa-address-card right"></i>
+            <i class="fas fa-address-card right hide-on-med-and-down"></i>
         </a>
     </div>
 
@@ -161,15 +163,15 @@
 {% for pokemon in pokedex %}
 
 <!-- pokedex entry -->
-<div class="row card pokedex-entry theme text-shadow" id="{{ pokemon.dex_id }}">
+<div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+    <!-- ensure user created pokemon display correct negative number -->
     {% if pokemon.dex_id > 1000 %}
     {% set display_id = -(pokemon.dex_id - 1000) %}
     {% endif %}
 
-    <!-- column 2 -->
-    <div class="col s4 center-align">
+    <!-- image and ID -->
+    <div class="col s6 l4 center-align">
         <div class="row">
-
             <!-- image -->
             <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
                 style="background-image: url('{{ pokemon.img_src }}');">
@@ -189,47 +191,31 @@
         </div>
     </div>
 
-    <!-- column 1 -->
-    <div class="col s4 center-align">
+    <!-- name, species, height and weight -->
+    <div class="col s6 l4 center-align">
         <div class="row">
-            <br>
 
             <!-- name and species-->
             <div class="col s12 center-align">
-                <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6>
                 <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
+                <!-- <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6> -->
+                <h6 class="header-color pokemon-species">{{ pokemon.species|capitalize }}</h6>
             </div>
             <br><br>
-            <br><br><br>
-
-            <!-- type(s)-->
-            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
-                {% if pokemon.type[1] == "" %}
-                <div class="col s6 offset-s3 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
-                </div>
-                {% else %}
-                <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[0]|upper }}">
-                </div>
-                <div class="col s6 pokemon-type">
-                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query"
-                        type="submit" value="{{ pokemon.type[1]|upper }}">
-                </div>
-                {% endif %}
-            </form>
-            <br>
 
             <!-- height -->
-            <h6 class="col s6 pokemon-stats">
-                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+            <h6 class="col s12 m6 pokemon-stats">
                 <i class="fas fa-arrows-alt-v header-color"></i>
+                {% if pokemon.height[1]|int < 10 %}
+                {% set inches = "0" + pokemon.height[1] %}
+                {{ pokemon.height[0] }}' {{ inches }}"
+                {% else %}
+                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                {% endif %}
             </h6>
 
             <!-- weight -->
-            <h6 class="col s6 pokemon-stats">
+            <h6 class="col s12 m6 pokemon-stats">
                 <i class="fas fa-weight-hanging header-color"></i>
                 {{ pokemon.weight }} lb
             </h6>
@@ -237,34 +223,51 @@
         </div>
     </div>
 
-    <!-- column 3 -->
-    <div class="col s4 center-align pokedex-text">
-        <div class="row">
-            <br>
-
-            <!-- modify button -->
-            <div class="col s12 center-align">
-                <a href="{{ url_for('edit_pokemon', index=pokemon._id) }}"
-                    class="btn btn-large waves-effect waves-light yellow darken-3">
-                    MODIFY
-                    <i class="fas fa-recycle right"></i>
-                </a>
-            </div>
-
-            <br><br>
-            <!-- description -->
-            <div class="col s12 pokemon-desc">
-                <p>{{ pokemon.desc }}</p>
-            </div>
-        </div>
-
-        <!-- rating -->
-        <!-- <h5 class="right-align">
-                {{ pokemon.rating }}
-                <i class="far fa-arrow-alt-circle-up"></i>
-            </h5> -->
-
+    <!-- description (small devices) -->
+    <div class="col l4 hide-on-med-and-down pokemon-desc center-align valign-wrapper">
+        <p>{{ pokemon.desc }}</p>
     </div>
+
+    <!-- type(s)-->
+    <form class="col s12 center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+        {% if pokemon.type[1] == "" %}
+        <div class="col s6 offset-s3 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[0]|upper }}">
+        </div>
+        {% else %}
+        <div class="col s6 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[0]|upper }}">
+        </div>
+        <div class="col s6 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[1]|upper }}">
+        </div>
+        {% endif %}
+    </form>
+
+    <!-- description (small devices) -->
+    <div class="col s12 hide-on-large-only pokemon-desc center-align">
+        <p>{{ pokemon.desc }}</p>
+    </div>
+
+    <!-- created by -->
+    <form class="col s6">
+        {% for trainer in trainers if pokemon.created_by|lower == trainer.username|lower %}
+        {% set display_name = trainer.name %}
+        <em>Discovered by <span class="header-color">{{ display_name }}</span></em>
+        {% endfor %}
+    </form>
+
+    <!-- rating -->
+    <form class="col s6 right-align">
+
+        <span>Rating: <span class="header-color">{{ pokemon.rating }}</span> </span>
+        <!-- <div>Rated By: <span class="header-color">{{ pokemon.rated_by }}</span></div> -->
+
+    </form>
+
 </div>
 
 {% endfor %}
