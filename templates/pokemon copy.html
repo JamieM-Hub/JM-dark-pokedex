@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- top card -->
+<div class="card pokedex-entry">
+    <div class="card-content">
+        <span class="card-title header-color center-align">The Dark Pokedex</span>
+        <br>
+
+        <!-- info -->
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla facere assumenda, sit nobis optio ipsa
+            possimus
+            maiores debitis molestias eum rem architecto adipisci ab quos, soluta doloremque accusantium vitae tenetur?
+        </p>
+
+        <div class="row">
+
+            <!-- Search bar -->
+            <form id="search" class="col s6 offset-s1 input-field" action="{{url_for('search_pokemon') }}"
+                method="POST">
+                <input class="search-bar" type="text" name="query" id="query" required>
+                <label for="query">Search</label>
+            </form>
+
+            <!-- sort option -->
+            <form id="sort" class="col s3 offset-s1 input-field" action="{{ url_for('sort_pokemon') }}" method="POST">
+                <label for="sort_by">Sort</label>
+                <select name="sort_by" id="sort_by">
+                    <option value="" disabled selected></option>
+                    <option value="dex_id">Pokedex No.</option>
+                    <option value="name">Name</option>
+                    <option value="species">Species</option>
+                    <option value="rating">Rating</option>
+                </select>
+            </form>
+
+        </div>
+        <br>
+
+        <!-- buttons -->
+        <div class="row center-align">
+
+            <!-- search -->
+            <div class="col s4">
+                <button type="submit" form="search" class="btn theme text-shadow">
+                    Search
+                    <i class="fas fa-search right"></i>
+                </button>
+            </div>
+
+            <!-- reset -->
+            <div class="col s4">
+                <a href="{{ url_for('get_pokemon') }}" class="btn red text-shadow">
+                    Reset
+                    <i class="far fa-times-circle right"></i>
+                </a>
+            </div>
+
+            <!-- sort -->
+            <div class="col s4">
+                <button type="submit" form="sort" class="btn theme text-shadow">
+                    Sort
+                    <i class="fas fa-sort right"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% if pokedex %}
+{% for pokemon in pokedex %}
+
+<div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+    <!-- ensure user created pokemon display correct negative number -->
+    {% if pokemon.dex_id > 1000 %}
+    {% set display_id = -(pokemon.dex_id - 1000) %}
+    {% endif %}
+
+    <!-- column 2 -->
+    <div class="col s4 center-align">
+        <div class="row">
+            <!-- image -->
+            <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
+                style="background-image: url('{{ pokemon.img_src }}');">
+            </div>
+
+            <!-- id -->
+            <div class="row pokedex-under-img">
+                <div class="col s4 offset-s4 pokedex-id header-color">
+                    {% if pokemon.dex_id < 1000 %}
+                    <strong>No. <span class="white-text">{{ pokemon.dex_id }}</span></strong>
+                    {% else %}
+                    <strong>No. <span class="white-text">{{ display_id }}</span></strong>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- column 1 -->
+    <div class="col s4 center-align">
+        <div class="row">
+            <br>
+
+            <!-- name and species-->
+            <div class="col s12 center-align">
+                <!-- <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6> -->
+                <h6 class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</h6>
+                <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
+            </div>
+            <br><br>
+            <br><br><br>
+
+            <!-- type(s)-->
+            <form class="row center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+                {% if pokemon.type[1] == "" %}
+                <div class="col s6 offset-s3 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[0]|upper }}">
+                </div>
+                {% else %}
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[0]|upper }}">
+                </div>
+                <div class="col s6 pokemon-type">
+                    <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query"
+                        type="submit" value="{{ pokemon.type[1]|upper }}">
+                </div>
+                {% endif %}
+            </form>
+            <br>
+
+            <!-- height -->
+            <h6 class="col s6 pokemon-stats">
+                {% if pokemon.height[1]|int < 10 %}
+                {% set inches = "0" + pokemon.height[1] %}
+                {{ pokemon.height[0] }}' {{ inches }}"
+                {% else %}
+                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                {% endif %}
+                <i class="fas fa-arrows-alt-v header-color"></i>
+            </h6>
+
+            <!-- weight -->
+            <h6 class="col s6 pokemon-stats">
+                <i class="fas fa-weight-hanging header-color"></i>
+                {{ pokemon.weight }} lb
+            </h6>
+
+        </div>
+    </div>
+
+    <!-- column 3 -->
+    <div class="col s4 center-align pokedex-text">
+        <div class="row">
+
+            <br>
+
+            <!-- rating -->
+            <form class="col s12">
+
+                {% if session['user'] and session['user'] not in pokemon.rated_by %}
+                <button class="theme right" type="submit" name="action"
+                    formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=False, _anchor=pokemon.dex_id+1) }}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                {% elif session['user'] and session['user'] in pokemon.rated_by %}
+                <button class="theme-reverse right" type="submit" name="action"
+                    formaction="{{ url_for('rate_pokemon', index=pokemon._id, unrate=True, _anchor=pokemon.dex_id+1) }}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                {% elif not session['user'] %}
+                <button class="theme right" type="submit" name="action" formaction="{{ url_for('login') }}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </button>
+
+                {% endif %}
+
+                <div>Rating: <span class="header-color">{{ pokemon.rating }}</span></div>
+                <!-- <div>Rated By: <span class="header-color">{{ pokemon.rated_by }}</span></div> -->
+
+            </form>
+
+            <!-- created by -->
+            <div class=" col s12">
+                {% for trainer in trainers if pokemon.created_by|lower == trainer.username|lower %}
+                {% set display_name = trainer.name %}
+                <em>Discovered by <span class="header-color">{{ display_name }}</span></em>
+                {% endfor %}
+            </div>
+            <br><br>
+
+            <!-- description -->
+            <div class="col s12 pokemon-desc">
+                <p>{{ pokemon.desc }}</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
