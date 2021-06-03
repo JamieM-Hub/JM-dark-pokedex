@@ -31,13 +31,14 @@
 </div>
 
 <!-- pokedex entry preview -->
-<div class="row card pokedex-entry theme text-shadow" id="{{ pokemon.dex_id }}">
+<div class="row card pokedex-entry theme" id="{{ pokemon.dex_id }}">
+    <!-- ensure user created pokemon display correct negative number -->
     {% if pokemon.dex_id > 1000 %}
     {% set display_id = -(pokemon.dex_id - 1000) %}
     {% endif %}
 
-    <!-- column 2 -->
-    <div class="col s4 center-align">
+    <!-- image and ID -->
+    <div class="col s6 m4 center-align">
         <div class="row">
             <!-- image -->
             <div class="col s10 offset-s1 pokemon-img type-{{ pokemon.type[0] }}"
@@ -58,50 +59,31 @@
         </div>
     </div>
 
-    <!-- column 1 -->
-    <div class="col s4 center-align">
+    <!-- name, species, height and weight -->
+    <div class="col s6 m4 center-align">
         <div class="row">
-            <br>
 
             <!-- name and species-->
             <div class="col s12 center-align">
-                <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6>
                 <h4 class="center-align pokemon-name">{{ pokemon.name|upper }}</h4>
+                <!-- <h6><em class="header-color pokemon-species">{{ pokemon.species|capitalize }} Pokemon</em></h6> -->
+                <h6 class="header-color pokemon-species">{{ pokemon.species|capitalize }}</h6>
             </div>
             <br><br>
-            <br><br><br>
-
-            <!-- type(s)-->
-            <div class="row center-align">
-                {% if pokemon.type[1] == "" %}
-                <div class="col s6 offset-s3 pokemon-type">
-                    <div class="btn-large btn-type type-{{ pokemon.type[0] }}">
-                        {{ pokemon.type[0]|upper }}
-                    </div>
-                </div>
-                {% else %}
-                <div class="col s6 pokemon-type">
-                    <div class="btn-large btn-type type-{{ pokemon.type[0] }}">
-                        {{ pokemon.type[0]|upper }}
-                    </div>
-                </div>
-                <div class="col s6 pokemon-type">
-                    <div class="btn-large btn-type type-{{ pokemon.type[1] }}">
-                        {{ pokemon.type[1]|upper }}
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-            <br>
 
             <!-- height -->
-            <h6 class="col s6 pokemon-stats">
-                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+            <h6 class="col s12 m6 pokemon-stats">
                 <i class="fas fa-arrows-alt-v header-color"></i>
+                {% if pokemon.height[1]|int < 10 %}
+                {% set inches = "0" + pokemon.height[1]|string %}
+                {{ pokemon.height[0] }}' {{ inches }}"
+                {% else %}
+                {{ pokemon.height[0] }}' {{ pokemon.height[1] }}"
+                {% endif %}
             </h6>
 
             <!-- weight -->
-            <h6 class="col s6 pokemon-stats">
+            <h6 class="col s12 m6 pokemon-stats">
                 <i class="fas fa-weight-hanging header-color"></i>
                 {{ pokemon.weight }} lb
             </h6>
@@ -109,28 +91,33 @@
         </div>
     </div>
 
-    <!-- column 3 -->
-    <div class="col s4 center-align pokedex-text">
-        <div class="row">
-            <br>
-            <!-- created by -->
-            <div class="col s12">
-                <em>Discovered by <span class="header-color">{{ pokemon.created_by }}</span></em>
-            </div>
+    <!-- description (small devices) -->
+    <div class="col m4 hide-on-small-and-down pokemon-desc center-align valign-wrapper">
+        <p>{{ pokemon.desc }}</p>
+    </div>
 
-            <br><br>
-            <!-- description -->
-            <div class="col s12 pokemon-desc">
-                <p>{{ pokemon.desc }}</p>
-            </div>
-
+    <!-- type(s)-->
+    <form class="col s12 center-align" method="POST" action="{{ url_for('search_pokemon') }}">
+        {% if pokemon.type[1] == "" %}
+        <div class="col s6 offset-s3 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[0]|upper }}">
         </div>
+        {% else %}
+        <div class="col s6 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[0] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[0]|upper }}">
+        </div>
+        <div class="col s6 pokemon-type">
+            <input class="btn btn-large btn-type type-{{ pokemon.type[1] }}" id="query" name="query" type="submit"
+                value="{{ pokemon.type[1]|upper }}">
+        </div>
+        {% endif %}
+    </form>
 
-        <!-- rating -->
-        <!-- <h5 class="right-align">
-                {{ pokemon.rating }}
-                <i class="far fa-arrow-alt-circle-up"></i>
-            </h5> -->
+    <!-- description (small devices) -->
+    <div class="col s12 hide-on-med-and-up pokemon-desc center-align">
+        <p>{{ pokemon.desc }}</p>
     </div>
 
 </div>
@@ -176,21 +163,21 @@
                 <div class="row">
 
                     <!-- Name (3-14 letters only, no spaces) -->
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m6 l3">
                         <input id="name" type="text" name="name" pattern="^[a-zA-Z]{3,14}$"
                             value="{{ pokemon.name|capitalize }}" required>
                         <label for="name">Name</label>
                     </div>
 
                     <!-- Species (3-14 letters only, spaces allowed within string but not at start or end) -->
-                    <div class="input-field col s6 m3">
+                    <div class="input-field col s12 m6 l3">
                         <input id="species" type="text" name="species" pattern="^[a-zA-Z]+([ ]?[a-zA-Z]+)*$"
                             minlength="3" maxlength="14" value="{{ pokemon.species|capitalize  }}" required>
                         <label for="species">Species</label>
                     </div>
 
                     <!-- Type 1 -->
-                    <div class="input-field col s6 m3 type-select">
+                    <div class="input-field col s12 m6 l3 type-select">
                         <select name="type_1" required>
 
                             <!-- display each type in the types list as options, with current selected -->
@@ -207,7 +194,7 @@
                     </div>
 
                     <!-- Type 2 -->
-                    <div class="input-field col s6 m3 type-select">
+                    <div class="input-field col s12 m6 l3 type-select">
                         <select name="type_2">
 
                             <!-- display "-" option if pokemon does not have a secondary type -->
@@ -237,21 +224,21 @@
                 <div class="row">
 
                     <!-- Height (feet) -->
-                    <div class="input-field col s2 offset-s3">
+                    <div class="input-field col s6 m4">
                         <input id="height_feet" type="number" name="height_feet" min="0" max="25"
                             value="{{ pokemon.height[0] }}" required>
                         <label for="height_feet">Height (feet)</label>
                     </div>
 
                     <!-- Height (inches) -->
-                    <div class="input-field col s2">
+                    <div class="input-field col s6 m4">
                         <input id="height_inches" type="number" name="height_inches" min="0" max="11"
                             value="{{ pokemon.height[1] }}" required>
                         <label for="height_inches">Height (inches)</label>
                     </div>
 
                     <!-- Weight -->
-                    <div class="input-field col s2">
+                    <div class="input-field col s6 offset-s3 m4">
                         <input id="weight" type="number" name="weight" step="0.1" min="0" max="999"
                             value="{{ pokemon.weight }}" required>
                         <label for="weight">Weight (pounds)</label>
