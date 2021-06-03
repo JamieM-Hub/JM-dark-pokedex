@@ -16,31 +16,34 @@
             phasellus. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu. Vel fringilla est
             ullamcorper eget.
         </p>
-        <br><br>
+
+        <!-- link to register -->
+        <div class="input-field right">
+            <a href="{{ url_for('register') }}" class="btn waves-effect waves-light theme">
+                JOIN THE LEAGUE
+                <i class="fab fa-superpowers right hide-on-small-and-down"></i>
+            </a>
+        </div>
 
         <form action="{{ url_for('login') }}" method="POST" class="col s12">
             <div class="row">
                 <!-- username -->
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     <input id="username" name="username" type="text" required>
                     <label for="username">Username</label>
                 </div>
 
                 <!-- password -->
-                <div class="input-field col s6">
+                <div class="input-field col s12 m6">
                     <input id="password" name="password" type="password" required>
                     <label for="password">Password</label>
                 </div>
-
-                <!-- Confirm/cancel buttons -->
-                <div class="input-field col s12">
-                    <a href="{{ url_for('register') }}" class="btn waves-effect waves-light theme">
-                        JOIN THE LEAGUE
-                        <i class="fab fa-superpowers right"></i>
-                    </a>
-                    <button class="btn waves-effect waves-light yellow darken-3 right" type="submit" name="action">
+                <br>
+                <!-- login button -->
+                <div class="input-field right">
+                    <button class="btn waves-effect waves-light yellow darken-3" type="submit" name="action">
                         Log In
-                        <i class="fas fa-user right"></i>
+                        <i class="fas fa-user right hide-on-small-and-down"></i>
                     </button>
                 </div>
             </div>
