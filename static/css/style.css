@@ -15,7 +15,7 @@ body {
 }
 
 .pokedex-entry>form {
-    padding: 1vh 3vh !important;
+    padding: 1vh 3vh;
 }
 
 .row {
@@ -23,7 +23,7 @@ body {
 }
 
 .card {
-    padding: 2vh;
+    padding: 0vh;
 }
 
 .btn-pokemon {
@@ -34,6 +34,14 @@ body {
 
 .btn-type {
     width: 85%;
+    margin: 1.5vh;
+}
+
+.btn-rating {
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    margin-left: 0.5vw;
 }
 
 .btn:hover,
@@ -189,7 +197,8 @@ section {
 /* POKEDEX */
 
 .pokedex-entry {
-    padding: 2vh 0;
+    padding: 1vh 0;
+
     /* background-color: rgba(214, 197, 142, 0.35) !important; */
     /* background-color: rgba(88, 89, 38, 0.7) !important; */
     background-color: rgba(49, 4, 45, 0.85) !important;
@@ -214,7 +223,7 @@ section {
 }
 
 .pokedex-entry>.center-align {
-    padding: 15px 25px;
+    /* padding: 15px 25px; */
 }
 
 .pokedex-under-img {
@@ -284,6 +293,10 @@ hr {
 
 .img-small {
     max-height: 20vh;
+}
+
+.rating {
+    padding: inherit 0;
 }
 
 /* TRAINER FORM */
@@ -431,11 +444,15 @@ span.lever::after {
     .img-small {
         height: 14vh;
     }
+
+    .btn-type {
+        margin: 1vh 0;
+    }
 }
 
 @media (max-width: 400px) {
     body {
-        font-size: 1.2vh !important;
+        font-size: 1.8vh;
     }
 
     .btn {
