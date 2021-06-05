@@ -82,6 +82,13 @@ def url_is_image(url):
 
 # Routes
 @app.route("/")
+def disclaimer():
+    if not session:
+        return render_template("disclaimer.html")
+    else:
+        return render_template("index.html")
+
+
 @app.route("/index")
 def index():
     # if not session:

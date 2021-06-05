@@ -194,6 +194,16 @@ section {
     color: whitesmoke;
 }
 
+[type="checkbox"]:checked+span:not(.lever)::before {
+    border-right: 2px solid #e7d75cec;
+    border-bottom: 2px solid #e7d75cec;
+}
+
+[type="checkbox"]+span:not(.lever)::before {
+    /* border-color: rgba(231, 215, 92, 0.925); */
+    border-color: grey;
+}
+
 /* POKEDEX */
 
 .pokedex-entry {

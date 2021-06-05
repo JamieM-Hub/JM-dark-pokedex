@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="modal card pokedex-entry" id="disclaimer">
+    <form class="card-content" action="{{ url_for('index') }}">
+        <p>
+            The Dark Pokedex is an unofficial Pokemon-themed project developed for educational and recreational
+            purposes. Neither the developer, registered users or content contributors are in any way affiliated with The
+            Pokemon Company or Nintendo, or any associated Trademarks or Copyrighted Material.
+        </p>
+        <br>
+        <p>
+            The developer encourages all users to have fun with their creations but also to respect common decency and
+            consider other users of the site. The Dark Pokedex is a completely open content creation platform so there
+            is no content moderation, and the developer cannot be held responsible for uploaded content. Users are
+            encouraged to report offensive content via the Feedback page.
+        </p>
+        <br>
+        <p class="center-align">
+            <label>
+                <input type="checkbox" required>
+                <span>Please tick this box to confirm you are over 18 and have read and understood the above
+                    message.</span>
+            </label>
+        </p>
+        <br>
+        <div class="center-align">
+            <button type="submit" class="btn theme">CONTINUE TO SITE</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
