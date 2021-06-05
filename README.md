@@ -105,31 +105,39 @@ Have you ever wanted to create your own *Pokemon* and show them off to the world
 
 # Deployment
 
-You can deploy this project to GitHub by doing the following:
-
-1. Log in to your GitHub account and search for/locate this repository
-2. Click the 'Settings'button at the top of the page
-3. Find the 'GitHub Pages' section
-4. Make sure 'main' is selected on the 'Branch' dropdown
-5. Click the newly-created link with a green tick next to it.
-6. Enjoy the website!
-
 ## Forking the GitHub Repository
-You can fork this GitHub Repository if you wish to make a copy of the original repository on your GitHub account without affecting the original respository:
+You can fork The Dark Pokedex if you wish to make a copy of the original repository on your GitHub account without affecting the original respository:
 
 1. Log in to your GitHub account and search for/locate this repository
 2. Click the 'Fork' button at the top of the page
 3. Your GitHub account will now have an exact copy of the project that you can edit
 
+## Deploying the App via Heroku
+You can deploy The Dark Pokedex via Heroku by following these steps:
+
+1. Sign in to your Heroku account
+2. Click the "New" button and select "Create New App"
+3. Choose a name for your app, select your region and click "Create app"
+4. In the Settings tab, click Reveal Convig Vars
+5. [config vars]
+6. In the Deploy tab, select GitHub as your Deployment Method
+7. Connect your GitHub account if you haven't done so already
+8. Search for the repo you forked from *The Dark Pokedex* and click Connect
+9. If you would like your app to update automatically when *The Dark Pokedex* is updated, click Enable Automatic Deploys
+10. Ensure the "main" branch is selected next to Manual Deploy and click Deploy Branch
+11. Once the build is completed, click Open app at the top of the page
+
 ## Making a Local Clone
-1. Log in to your GitHub account and search for/locate this repository
-2. Click the 'Code' dropdown and select your cloning method
-3. If you have GitHub Desktop, click the GitHub Desktop button
-    * The application will open with this repository available for editing
-4. If you're using an alternative Git service
-    1. Open Git Bash
-    2. Make sure the current working directory is set to the location where you want to place the clone.
-    3. Type 'git clone' in your command line and paste the URL given on the GitHub repository page
+To clone The Dark Pokedex locally:
+
+1. Ensure you have Python installed on your machine
+2. Download the repo using GitHub Desktop and open it in your preferred IDE
+3. Create a new file called "env.py" in the root folder
+4. [env.py content]
+5. Open a bash command line and type "pip3 install -r requirements.txt" and press enter
+6. Once the installation is complete, type "python3 app.py" and press enter
+7. Ensure port 8080 is public
+8. You can now view the application locally in your web browser!
 
 # Credits
 
