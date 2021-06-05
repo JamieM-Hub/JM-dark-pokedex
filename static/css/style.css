@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
 
 body {
     height: 100vh;
@@ -7,11 +8,18 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
+    font-size: 15px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 300;
+    text-align: justify;
 }
 
 .container {
     margin-top: 10vh;
+}
+
+.padding-0 {
+    padding: 0 !important;
 }
 
 .pokedex-entry>form {
@@ -23,7 +31,21 @@ body {
 }
 
 .card {
-    padding: 0vh;
+    padding: 0;
+}
+
+.card .card-content {
+    padding: 10px;
+}
+
+.card .card-title {
+    font-weight: 400;
+}
+
+.btn {
+    font-size: inherit;
+    text-align: center;
+    padding: 0;
 }
 
 .btn-pokemon {
@@ -34,14 +56,20 @@ body {
 
 .btn-type {
     width: 85%;
+    height: 85%;
     margin: 1.5vh;
+    text-shadow: 0 0 2px black;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
 }
 
+.type-shadow {}
+
 .btn-rating {
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     padding: 0;
-    margin-left: 0.5vw;
+    margin-left: 12px;
 }
 
 .btn:hover,
@@ -52,6 +80,10 @@ body {
     background-color: rgb(74, 0, 74);
 }
 
+.fa-arrow-up {
+    padding: 3px;
+}
+
 .fav-pokemon {
     background-color: black;
     color: #e7d75c;
@@ -59,6 +91,10 @@ body {
 
 .text-shadow {
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+    font-weight: 500;
 }
 
 .header-color {
@@ -73,6 +109,10 @@ body {
 
 label.active {
     color: #e7d75c !important;
+}
+
+.entry-footer {
+    line-height: 30px;
 }
 
 /* DROPDOWNS */
@@ -92,7 +132,7 @@ label.active {
     background-color: transparent !important;
 }
 
-/* HEADER */
+/* NAV */
 
 nav.nav-extended {
     height: 10vh;
@@ -207,28 +247,26 @@ section {
 /* POKEDEX */
 
 .pokedex-entry {
-    padding: 1vh 0;
-
-    /* background-color: rgba(214, 197, 142, 0.35) !important; */
-    /* background-color: rgba(88, 89, 38, 0.7) !important; */
+    padding: 10px 5px;
     background-color: rgba(49, 4, 45, 0.85) !important;
     color: whitesmoke;
     margin-bottom: 6vh;
-    border: ridge 2vh rgba(77, 16, 77, 0.9);
+    border: ridge 10px rgba(77, 16, 77, 0.9);
     margin: 3vh 0;
 }
 
 .pokemon-img {
-    border: outset 0.75vh rgba(77, 16, 77, 0.9);
+    /* border: outset 0.75vh rgba(77, 16, 77, 0.9); */
     /* border: outset 0.75vh #e7d75c; */
     height: 22vh;
     width: 60%;
     left: 20%;
     position: relative;
+
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-color: white;
+    /* background-color: white; */
     background-image: url('https://i.pinimg.com/originals/95/d5/cd/95d5cded00f3a3e8a98fb1eed568aa9f.png');
 }
 
@@ -238,7 +276,7 @@ section {
 
 .pokedex-under-img {
     padding-top: 1vh;
-    margin: 0;
+    margin-bottom: 10px;
 }
 
 .pokedex-text {
@@ -246,20 +284,27 @@ section {
 }
 
 .pokemon-name {
-    line-height: 1vh;
-    font-size: 4vh;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: -7px;
 }
 
 .pokemon-species {
-    line-height: 1vh;
+    font-size: 15px;
 }
 
 .pokemon-desc {
-    height: auto;
+    margin: 1.5vh 0;
+    text-align: left;
 }
 
 .pokemon-stats {
-    letter-spacing: 0.05vw;
+    letter-spacing: 1px;
+    width: 85%;
+}
+
+.pokemon-stats i {
+    font-size: 18px;
 }
 
 .pokedex-id {
@@ -290,14 +335,14 @@ hr {
 }
 
 .trainer-bio {
-    padding: 2vh;
-    padding-bottom: 0 !important;
+    /* padding: 2vh;
+    padding-bottom: 0 !important; */
     font-size: inherit;
     height: auto;
-    margin: 0;
+    margin: 1vh 0;
     text-align: center;
-    width: 75%;
-    left: 12.5%;
+    /* width: 75%;
+    left: 12.5%; */
     position: relative;
 }
 
@@ -306,7 +351,7 @@ hr {
 }
 
 .rating {
-    padding: inherit 0;
+    padding: 0;
 }
 
 /* TRAINER FORM */
@@ -350,9 +395,6 @@ span.lever::after {
 .input-field>label {
     color: #e7d75c;
 }
-
-
-
 
 .active {
     color: red;
@@ -444,24 +486,28 @@ span.lever::after {
 
 /* MEDIA QUERIES */
 
-@media (orientation: landscape) {}
+@media (orientation: landscape) {
+    .container {
+        width: 60%
+    }
+}
 
 @media (orientation: portrait) {
-    .pokemon-img {
+    /* .pokemon-img {
         height: 14vh;
     }
 
     .img-small {
         height: 14vh;
-    }
+    } */
 
-    .btn-type {
+    /* .btn-type {
         margin: 1vh 0;
-    }
+    } */
 }
 
 @media (max-width: 400px) {
-    body {
+    /* body {
         font-size: 1.8vh;
     }
 
@@ -484,5 +530,5 @@ span.lever::after {
     .trainer-name,
     .pokemon-name {
         font-size: 2vh;
-    }
+    } */
 }
